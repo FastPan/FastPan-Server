@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<link rel="icon" href="http://v3.bootcss.com/favicon.ico">
+		<title>主页</title>
+		<!-- Bootstrap core CSS -->
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href="../css/myPan.css" rel="stylesheet">
+		<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+		<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+		<script src="../css/ie-emulation-modes-warning.js "></script>
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		<script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		<style>
+			a:hover {
+				text-decoration: none;
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div style="height:100%;"class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="../html/index.html">极速网盘</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li >
+							<a href="#"><img src='https://ss0.bdstatic.com/7Ls0a8Sm1A5BphGlnYG/sys/portrait/item/11ddd637.jpg' style="height:30px;width:30px;" class="img-circle"></img>好聚不好散</a>
+						</li>
+						<li class="navbar-nav-unactive">
+							<a href="#">控制台</a>
+						</li>
+						<li class="navbar-nav-unactive">
+							<a href="#">设置</a>
+						</li>
+						<li class="navbar-nav-unactive">
+							<a href="#">帮助</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="container-fluid">
+			<div class="row">
+				<div id="sidebar" class="col-sm-3 col-md-2 sidebar">
+					<ul class="nav nav-sidebar">
+						<li class="active">
+							<a href="#">全部文件</a>
+						</li>
+						<li >
+							<a class="glyphicon glyphicon-picture" href="#">&nbsp;图片</a>
+						</li>
+						<li >
+							<a class="glyphicon glyphicon-briefcase" href="#">&nbsp;文档</a>
+						</li>
+						<li >
+							<a class="glyphicon glyphicon-facetime-video" href="#">&nbsp;视频</a>
+						</li>
+						<li >
+							<a class="glyphicon glyphicon-music" href="#">&nbsp;音乐</a>
+						</li>
+						<li >
+							<a class="glyphicon glyphicon-th-large" href="#">&nbsp;其他</a>
+						</li>
+					</ul>
+					<ul class="nav nav-sidebar">
+						<li>
+							<a class="glyphicon glyphicon-trash" href="#">&nbsp;回收站</a>
+							<!--<em class="icon icon-delete" title="回收站"></em>-->
+						</li>
+					</ul>
+					<!--<ul class="nav nav-sidebar">
+					<li>
+					<a href="#">Nav item again</a>
+					</li>
+					</ul>-->
+				</div>
+				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+					<div id="table-head">
+						<button type="button" class="btn btn-primary">
+							上传
+						</button>
+						<button type="button" class="btn btn-default">
+							新建文件夹
+						</button>
+						<form class="pull-right">
+							<input type="text" class="form-control" placeholder="搜索">
+							</input>
+						</form>
+					</div>
+					<div id="table" class="table-responsive" style="overflow-y: scroll">
+						<table class="table table-hover ">
+							<thead >
+								<tr id="thead_hide" >
+									<th style="width: 60%;"><!--style="width: 60%;"-->
+									<input type="checkbox">
+									</input><a>文件名</a></th>
+									<th style="width: 20%;"><a>大小</a></th><!--style="width: 20%;"-->
+									<th style="width: 20%;"><a>修改日期</a></th>
+								</tr>
+								<tr id="thead_show" style="position: fixed;">
+									<th >
+									<input type="checkbox">
+									</input><a>文件名</a></th>
+									<th ><a>大小</a></th>
+									<th ><a>修改日期</a></th>
+								</tr>
+							</thead>
+							<tbody >
+								<tr>
+									<td >
+									<input type="checkbox">
+									<a>文件1</a></input></td>
+									<td>-</td>
+									<td>2016-05-12 12:05</td>
+								</tr>
+								<tr>
+									<td >
+									<input type="checkbox">
+									<a>文件2</a></input></td>
+									<td>-</td>
+									<td>2016-05-12 12:06</td>
+								</tr>
+								<tr>
+									<td >
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td>
+									<input type="checkbox">
+									<a>文件3</a></input></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/docs.min.js"></script>
+		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+		<script src="../js/ie10-viewport-bug-workaround.js"></script>
+	</body>
+	<script>
+		$(window).resize(function() {
+			var height = $(window).height() - $('nav').height() - $('#table-head').height() - $('.main').css('padding-top').replace(/[^0-9]/ig, "") * 2;
+			$('#table').css('height', height + 'px');
+			$('#thead_show').css('top', $('#thead_hide').offset().top);
+			$('#thead_show').css('left', $('#thead_hide').offset().left);
+			$('#thead_show th').each(function(index) {
+				$(this).css('left', $('#thead_hide th').eq(index).offset().left);
+				$(this).css('width', $('#thead_hide th').eq(index).css('width'));
+				$(this).css('background', $('body').css('background'));
+			});
+		});
+		$(document).ready(function() {
+			var height = $(window).height() - $('nav').height() - $('#table-head').height() - $('.main').css('padding-top').replace(/[^0-9]/ig, "") * 3;
+			$('#table').css('height', height + 'px');
+			$('#thead_show').css('top', $('#thead_hide').offset().top);
+			$('#thead_show').css('left', $('#thead_hide').offset().left);
+			$('#thead_show th').each(function(index) {
+				$(this).css('left', $('#thead_hide th').eq(index).offset().left);
+				$(this).css('width', $('#thead_hide th').eq(index).css('width'));
+				$(this).css('background', $('body').css('background'));
+			});
+		});
+	</script>
+</html>

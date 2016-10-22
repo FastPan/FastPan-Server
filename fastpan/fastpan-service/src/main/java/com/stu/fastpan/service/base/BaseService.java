@@ -1,4 +1,4 @@
-package com.stu.fastpan.web.base;
+package com.stu.fastpan.service.base;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
