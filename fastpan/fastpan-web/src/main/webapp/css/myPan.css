@@ -1,7 +1,16 @@
 /*
  * Base structure
  */
-
+@font-face{
+    font-family:Batch;
+    src:url('../fonts/batch-icons-webfont.eot');
+    src:url('../fonts/batch-icons-webfont.eot?#iefix') format('embedded-opentype'),
+      url('../fonts/batch-icons-webfont.woff') format('woff'),
+      url('../fonts/batch-icons-webfont.ttf') format('truetype'),
+      url('../fonts/batch-icons-webfont.svg#batchregular') format('svg');
+    font-weight:normal;
+    font-style:normal;
+  }
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
 	padding-top: 50px;
@@ -105,3 +114,10 @@ body {
 .navbar-nav > li >a >img{
 	margin-right:10px;
 }
+
+.batch {
+    font-family:"Batch"; /*or whatever you've decalred your font name as*/
+    font-size:14px;
+    line-height:1;
+    display:inline-block;
+  }
