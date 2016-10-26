@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="http://v3.bootcss.com/favicon.ico">
+
+<title>登录</title>
+
+<!-- Bootstrap core CSS -->
+<link href="../css/plug-in/bootstrap.min.css" rel="stylesheet">
+
+<link href="../css/plug-in/bootstrapValidator.min.css" rel="stylesheet" />
+<!-- Custom styles for this template -->
+<link href="../css/login.css" rel="stylesheet">
+
+<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<script src="../js/plug-in/ie-emulation-modes-warning.js"></script>
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+	<div class="container">
+
+		<form class="form-signin" role="form" action="doRegister"
+			method="post">
+			<h2 class="form-signin-heading" align="center">登录</h2>
+			<div class="form-group">
+				<input type="email" class="form-control" name="email"
+					placeholder="邮箱" required="required" value="524329278@qq.com">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" name="password"
+					placeholder="密码" required="required" value="LZP@1994">
+			</div>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+		</form>
+
+	</div>
+	<!-- /container -->
+
+
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script src="../js/plug-in/ie10-viewport-bug-workaround.js"></script>
+	<script src="../js/plug-in/jquery.min.js"></script>
+	<script src="../js/plug-in/bootstrap.min.js"></script>
+	<script src="../js/plug-in/bootstrapValidator.min.js"></script>
+	<script>
+		$(function() {
+			$('form')
+					.bootstrapValidator(
+							{
+								message : '输入非法',
+								feedbackIcons : {
+									valid : 'glyphicon glyphicon-ok',
+									invalid : 'glyphicon glyphicon-remove',
+									validating : 'glyphicon glyphicon-refresh'
+								},
+								fields : {
+									email : {
+										validators : {
+											notEmpty : {
+												message : '邮箱不能为空'
+											},
+											emailAddress : {
+												message : '邮箱地址格式有误'
+											},
+											stringLength : {
+												min : 6,
+												max : 40,
+												message : '请输入长度为6-40的邮箱'
+											}
+										}
+									},
+									password : {
+										validators : {
+											notEmpty : {
+												message : '密码不能为空'
+											},
+											regexp : {
+												regexp : /(?=.*[a-z])(?=.*\d)(?=.*[#@!~%^&*])[a-z\d#@!~%^&*]{8,16}/i,
+												message : '请输入8-16位,包含数字,字母及以下符号其中之一的密码：~!@#$%^&*'
+											}
+										}
+									}
+								}
+							});
+		});
+	</script>
+</body>
+</html>

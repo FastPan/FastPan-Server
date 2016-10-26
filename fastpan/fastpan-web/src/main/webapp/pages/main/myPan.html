@@ -9,12 +9,12 @@
 <link rel="icon" href="http://v3.bootcss.com/favicon.ico">
 <title>主页</title>
 <!-- Bootstrap core CSS -->
-<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/plug-in/bootstrap.min.css" rel="stylesheet">
 <!-- Custom styles for this template -->
 <link href="../css/myPan.css" rel="stylesheet">
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-<script src="../css/ie-emulation-modes-warning.js "></script>
+<script src="../js/plug-in/ie-emulation-modes-warning.js "></script>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
 		<script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
@@ -27,19 +27,19 @@ a:hover {
 	cursor: pointer;
 }
 
-#table td:nth-child(1),#thead_show th:nth-child(1){
+#table td:nth-child(1), #thead_show th:nth-child(1) {
 	width: 50%;
 }
 
-#table td:nth-child(2),#thead_show th:nth-child(2) {
+#table td:nth-child(2), #thead_show th:nth-child(2) {
 	width: 20%;
 }
 
-#table  td:nth-child(3),#thead_show th:nth-child(3) {
+#table  td:nth-child(3), #thead_show th:nth-child(3) {
 	width: 10%;
 }
 
-#table  td:nth-child(4),#thead_show th:nth-child(4) {
+#table  td:nth-child(4), #thead_show th:nth-child(4) {
 	width: 20%;
 }
 
@@ -52,11 +52,13 @@ a:hover {
 	cursor: hand;
 	cursor: pointer;
 }
-.nav-sidebar li a span{
-	margin-left:10px;
+
+.nav-sidebar li a span {
+	margin-left: 10px;
 }
-#table  td span{
-	margin-left:10px;
+
+#table  td span {
+	margin-left: 10px;
 }
 </style>
 </head>
@@ -71,7 +73,7 @@ a:hover {
 						class="icon-bar"></span><span class="icon-bar"></span><span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">极速网盘</a>
+				<a class="navbar-brand" href="../">极速网盘</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
@@ -101,35 +103,34 @@ a:hover {
 				</ul>
 				<ul class="nav nav-sidebar">
 					<li><a class="glyphicon glyphicon-trash" href="#"><span>回收站</span></a>
-					<li><a href="#"><div class="batch">&#xF159;</div><span>我的分享</span></a>
+					<li><a href="#"><div class="batch">&#xF159;</div>
+							<span>我的分享</span></a>
 				</ul>
 			</div>
 			<div id="main-content"
 				class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<div id="table-head">
-					<button type="button" class="btn btn-primary">上传</button>
-					<button type="button" class="btn btn-default">新建文件夹</button>
-					<button type="button" class="btn btn-default">移动至</button>
-					<button type="button" class="btn btn-default">删除</button>
-					<button type="button" class="btn btn-default">下载</button>
-					<button type="button" class="btn btn-default">分享</button>
-					<form class="pull-right">
-						<input type="text" class="form-control" placeholder="搜索">
-						</input>
-					</form>
+						<button type="button" class="btn btn-primary">上传</button>
+						<button type="button" class="btn btn-default">新建文件夹</button>
+						<button type="button" class="btn btn-default">移动至</button>
+						<button type="button" class="btn btn-default">删除</button>
+						<button type="button" class="btn btn-default">下载</button>
+						<button type="button" class="btn btn-default">分享</button>
+						<form class="pull-right">
+							<input type="text" class="form-control" placeholder="搜索">
+							</input>
+						</form>
 				</div>
-				<!-- <span class="glyphicon glyphicon-arrow-down" style="font-size:40"></span> -->
 				<table id="table-thead" class="table table-hover" style="margin: 0">
 					<thead>
 						<tr id="thead_show">
-							<th><input id="select-all"
-								type="checkbox"> </input><a id="filename">文件名<font size=1><span
+							<th><input id="select-all" type="checkbox"> </input><a
+								id="filename">文件名<font size=1><span class="glyphicon"></span></font></a></th>
+							<th></th>
+							<th><a id="filesize">大小<font size=1><span
 										class="glyphicon"></span></font></a></th>
-							<th ></th>
-							<th ><a id="filesize">大小<font size=1><span
+							<th><a id="updatetime">修改日期<font size=1><span
 										class="glyphicon"></span></font></a></th>
-							<th ><a id="updatetime">修改日期<font
-									size=1><span class="glyphicon"></span></font></a></th>
 						</tr>
 					</thead>
 				</table>
@@ -286,15 +287,15 @@ a:hover {
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Bootstrap core JavaScript
 		================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="../js/jquery.min.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
-	<script src="../js/docs.min.js"></script>
+	<script src="../js/plug-in/jquery.min.js"></script>
+	<script src="../js/plug-in/bootstrap.min.js"></script>
+	<script src="../js/plug-in/docs.min.js"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="../js/ie10-viewport-bug-workaround.js"></script>
+	<script src="../js/plug-in/ie10-viewport-bug-workaround.js"></script>
 </body>
 <script>
 	$(window).resize(
