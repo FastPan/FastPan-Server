@@ -9,6 +9,6 @@ public class MainPageController {
 	//login页面
 	@RequestMapping ("/index")
 	public String login(){
-		return "/pages/myPan.html";
+		return "/pages/main/myPan.html";
 	}
 }
