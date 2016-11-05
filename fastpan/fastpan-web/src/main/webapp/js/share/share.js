@@ -1,10 +1,3 @@
-/*$(window).resize(
-		function() {
-			var height = $(window).height() - $('nav').height()
-					- $('#table-head').height() - $('#table-thead').height()
-					- parseInt($('#main-content').css('padding')) * 2;
-			$('#table').css('height', height + 'px');
-		});*/
 $(function() {
 	$('#select-all').click(
 			function() {
@@ -34,12 +27,11 @@ $(function() {
 	$('#table table tbody tr')
 			.hover(
 					function() {
-						if (!$('#my-share').hasClass('active')&&!$('#my-delete').hasClass('active')) {
-							$(this)
-									.find('td:nth-of-type(2)')
-									.html(
-											'<span class="batch blue" title="分享">&#xF159;</span><span class="glyphicon glyphicon-download-alt blue" title="下载"></span><span class="glyphicon glyphicon-trash blue" title="删除"></span>');
-						}
+						
+						$(this)
+								.find('td:nth-of-type(2)')
+								.html(
+										'<span class="glyphicon glyphicon-download-alt blue" title="下载"></span>');
 					}, function() {
 						$(this).find('td:nth-of-type(2)').html('');
 					});
