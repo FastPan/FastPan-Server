@@ -21,8 +21,14 @@ public class UserController {
 	}
 
 	// 注册页面
-	@RequestMapping(value="/doRegister", method=RequestMethod.POST)
+	@RequestMapping(value = "/doRegister", method = RequestMethod.POST)
 	public String doRegister() {
 		return "redirect:/main/index";
+	}
+
+	// 账户设置页面
+	@RequestMapping(value = "/accountInfo")
+	public String accountInfo() {
+		return "/pages/user/accountInfo.html";
 	}
 }
