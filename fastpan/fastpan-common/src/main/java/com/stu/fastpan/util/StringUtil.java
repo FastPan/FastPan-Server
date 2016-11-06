@@ -101,6 +101,7 @@ public final class StringUtil {
 	 * @param str
 	 * @return String
 	 */
+	@SuppressWarnings("restriction")
 	public static String encodeString(String str) {
 		sun.misc.BASE64Encoder encoder = new sun.misc.BASE64Encoder();
 		return encoder.encodeBuffer(str.getBytes()).trim();

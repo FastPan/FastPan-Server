@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-4.0.xsd
+      http://www.springframework.org/schema/aop 
+	  http://www.springframework.org/schema/aop/spring-aop.xsd
+      http://www.springframework.org/schema/tx 
+	  http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<!-- <context:annotation-config /> -->
+	<context:component-scan base-package="com.stu.fastpan">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<context:property-placeholder location="classpath:*.properties"
+		ignore-unresolvable="true" />
+
+	<bean class="com.stu.fastpan.CustomPropertyPlaceholder">
+		<property name="fileEncoding" value="utf-8" />
+		<property name="locations">
+			<list>
+				<value>classpath:gateway-bus.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+		name="trpSqlSessionFactory">
+		<property name="typeAliasesPackage" value="com.stu.fastpan.dao.pojo.*" />
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mapperLocations" value="classpath*:mybatis/sql/*/*.xml" />
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.stu.fastpan.dao.mapper.*" />
+		<property name="sqlSessionFactoryBeanName" value="trpSqlSessionFactory" />
+	</bean>
+
+	<bean id="trpTxManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:advice id="txAdvice" transaction-manager="trpTxManager">
+		<tx:attributes>
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="is*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="query*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="update*" propagation="REQUIRED"
+				rollback-for="Exception" read-only="false" />
+			<tx:method name="delete*" propagation="REQUIRED"
+				rollback-for="Exception" read-only="false" />
+			<tx:method name="insert*" propagation="REQUIRED"
+				rollback-for="Exception" read-only="false" />
+			<tx:method name="save*" propagation="REQUIRED"
+				rollback-for="Exception" read-only="false" />
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"
+				read-only="false" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config proxy-target-class="true">
+		<aop:advisor pointcut="execution(* com.stu.fastpan.service.*.*Service.*(..))"
+			advice-ref="txAdvice" order="5" />
+	</aop:config>
+
+	<import resource="classpath*:spring/applicationContext-datasource.xml" />
+</beans>
