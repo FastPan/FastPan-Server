@@ -16,7 +16,7 @@ public class UserController {
 		return "/pages/user/login.html";
 	}
 
-	// 注册页面
+	//登录
 	@RequestMapping(value = "/doLogin", method = RequestMethod.POST)
 	public String doLogin(HttpSession session) {
 		session.setAttribute("user", "test");

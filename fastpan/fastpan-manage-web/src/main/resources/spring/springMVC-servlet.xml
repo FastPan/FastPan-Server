@@ -64,4 +64,5 @@
 		<property name="contentType" value="text/html"></property>
 	</bean>
 	<mvc:view-controller path="/" view-name="index"/>
+	<import resource="springMVC-interceptor.xml"/>
 </beans>
