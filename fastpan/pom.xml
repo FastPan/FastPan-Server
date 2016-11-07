@@ -352,7 +352,6 @@
     <module>fastpan-dao</module>
     <module>fastpan-service</module>
     <module>fastpan-web</module>
-    <module>fastpan-manage</module>
     <module>fastpan-manage-web</module>
     <module>fastpan-manage-service</module>
   </modules>
