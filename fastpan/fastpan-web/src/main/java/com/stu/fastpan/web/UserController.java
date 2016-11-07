@@ -1,5 +1,7 @@
 package com.stu.fastpan.web;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,12 +17,19 @@ public class UserController {
 	}
 
 	// 注册页面
+	@RequestMapping(value = "/doLogin", method = RequestMethod.POST)
+	public String doLogin(HttpSession session) {
+		session.setAttribute("user", "test");
+		return "redirect:/main/index";
+	}
+
+	// 注册页面
 	@RequestMapping("/register")
 	public String register() {
 		return "/pages/user/register.html";
 	}
 
-	// 注册页面
+	// 注册
 	@RequestMapping(value = "/doRegister", method = RequestMethod.POST)
 	public String doRegister() {
 		return "redirect:/main/index";
