@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="http://v3.bootcss.com/favicon.ico">
+<title>账户设置</title>
+<!-- Bootstrap core CSS -->
+<link href="../css/plug-in/bootstrap.min.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="../css/main/myPan.css" rel="stylesheet">
+<link href="../css/plug-in/style.css" rel="stylesheet">
+<link href="../css/plug-in/bootstrapValidator.min.css" rel="stylesheet" />
+<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<script src="../js/plug-in/ie-emulation-modes-warning.js"></script>
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+		<script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+<style>
+a:hover {
+	text-decoration: none;
+	cursor: hand;
+	cursor: pointer;
+}
+
+#table td:nth-child(1), #thead_show th:nth-child(1) {
+	width: 50%;
+}
+
+#table td:nth-child(2), #thead_show th:nth-child(2) {
+	width: 20%;
+}
+
+#table  td:nth-child(3), #thead_show th:nth-child(3) {
+	width: 10%;
+}
+
+#table  td:nth-child(4), #thead_show th:nth-child(4) {
+	width: 20%;
+}
+
+.blue {
+	color: #436EEE
+}
+
+.blue:hover {
+	color: #6495ED;
+	cursor: hand;
+	cursor: pointer;
+}
+
+.nav-sidebar li a span {
+	margin-left: 10px;
+}
+
+#table  td span {
+	margin-left: 10px;
+}
+
+._hide {
+	display: none;
+}
+/* 头像 */
+.head-img {
+	text-align: center;
+	margin-top: 50px;
+}
+
+.head-img img {
+	height: 100px;
+	width: 100px;
+	margin: 20px;
+	display: inline-block;
+}
+
+.text {
+	text-align: center;
+	font-family: inherit;
+	font-weight: 500;
+	line-height: 1.1;
+	color: inherit;
+	font-size: 20px;
+	font-family: inherit;
+	text-align: center;
+}
+
+.head-img-left {
+	
+}
+
+.line {
+	width: 1px;
+	height: 200px;
+	border: 1px solid #999;
+}
+
+.btn-img-submit {
+	width: 100px;
+	margin-top: 50px;
+	display: inline-block;
+}
+</style>
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div style="height: 100%;" class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span><span
+						class="icon-bar"></span><span class="icon-bar"></span><span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="../">极速网盘</a>
+			</div>
+		</div>
+	</nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div id="sidebar" class="col-sm-3 col-md-2 sidebar">
+				<ul id="left-sidebar" class="nav nav-sidebar">
+					<li class="active"><a id="head-img" href="#">个人头像</a></li>
+					<li><a id="myinfo" href="#">个人信息</a></li>
+					<li><a id="pass" href="#">密码修改</a></li>
+				</ul>
+			</div>
+			<div id="main-content"
+				class="col-sm-4 col-sm-offset-5 col-md-5 col-md-offset-4 main">
+				<div id="tab-head-img" class="row">
+					<div class="col-sm-12  col-md-8">
+						<div class="imageBox">
+							<div class="thumbBox"></div>
+							<div class="spinner" style="display: none">Loading...</div>
+						</div>
+						<div class="action">
+							<div class="new-contentarea tc">
+								<a href="javascript:void(0)" class="upload-img"> <label
+									for="upload-file">上传图像</label>
+								</a> <input type="file" class="" name="upload-file" id="upload-file" />
+							</div>
+							<input type="button" id="btnCrop" class="Btnsty_peyton"
+								value="裁切"> <input type="button" id="btnZoomIn"
+								class="Btnsty_peyton" value="+"> <input type="button"
+								id="btnZoomOut" class="Btnsty_peyton" value="-">
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-4">
+						<div class="cropped"></div>
+					</div>
+				</div>
+				<div id="tab-myinfo" class="_hide">
+					<h2 class="form-signin-heading" align="center">个人信息修改</h2>
+					<form class="form-signin" role="form" action="doRegister"
+						method="post">
+
+						<div class="form-group">
+							<input type="text" class="form-control" name="nickName"
+								placeholder="昵称" required="required" autofocus="autofocus"
+								value="">
+						</div>
+						<div class="form-group">
+							<input type="email" class="form-control" name="email"
+								placeholder="邮箱" required="required" value="">
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" name="verificationCode"
+								placeholder="验证码" required="required" value="">
+						</div>
+						<button class="btn btn-lg btn-primary btn-block" type="submit">修改信息</button>
+					</form>
+				</div>
+				<div id="tab-pass" class="_hide">
+					<h2 class="form-signin-heading" align="center">密码修改</h2>
+					<form class="form-signin" role="form" action="doRegister"
+						method="post">
+
+						<div class="form-group">
+							<input type="password" class="form-control" name="oldPassword"
+								placeholder="密码" required="required" value="">
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" name="password"
+								placeholder="密码" required="required" value="">
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" name="passwordAgain"
+								placeholder="确认密码" required="required" value="">
+						</div>
+						<button class="btn btn-lg btn-primary btn-block" type="submit">修改密码</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Bootstrap core JavaScript
+		================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="../js/plug-in/jquery.min.js"></script>
+	<script src="../js/plug-in/bootstrap.min.js"></script>
+	<script src="../js/plug-in/docs.min.js"></script>
+	<script src="../js/plug-in/cropbox.js"></script>
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script src="../js/plug-in/ie10-viewport-bug-workaround.js"></script>
+	<script src="../js/plug-in/bootstrapValidator.min.js"></script>
+	<script src="../js/user/accountInfo.js"></script>
+</body>
+
+</html>

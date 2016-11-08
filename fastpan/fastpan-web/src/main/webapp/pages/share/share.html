@@ -77,17 +77,14 @@ a:hover {
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="../user/accountInfo"><img
-							src='https://ss0.bdstatic.com/7Ls0a8Sm1A5BphGlnYG/sys/portrait/item/11ddd637.jpg'
-							style="height: 30px; width: 30px;" class="img-circle"></img>好聚不好散</a>
-					</li>
+					<li><a href="../main/index">我的网盘</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 	<div class="container-fluid">
 		<div class="row">
-			<div id="sidebar" class="col-sm-3 col-md-2 sidebar">
+			<!-- <div id="sidebar" class="col-sm-3 col-md-2 sidebar">
 				<ul id="left-sidebar" class="nav nav-sidebar">
 					<li class="active"><a href="#">全部文件</a></li>
 					<li><a class="glyphicon glyphicon-picture" href="#"><span>图片</span></a>
@@ -102,22 +99,15 @@ a:hover {
 					</li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li id="my-delete"><a class="glyphicon glyphicon-trash" href="#"><span>回收站</span></a>
-					<li id="my-share"><a href="#"><div class="batch">&#xF159;</div> <span>我的分享</span></a>
+					<li><a class="glyphicon glyphicon-trash" href="#"><span>回收站</span></a>
+					<li><a href="#"><div class="batch">&#xF159;</div> <span>我的分享</span></a>
 				</ul>
-			</div>
+			</div> -->
 			<div id="main-content"
-				class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				class="col-sm-9 col-sm-offset-2 col-md-10 col-md-offset-1 main">
 				<div id="table-head">
-					<button type="button" class="btn btn-primary">上传</button>
-					<button type="button" class="btn btn-default">新建文件夹</button>
-					<button type="button" class="btn btn-default">移动至</button>
-					<button type="button" class="btn btn-default">删除</button>
+					<button type="button" class="btn btn-primary">保存</button>
 					<button type="button" class="btn btn-default">下载</button>
-					<button type="button" class="btn btn-default">分享</button>
-					<form class="pull-right">
-						<input type="text" class="form-control" placeholder="搜索"/>
-					</form>
 				</div>
 				<table id="table-thead" class="table table-hover" style="margin: 0">
 					<thead>
@@ -214,7 +204,7 @@ a:hover {
 								<td>2016-05-12 12:15</td>
 							</tr>
 							<tr>
-								<td><input type="checkbox"><a>文件11</a></input></td>
+								<td><input type="checkbox"> <a>文件11</a></input></td>
 								<td></td>
 								<td>152.9M</td>
 								<td>2016-05-12 12:15</td>
@@ -294,6 +284,6 @@ a:hover {
 	<script src="../js/plug-in/docs.min.js"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="../js/plug-in/ie10-viewport-bug-workaround.js"></script>
-	<script src="../js/main/myPan.js"></script>
+	<script src="../js/share/share.js"></script>
 </body>
 </html>

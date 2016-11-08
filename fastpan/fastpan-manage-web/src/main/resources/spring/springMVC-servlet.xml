@@ -17,7 +17,7 @@
 	  http://www.springframework.org/schema/task/spring-task-4.0.xsd">
 
 	<mvc:annotation-driven />
-	<context:component-scan base-package="com.stu.fastpan.web" />
+	<context:component-scan base-package="com.stu.fastpan.manage.web" />
 
 	<bean id="mappingJacksonHttpMessageConverter"
 		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
@@ -63,8 +63,6 @@
 		<property name="prefix" value="/"></property>
 		<property name="contentType" value="text/html"></property>
 	</bean>
-	<mvc:view-controller path="/" view-name="index" />
-
- 
-	<import resource="springMVC-interceptor.xml" />
+	<mvc:view-controller path="/" view-name="index"/>
+	<import resource="springMVC-interceptor.xml"/>
 </beans>

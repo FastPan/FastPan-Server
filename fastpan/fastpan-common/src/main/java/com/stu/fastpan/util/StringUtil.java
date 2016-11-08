@@ -6,6 +6,8 @@ import java.io.StringWriter;
 import java.security.MessageDigest;
 import java.util.StringTokenizer;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -101,6 +103,7 @@ public final class StringUtil {
 	 * @param str
 	 * @return String
 	 */
+	@SuppressWarnings("restriction")
 	public static String encodeString(String str) {
 		sun.misc.BASE64Encoder encoder = new sun.misc.BASE64Encoder();
 		return encoder.encodeBuffer(str.getBytes()).trim();
@@ -121,8 +124,7 @@ public final class StringUtil {
 		return String.format(format, args);
 	}
 
-	public static StringBuilder formatNoBracket(String msgWithFormat,
-			Object... args) {
+	public static StringBuilder formatNoBracket(String msgWithFormat, Object... args) {
 		return formatStr(new StringBuilder(msgWithFormat), false, args);
 	}
 
@@ -136,8 +138,7 @@ public final class StringUtil {
 	 * @param args
 	 * @return
 	 */
-	private static StringBuilder formatStr(CharSequence msgWithFormat,
-			boolean autoQuote, Object... args) {
+	private static StringBuilder formatStr(CharSequence msgWithFormat, boolean autoQuote, Object... args) {
 		StringBuilder sb = new StringBuilder(msgWithFormat);
 		int argsLen = args.length;
 
@@ -157,8 +158,7 @@ public final class StringUtil {
 
 			if (args[argsLen - 1] instanceof Throwable) {
 				StringWriter sw = new StringWriter();
-				((Throwable) args[argsLen - 1])
-						.printStackTrace(new PrintWriter(sw));
+				((Throwable) args[argsLen - 1]).printStackTrace(new PrintWriter(sw));
 				sb.append("\n").append(sw.toString());
 			} else if (argsLen == 1 && !markFound) {
 				sb.append(args[argsLen - 1].toString());
@@ -175,8 +175,7 @@ public final class StringUtil {
 		if (value == null || value == "") {
 			return false;
 		} else {
-			return value
-					.matches("^[-+]?(([0-9]+)([.]([0-9]+))?|([.]([0-9]+))?)$");
+			return value.matches("^[-+]?(([0-9]+)([.]([0-9]+))?|([.]([0-9]+))?)$");
 		}
 	}
 
@@ -216,10 +215,8 @@ public final class StringUtil {
 				sb.append(obj.toString());
 			}
 		}
-		if (autoQuote
-				&& sb.length() > 0
-				&& !((sb.charAt(0) == '[' && sb.charAt(sb.length() - 1) == ']') || (sb
-						.charAt(0) == '{' && sb.charAt(sb.length() - 1) == '}'))) {
+		if (autoQuote && sb.length() > 0 && !((sb.charAt(0) == '[' && sb.charAt(sb.length() - 1) == ']')
+				|| (sb.charAt(0) == '{' && sb.charAt(sb.length() - 1) == '}'))) {
 			sb.insert(0, "[").append("]");
 		}
 		return sb.toString();
@@ -250,7 +247,7 @@ public final class StringUtil {
 		else
 			return false;
 	}
-	
+
 	public static boolean isNotEmpty(String s) {
 		return (!isEmpty(s));
 	}
@@ -439,5 +436,19 @@ public final class StringUtil {
 	}
 
 	private StringUtil() {
+	}
+	/**
+	 * 正则表达式匹配
+	 * @param str
+	 * @param regex
+	 * @return
+	 */
+	public static boolean regexMatches(String str, String regex) {
+		// 创建 Pattern 对象
+		Pattern r = Pattern.compile(regex);
+
+		// 现在创建 matcher 对象
+		Matcher m = r.matcher(str);
+		return m.matches();
 	}
 }
