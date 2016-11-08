@@ -8,7 +8,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * Bean工厂
  * 
  * @author weizhansong
- * @version Id: BeanFactory.java, v 0.1 2015/12/22 17:58 weizhansong Exp $$
+ * @version Id: BeanFactory.java, v 0.1
  */
 public final class BeanFactory {
     private static final String SPRING_FILE = "classpath:spring/spring-demo.xml";

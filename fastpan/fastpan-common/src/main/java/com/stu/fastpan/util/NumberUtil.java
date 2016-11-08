@@ -322,6 +322,7 @@ public class NumberUtil {
 		}
 		return mod;
 	}
+	
 	//获取随机数字字母组合 length为位数
 	public static String getRandomCharAndNumr(Integer length) {  
 	    String str = "";  

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
 /**
  * 配置信息加载类
- * @version Id: CustomPropertyPlaceholder.java, v 0.1 2015/12/22 17:58 
+ * @version Id: CustomPropertyPlaceholder.java
  */
 public class CustomPropertyPlaceholder extends PropertyPlaceholderConfigurer {
 	private static Logger log = LoggerFactory.getLogger(CustomPropertyPlaceholder.class);

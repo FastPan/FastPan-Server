@@ -12,25 +12,25 @@
             <property name="suppressAllComments" value="true"/>  
         </commentGenerator>  
         <!--数据库链接URL，用户名、密码 -->  
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/fastpan?&amp;useUnicode=true&amp;characterEncoding=utf8" userId="root" password="fastpan">  
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/fastpan?&amp;useUnicode=true&amp;characterEncoding=utf8" userId="root" password="root">  
         </jdbcConnection>  
         <javaTypeResolver>  
             <property name="forceBigDecimals" value="false"/>  
         </javaTypeResolver>  
         <!-- 生成模型的包名和位置-->
-        <javaModelGenerator targetPackage="com.stu.fastpan.dao.pojo.contact" targetProject="src\main\java">  
+        <javaModelGenerator targetPackage="com.stu.fastpan.dao.pojo.user" targetProject="src\main\java">  
             <property name="enableSubPackages" value="false"/>  
             <property name="trimStrings" value="false"/>  
         </javaModelGenerator>  
         <!-- 生成映射文件的包名和位置-->  
-        <sqlMapGenerator targetPackage="mybatis.sql.contact" targetProject="src\main\resources">  
+        <sqlMapGenerator targetPackage="mybatis.sql.user" targetProject="src\main\resources">  
             <property name="enableSubPackages" value="false"/>  
         </sqlMapGenerator>  
         <!-- 生成DAO的包名和位置-->  
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.stu.fastpan.dao.mapper.contact" targetProject="src\main\java">  
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.stu.fastpan.dao.mapper.user" targetProject="src\main\java">  
             <property name="enableSubPackages" value="false"/>  
         </javaClientGenerator>  
         <!-- 要生成哪些表-->
-		<table schema="contact" tableName="ctu_contact_us" domainObjectName="Contact" enableCountByExample="false"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false"></table> 
+		<table schema="fastpan" tableName="users" domainObjectName="User" enableCountByExample="false"  enableUpdateByExample="false" enableDeleteByExample="false"  enableSelectByExample="false" selectByExampleQueryId="false"></table> 
 	</context>  
 </generatorConfiguration>  
