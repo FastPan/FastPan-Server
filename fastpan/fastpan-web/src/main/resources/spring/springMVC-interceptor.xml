@@ -16,6 +16,7 @@
       	  http://www.springframework.org/schema/task
 	  http://www.springframework.org/schema/task/spring-task-4.0.xsd">
 
+
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
@@ -27,7 +28,8 @@
 						<value>/images/</value>
 						<value>/fonts/</value>
 						<value>/pages/</value>
-						
+
+
 						<!-- controller -->
 						<value>/</value>
 						<value>/index</value>
@@ -41,6 +43,5 @@
 		</mvc:interceptor>
 
 	</mvc:interceptors>
-
 
 </beans>
