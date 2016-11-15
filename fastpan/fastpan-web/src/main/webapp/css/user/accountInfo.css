@@ -1,0 +1,82 @@
+a:hover {
+	text-decoration: none;
+	cursor: hand;
+	cursor: pointer;
+}
+
+#table td:nth-child(1), #thead_show th:nth-child(1) {
+	width: 50%;
+}
+
+#table td:nth-child(2), #thead_show th:nth-child(2) {
+	width: 20%;
+}
+
+#table  td:nth-child(3), #thead_show th:nth-child(3) {
+	width: 10%;
+}
+
+#table  td:nth-child(4), #thead_show th:nth-child(4) {
+	width: 20%;
+}
+
+.blue {
+	color: #436EEE
+}
+
+.blue:hover {
+	color: #6495ED;
+	cursor: hand;
+	cursor: pointer;
+}
+
+.nav-sidebar li a span {
+	margin-left: 10px;
+}
+
+#table  td span {
+	margin-left: 10px;
+}
+
+._hide {
+	display: none;
+}
+/* 头像 */
+.head-img {
+	text-align: center;
+	margin-top: 50px;
+}
+
+.head-img img {
+	height: 100px;
+	width: 100px;
+	margin: 20px;
+	display: inline-block;
+}
+
+.text {
+	text-align: center;
+	font-family: inherit;
+	font-weight: 500;
+	line-height: 1.1;
+	color: inherit;
+	font-size: 20px;
+	font-family: inherit;
+	text-align: center;
+}
+
+.head-img-left {
+	
+}
+
+.line {
+	width: 1px;
+	height: 200px;
+	border: 1px solid #999;
+}
+
+.btn-img-submit {
+	width: 100px;
+	margin-top: 50px;
+	display: inline-block;
+}

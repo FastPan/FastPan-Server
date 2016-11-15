@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -87,8 +88,7 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping(value = "loginAccount", method = RequestMethod.POST)
-	public Object login(@RequestBody RequestMessage<User> info,
-			HttpSession session) {
+	public Object login(@RequestBody RequestMessage<User> info, HttpSession session) {
 
 		User user = info.getRequestContext();
 		System.out.println(user);
@@ -113,17 +113,23 @@ public class UserController {
 	/**
 	 * 发送图片验证码
 	 */
-
-	@RequestMapping(value = "pictureCode", method = RequestMethod.POST)
+	@RequestMapping(value = "pictureCode", method = RequestMethod.GET)
 	@ResponseBody
-	public void pictureCode(HttpServletRequest request,
-			HttpServletResponse response,
-			@RequestBody RequestMessage<PictureCode> info, HttpSession session)
-			throws ServletException, IOException {
-
-		PictureCode pictureCode = info.getRequestContext();
-		registerLoginFacade.sendPictureCode(request, response, pictureCode,
-				session);
+	public void pictureCode(HttpServletRequest request, HttpServletResponse response, PictureCode pictureCode,
+			HttpSession session) throws ServletException, IOException {
+		if (pictureCode == null) {
+			pictureCode = new PictureCode();
+			pictureCode.setHeight(30);
+			pictureCode.setWidth(120);
+		} else {
+			if (pictureCode.getHeight() == 0) {
+				pictureCode.setHeight(30);
+			}
+			if (pictureCode.getWidth() == 0) {
+				pictureCode.setWidth(120);
+			}
+		}
+		registerLoginFacade.sendPictureCode(request, response, pictureCode, session);
 	}
 
 	/**
@@ -132,23 +138,21 @@ public class UserController {
 
 	@RequestMapping(value = "testPictureCode", method = RequestMethod.POST)
 	@ResponseBody
-	public Object testPictureCode(HttpSession session,
-			@RequestBody RequestMessage<String> info) throws ServletException,
-			IOException {
+	public Object testPictureCode(HttpSession session, @RequestBody RequestMessage<String> info)
+			throws ServletException, IOException {
 		String str = info.getRequestContext();
 		Object obj = registerLoginFacade.testPictureCode(str, session);
 		return obj;
 	}
-	
+
 	/**
 	 * 合并验证码功能加强版登录
 	 */
 
 	@RequestMapping(value = "loginCode", method = RequestMethod.POST)
 	@ResponseBody
-	public Object loginCode(HttpSession session,
-			@RequestBody RequestMessage<UserCode> info) throws ServletException,
-			IOException {
+	public Object loginCode(HttpSession session, @RequestBody RequestMessage<UserCode> info)
+			throws ServletException, IOException {
 		UserCode userCode = info.getRequestContext();
 		Object obj = registerLoginFacade.loginCode(userCode, session);
 		return obj;

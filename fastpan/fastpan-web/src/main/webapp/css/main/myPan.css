@@ -5,9 +5,9 @@
 	font-family: Batch;
 	src: url('../../fonts/batch-icons-webfont.eot');
 	src: url('../../fonts/batch-icons-webfont.eot?#iefix')
-		format('embedded-opentype'), url('../../fonts/batch-icons-webfont.woff')
-		format('woff'), url('../../fonts/batch-icons-webfont.ttf')
-		format('truetype'),
+		format('embedded-opentype'),
+		url('../../fonts/batch-icons-webfont.woff') format('woff'),
+		url('../../fonts/batch-icons-webfont.ttf') format('truetype'),
 		url('../../fonts/batch-icons-webfont.svg#batchregular') format('svg');
 	font-weight: normal;
 	font-style: normal;
@@ -137,4 +137,44 @@ body {
 	font-size: 14px;
 	line-height: 1;
 	display: inline-block;
+}
+
+a:hover {
+	text-decoration: none;
+	cursor: hand;
+	cursor: pointer;
+}
+
+#table td:nth-child(1), #thead_show th:nth-child(1) {
+	width: 50%;
+}
+
+#table td:nth-child(2), #thead_show th:nth-child(2) {
+	width: 20%;
+}
+
+#table  td:nth-child(3), #thead_show th:nth-child(3) {
+	width: 10%;
+}
+
+#table  td:nth-child(4), #thead_show th:nth-child(4) {
+	width: 20%;
+}
+
+.blue {
+	color: #436EEE
+}
+
+.blue:hover {
+	color: #6495ED;
+	cursor: hand;
+	cursor: pointer;
+}
+
+.nav-sidebar li a span {
+	margin-left: 10px;
+}
+
+#table  td span {
+	margin-left: 10px;
 }
