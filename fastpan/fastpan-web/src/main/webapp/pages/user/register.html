@@ -17,7 +17,7 @@
 <link href="../css/plug-in/bootstrapValidator.min.css" rel="stylesheet" />
 <!-- Custom styles for this template -->
 <link href="../css/user/login.css" rel="stylesheet">
-
+<link href="../css/plug-in/bootstrap-dialog.min.css" rel="stylesheet">
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 <script src="../js/plug-in/ie-emulation-modes-warning.js"></script>
@@ -33,8 +33,7 @@
 
 	<div class="container">
 
-		<form class="form-signin" role="form" action="doRegister"
-			method="post">
+		<form class="form-signin" role="form">
 			<h2 class="form-signin-heading" align="center">请输入个人信息</h2>
 			<div class="form-group">
 				<input type="text" class="form-control" name="nickName"
@@ -48,7 +47,6 @@
 			<div class="form-group">
 				<input type="text" class="form-control" name="verificationCode"
 					placeholder="验证码" required="required" value="h2j3b4">
-				<!-- pattern="" -->
 			</div>
 			<div class="form-group">
 				<input type="password" class="form-control" name="password"
@@ -58,7 +56,8 @@
 				<input type="password" class="form-control" name="passwordAgain"
 					placeholder="确认密码" required="required" value="LZP@1994">
 			</div>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+			<button class="btn btn-lg btn-primary btn-block" type="submit"
+				onclick="register()">注册</button>
 		</form>
 
 	</div>
@@ -69,6 +68,8 @@
 	<script src="../js/plug-in/ie10-viewport-bug-workaround.js"></script>
 	<script src="../js/plug-in/jquery.min.js"></script>
 	<script src="../js/plug-in/bootstrap.min.js"></script>
+
+	<script src="../js/plug-in/bootstrap-dialog.min.js"></script>
 	<script src="../js/plug-in/bootstrapValidator.min.js"></script>
 	<script src="../js/user/register.js"></script>
 </body>
