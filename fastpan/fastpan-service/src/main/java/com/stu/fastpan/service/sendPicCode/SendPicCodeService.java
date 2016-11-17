@@ -33,8 +33,9 @@ implements SendPicCodeFacade{
 	}
 
 	@Override
-	public ResponseMessage testPictureCode(String code, HttpSession session) {
+	public ResponseMessage testPictureCode(String str, HttpSession session) {
 
+		String code = str.toUpperCase();
 		if (code.equals("")) {
 			log.info("入参失败");
 			return FAIL(1003, "业务参数错误");
@@ -58,7 +59,9 @@ implements SendPicCodeFacade{
 	}
 
 	@Override
-	public ResponseMessage testEmailCode(String code, HttpSession session) {
+	public ResponseMessage testEmailCode(String str, HttpSession session) {
+		
+		String code = str.toUpperCase();
 		
 		if (code.equals("")) {
 			log.info("入参失败");

@@ -28,8 +28,6 @@ public class User {
 
     private Date updateTime;
 
-    private Byte sex;
-
     public Long getUserId() {
         return userId;
     }
@@ -94,11 +92,4 @@ public class User {
         this.updateTime = updateTime;
     }
 
-    public Byte getSex() {
-        return sex;
-    }
-
-    public void setSex(Byte sex) {
-        this.sex = sex;
-    }
 }

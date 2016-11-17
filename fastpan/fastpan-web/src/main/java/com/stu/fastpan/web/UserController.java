@@ -183,5 +183,19 @@ public class UserController {
 		Object obj = registerLoginFacade.loginCode(userCode, session);
 		return obj;
 	}
+	
+	/**
+	 * 合并验证码功能加强版注册
+	 */
+
+	@RequestMapping(value = "registerCode", method = RequestMethod.POST)
+	@ResponseBody
+	public Object registerCode(HttpSession session,
+			@RequestBody RequestMessage<UserCode> info) throws ServletException,
+			IOException {
+		UserCode userCode = info.getRequestContext();
+		Object obj = registerLoginFacade.registerCode(userCode, session);
+		return obj;
+	}
 
 }
