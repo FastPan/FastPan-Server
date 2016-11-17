@@ -10,31 +10,35 @@
 <link rel="icon" href="http://v3.bootcss.com/favicon.ico">
 
 <title>登录</title>
-
 <!-- Bootstrap core CSS -->
-<link href="../css/plug-in/bootstrap.min.css" rel="stylesheet">
+<link href="../plug-in/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-<link href="../css/plug-in/bootstrapValidator.min.css" rel="stylesheet" />
+<link
+	href="../plug-in/bootstrapValidator/css/bootstrapValidator.min.css"
+	rel="stylesheet" />
 <!-- Custom styles for this template -->
 <link href="../css/user/login.css" rel="stylesheet">
 
+<link href="../plug-in/bootstrapDialog/css/bootstrap-dialog.min.css"
+	rel="stylesheet">
+
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-<script src="../js/plug-in/ie-emulation-modes-warning.js"></script>
+<script src="../plug-in/ie/js/ie-emulation-modes-warning.js"></script>
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
       <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 
 <body>
 
 	<div class="container">
 
-		<form class="form-signin" role="form" action="doLogin"
-			method="post">
+		<form class="form-signin" role="form">
 			<h2 class="form-signin-heading" align="center">登录</h2>
 			<div class="form-group">
 				<input type="email" class="form-control" name="email"
@@ -44,7 +48,8 @@
 				<input type="password" class="form-control" name="password"
 					placeholder="密码" required="required" value="LZP@1994">
 			</div>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+			<button class="btn btn-lg btn-primary btn-block" type="submit"
+				onclick="login()">登录</button>
 		</form>
 
 	</div>
@@ -52,10 +57,12 @@
 
 
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="../js/plug-in/ie10-viewport-bug-workaround.js"></script>
-	<script src="../js/plug-in/jquery.min.js"></script>
-	<script src="../js/plug-in/bootstrap.min.js"></script>
-	<script src="../js/plug-in/bootstrapValidator.min.js"></script>
+	<script src="../plug-in/ie/js/ie10-viewport-bug-workaround.js"></script>
+	<script src="../plug-in/jquery/js/jquery.min.js"></script>
+	<script src="../plug-in/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../plug-in/bootstrapDialog/js/bootstrap-dialog.min.js"></script>
+	<script
+		src="../plug-in/bootstrapValidator/js/bootstrapValidator.min.js"></script>
 	<script src="../js/user/login.js"></script>
 </body>
 </html>

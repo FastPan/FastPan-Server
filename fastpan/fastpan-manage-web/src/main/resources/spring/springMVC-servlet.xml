@@ -57,6 +57,7 @@
 	<mvc:resources mapping="/fonts/**" location="/fonts/" />
 	<mvc:resources mapping="/images/**" location="/images/" />
 	<mvc:resources mapping="/pages/**" location="/pages/" />
+	<mvc:resources mapping="/plug-in/**" location="/plug-in/" />
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="order" value="10"></property>

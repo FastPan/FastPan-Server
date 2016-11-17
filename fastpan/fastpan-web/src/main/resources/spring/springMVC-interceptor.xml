@@ -31,8 +31,11 @@
 
 
 						<!-- controller -->
+						<value>/</value>
+						<value>/index</value>
 						<value>/user/login</value>
-						<value>/user/doLogin</value>
+						<value>/user/pictureCode</value>
+						<value>/user/loginAccount</value>
 						<value>/user/register</value>
 						<value>/user/doRegister</value>
 					</list>

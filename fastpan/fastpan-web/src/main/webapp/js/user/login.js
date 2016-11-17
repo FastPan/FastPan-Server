@@ -1,4 +1,7 @@
 $(function() {
+	$('form').submit(function() {
+		return false;
+	});
 	$('form')
 			.bootstrapValidator(
 					{
@@ -38,3 +41,42 @@ $(function() {
 						}
 					});
 });
+function login() {
+	var email = $('form input[name="email"]').val();
+	var password = $('form input[name="password"]').val();
+	$.ajax({
+		url : 'loginAccount',
+		data : "{\"requestContext\":{\"email\":\"" + email
+				+ "\",\"password\":\"" + password + "\"}}",
+		type : 'post',
+		dataType : 'json',
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		success : function(data) {
+			BootstrapDialog.show({
+				title : "消息",
+				message : data.message,
+				onshown : function(dialog) {
+					setTimeout(function() {
+						$('button[type="submit"]').removeAttr("disabled");
+						dialog.close();
+					}, 1000);
+
+				}
+			});
+		},
+		error : function(error) {
+			BootstrapDialog.show({
+				title : "消息",
+				message : "登录失败,服务器出错了",
+				onshown : function(dialog) {
+					setTimeout(function() {
+						$('button[type="submit"]').removeAttr("disabled");
+						dialog.close();
+					}, 1000);
+				}
+			});
+		}
+	});
+}

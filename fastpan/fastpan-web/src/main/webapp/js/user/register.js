@@ -1,4 +1,7 @@
 $(function() {
+	$('form').submit(function() {
+		return false;
+	});
 	$('form')
 			.bootstrapValidator(
 					{
@@ -72,3 +75,45 @@ $(function() {
 						}
 					});
 });
+function register() {
+	var nickName=$('form input[name="nickName"]').val();
+	var email = $('form input[name="email"]').val();
+	var password = $('form input[name="password"]').val();
+	var verificationCode=$('form input[name="verificationCode"]').val();
+	BootstrapDialog.alert(verificationCode);
+	$.ajax({
+		url : 'register',
+		data : "{\"requestContext\":{\"email\":\"" + email
+				+ "\",\"password\":\"" + password + "\",\"nickName\":\"" + nickName + "\"}}",
+		type : 'post',
+		dataType : 'json',
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		success : function(data) {
+			BootstrapDialog.show({
+				title : "消息",
+				message : data.message,
+				onshown : function(dialog) {
+					setTimeout(function() {
+						$('button[type="submit"]').removeAttr("disabled");
+						dialog.close();
+					}, 1000);
+
+				}
+			});
+		},
+		error : function(error) {
+			BootstrapDialog.show({
+				title : "消息",
+				message : "注册失败,服务器出错了",
+				onshown : function(dialog) {
+					setTimeout(function() {
+						$('button[type="submit"]').removeAttr("disabled");
+						dialog.close();
+					}, 1000);
+				}
+			});
+		}
+	});
+}
