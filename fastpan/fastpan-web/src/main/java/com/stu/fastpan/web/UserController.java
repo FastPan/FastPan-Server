@@ -19,6 +19,7 @@ import com.stu.fastpan.dao.pojo.user.User;
 import com.stu.fastpan.dao.pojo.user.UserCode;
 import com.stu.fastpan.message.RequestMessage;
 import com.stu.fastpan.service.registerLogin.RegisterLoginFacade;
+import com.stu.fastpan.service.sendPicCode.SendPicCodeFacade;
 
 /**
  * 
@@ -34,6 +35,9 @@ public class UserController {
 
 	@Autowired
 	private RegisterLoginFacade registerLoginFacade;
+	
+	@Autowired
+	private SendPicCodeFacade sendPicCodeFacade;
 
 	// login页面
 	@RequestMapping("login")
@@ -102,11 +106,11 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping(value = "sendEmail", method = RequestMethod.POST)
-	public Object sendEmail(@RequestBody RequestMessage<String> info) {
+	public Object sendEmail(@RequestBody RequestMessage<String> info,HttpSession session) {
 
 		String email = info.getRequestContext();
 		System.out.println(email);
-		Object obj = registerLoginFacade.sendEmail(email);
+		Object obj = registerLoginFacade.sendEmail(email,session);
 		return obj;
 	}
 
@@ -114,20 +118,32 @@ public class UserController {
 	 * 发送图片验证码
 	 */
 
-	@RequestMapping(value = "pictureCode", method = RequestMethod.POST)
+	@RequestMapping(value = "pictureCode", method = RequestMethod.GET)
 	@ResponseBody
 	public void pictureCode(HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestBody RequestMessage<PictureCode> info, HttpSession session)
+			PictureCode pictureCode, HttpSession session)
 			throws ServletException, IOException {
 
-		PictureCode pictureCode = info.getRequestContext();
-		registerLoginFacade.sendPictureCode(request, response, pictureCode,
+		if (pictureCode == null) {
+			pictureCode = new PictureCode();
+			pictureCode.setHeight(30);
+			pictureCode.setWidth(120);
+		} else {
+			if (pictureCode.getHeight() == 0) {
+				pictureCode.setHeight(30);
+			}
+			if (pictureCode.getWidth() == 0) {
+				pictureCode.setWidth(120);
+			}
+		}
+		
+		sendPicCodeFacade.sendPictureCode(request, response, pictureCode,
 				session);
 	}
-
+	
 	/**
-	 * 验证码验证功能
+	 * 图片验证码验证功能
 	 */
 
 	@RequestMapping(value = "testPictureCode", method = RequestMethod.POST)
@@ -136,7 +152,21 @@ public class UserController {
 			@RequestBody RequestMessage<String> info) throws ServletException,
 			IOException {
 		String str = info.getRequestContext();
-		Object obj = registerLoginFacade.testPictureCode(str, session);
+		Object obj = sendPicCodeFacade.testPictureCode(str, session);
+		return obj;
+	}
+	
+	/**
+	 * 邮件验证码验证功能
+	 */
+
+	@RequestMapping(value = "testEmailCode", method = RequestMethod.POST)
+	@ResponseBody
+	public Object testEmailCode(HttpSession session,
+			@RequestBody RequestMessage<String> info) throws ServletException,
+			IOException {
+		String str = info.getRequestContext();
+		Object obj = sendPicCodeFacade.testEmailCode(str, session);
 		return obj;
 	}
 	

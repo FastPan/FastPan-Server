@@ -85,12 +85,12 @@ public final class VerificationCodeUtil
                 BufferedImage.TYPE_INT_RGB);
         
         Graphics2D g = bi.createGraphics();
-        g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, (int) (height*0.7-1)));
         
         g.setColor(color);
         g.fillRect(0, 0, width, height);
         g.setColor(reverse);
-        g.drawString(randomString, 18, 20);
+        g.drawString(randomString, 5, 25);
         
         for (int i = 0, n = random.nextInt(100); i < n; i++) 
         {
