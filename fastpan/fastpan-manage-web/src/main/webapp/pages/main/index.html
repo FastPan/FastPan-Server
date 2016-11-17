@@ -5,20 +5,32 @@
 <title>极速网盘管理页面</title>
 <link rel="stylesheet" type="text/css"
 	href="../plug-in/easy-ui/themes/default/easyui.css">
-<link rel="stylesheet" type="text/css" href="../plug-in/easy-ui/themes/icon.css">
+<link rel="stylesheet" type="text/css"
+	href="../plug-in/easy-ui/themes/icon.css">
 <link rel="stylesheet" type="text/css" href="../css/main/index.css">
 <script type="text/javascript" src="../plug-in/jquery/js/jquery.min.js"></script>
-<script type="text/javascript" src="../plug-in/easy-ui/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="../plug-in/easy-ui/jquery.easyui.min.js"></script>
 </head>
 <body class="easyui-layout">
 	<div data-options="region:'north',border:false"
-		style="height: 60px; background: #B3DFDA; padding: 5px"><h1>极速网盘管理页面</h1></div>
+		style="height: 80px; background: #B3DFDA; padding: 5px">
+		<h1>极速网盘管理页面</h1>
+	</div>
 	<div data-options="region:'west',split:true" title="菜单"
 		style="width: 150px;">
 		<div class="easyui-accordion" data-options="fit:true,border:false">
-			<div title="用户管理" style="padding: 10px;">content1</div>
-			<div title="文件管理" data-options="selected:true"
-				style="padding: 10px;">content2</div>
+			<ul class="easyui-datalist" title="用户管理" lines="true">
+				<li value="UM">普通用户管理</li>
+				<li value="AUM">管理员用户管理</li>
+			</ul>
+			<ul class="easyui-datalist" title="文件管理" lines="true">
+				<li value="UNFM">未审核文件管理</li>
+				<li value="FM">禁用文件管理</li>
+			</ul>
+			<ul class="easyui-datalist" title="权限管理" lines="true">
+				<li value="UNFM">权限管理</li>
+			</ul>
 		</div>
 	</div>
 	<!-- <div
@@ -26,6 +38,9 @@
 		style="width: 100px; padding: 10px;">east region</div> -->
 	<div data-options="region:'south',border:false"
 		style="height: 50px; background: #A9FACD; padding: 10px;">底部待定</div>
-	<div data-options="region:'center',title:' '"></div>
+	<div data-options="region:'center'" class="easyui-tabs">
+		<div title="test" data-options="closable:true"
+			style="padding: 10px">测试页面</div>
+	</div>
 </body>
 </html>

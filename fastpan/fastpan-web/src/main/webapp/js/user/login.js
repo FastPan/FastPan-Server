@@ -37,6 +37,17 @@ $(function() {
 										message : '请输入8-16位,包含数字,字母及以下符号其中之一的密码：~!@#$%^&*'
 									}
 								}
+							},
+							verificationCode : {
+								validators : {
+									notEmpty : {
+										message : '验证码不能为空'
+									},
+									regexp : {
+										regexp : /^[a-zA-Z0-9]{6}$/,
+										message : '请输入6位由数字和字母组成的验证码'
+									}
+								}
 							}
 						}
 					});

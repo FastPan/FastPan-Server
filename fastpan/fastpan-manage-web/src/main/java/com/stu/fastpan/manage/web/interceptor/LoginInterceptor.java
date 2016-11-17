@@ -32,12 +32,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String requestUri = request.getRequestURI();
-		log.info(requestUri);
+	//	log.info(requestUri);
 		String contextPath = request.getContextPath();
-		log.info(contextPath);
+	//	log.info(contextPath);
 		String url = requestUri.substring(contextPath.length());
 
-		log.info("url:" + url);
+		//log.info("url:" + url);
 		uncheckUrls.contains(url);
 		boolean flag = false;
 		for (String string : uncheckUrls) {

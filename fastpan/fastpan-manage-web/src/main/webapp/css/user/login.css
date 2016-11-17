@@ -38,3 +38,17 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.code input {
+	width: 50%;
+	display: inline;
+}
+.email input{
+	width:65%;
+	display: inline;
+}
+.email button{
+	font-size:10px;
+	width:32%;
+	display: inline;
+}
