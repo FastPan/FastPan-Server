@@ -181,6 +181,7 @@ public class UserController {
 			IOException {
 		UserCode userCode = info.getRequestContext();
 		Object obj = registerLoginFacade.loginCode(userCode, session);
+		
 		return obj;
 	}
 	

@@ -4,92 +4,99 @@ import java.util.Date;
 
 /**
  * 
- * Description:用户表 
- *             用于用户的返回值的实体类
+ * Description:用户表 用于用户的返回值的实体类
+ * 
  * @date 创建时间： 2016年10月31日
  * @version 1.0
  */
 
 public class User {
-	
-    private Long userId;
 
-    private String email;
+	private Long userId;
 
-    private String password;
+	private String email;
 
-    private String nickName;
+	private String password;
 
-    private Byte roleId;
+	private String nickName;
 
-    private Date createTime;
+	private Byte roleId;
 
-    private Date lastLoginTime;
+	private Date createTime;
 
-    private Date updateTime;
+	private Date lastLoginTime;
 
-    public Long getUserId() {
-        return userId;
-    }
+	private Date updateTime;
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+	public Long getUserId() {
+		return userId;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public String getNickName() {
-        return nickName;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
+	public String getNickName() {
+		return nickName;
+	}
 
-    public Byte getRoleId() {
-        return roleId;
-    }
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
 
-    public void setRoleId(Byte roleId) {
-        this.roleId = roleId;
-    }
+	public Byte getRoleId() {
+		return roleId;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public void setRoleId(Byte roleId) {
+		this.roleId = roleId;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public Date getLastLoginTime() {
-        return lastLoginTime;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public void setLastLoginTime(Date lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
-    }
+	public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", email=" + email + ", password=" + password + ", nickName=" + nickName
+				+ ", roleId=" + roleId + ", createTime=" + createTime + ", lastLoginTime=" + lastLoginTime
+				+ ", updateTime=" + updateTime + "]";
+	}
 
 }

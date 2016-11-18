@@ -200,8 +200,8 @@ public class RegisterLoginService extends ResponseMeService<User, Long>
 	@Override
 	public Object registerCode(UserCode userCode, HttpSession session){
 		User user = new User();
-		sendPicCodeService.testPictureCode(userCode.getCode(), session);
-		if (sendPicCodeService.testPictureCode(userCode.getCode(), session).isSuccess()) {
+		sendPicCodeService.testEmailCode(userCode.getCode(), session);
+		if (sendPicCodeService.testEmailCode(userCode.getCode(), session).isSuccess()) {
 
 			user.setEmail(userCode.getEmail());
 			user.setPassword(userCode.getPassword());

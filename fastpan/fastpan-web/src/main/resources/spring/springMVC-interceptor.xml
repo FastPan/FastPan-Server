@@ -23,20 +23,24 @@
 			<bean class="com.stu.fastpan.web.interceptor.LoginInterceptor">
 				<property name="uncheckUrls">
 					<list>
-						<value>/js/</value>
-						<value>/css/</value>
-						<value>/images/</value>
-						<value>/fonts/</value>
-						<value>/pages/</value>
+						<value>/js/*</value>
+						<value>/css/*</value>
+						<value>/images/*</value>
+						<value>/fonts/*</value>
+						<value>/pages/*</value>
+						<value>/plug-in/*</value>
 
 
 						<!-- controller -->
 						<value>/</value>
 						<value>/index</value>
 						<value>/user/login</value>
+						<value>/user/loginCode</value>
 						<value>/user/pictureCode</value>
+						<value>/user/sendEmail</value>
 						<value>/user/loginAccount</value>
 						<value>/user/register</value>
+						<value>/user/registerCode</value>
 						<value>/user/doRegister</value>
 					</list>
 				</property>

@@ -1,3 +1,4 @@
+submit = 0;
 $(function() {
 	$('form').submit(function() {
 		return false;
@@ -51,37 +52,49 @@ $(function() {
 							}
 						}
 					});
-	$('#pictureCode').click(function(){
-		$('#pictureCode').attr('src','./pictureCode?'+new Date().getTime());
+	$('#pictureCode').click(function() {
+		$('#pictureCode').attr('src', './pictureCode?' + new Date().getTime());
 	});
 });
 function login() {
+	if (submit == 1) {
+		return;
+	}
+	submit++;
 	var email = $('form input[name="email"]').val();
 	var password = $('form input[name="password"]').val();
 	var code = $('form input[name="code"]').val();
 	$.ajax({
 		url : 'loginCode',
 		data : "{\"requestContext\":{\"email\":\"" + email
-				+ "\",\"password\":\"" + password + "\",\"code\":\"" + code + "\"}}",
+				+ "\",\"password\":\"" + password + "\",\"code\":\"" + code
+				+ "\"}}",
 		type : 'post',
 		dataType : 'json',
 		headers : {
 			"Content-Type" : "application/json"
 		},
 		success : function(data) {
+			submit--;
+			//alert(JSON.stringify(data));
+			var message = data.success ? '登录成功' : data.message;
 			BootstrapDialog.show({
 				title : "消息",
-				message : data.message,
+				message : message,
 				onshown : function(dialog) {
 					setTimeout(function() {
 						$('button[type="submit"]').removeAttr("disabled");
 						dialog.close();
+						if (data.success) {
+							window.location.href = "../main/index";
+						}
 					}, 1000);
 
 				}
 			});
 		},
 		error : function(error) {
+			submit--;
 			BootstrapDialog.show({
 				title : "消息",
 				message : "登录失败,服务器出错了",

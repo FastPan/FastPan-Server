@@ -91,7 +91,7 @@ function getCode() {
 			"Content-Type" : "application/json"
 		},
 		success : function(data) {
-			var message=data.success?'验证码发送成功':data.message;
+			var message = data.success ? '验证码发送成功' : data.message;
 			BootstrapDialog.show({
 				title : "消息",
 				message : message,
@@ -129,23 +129,27 @@ function register() {
 	var password = $('form input[name="password"]').val();
 	var code = $('form input[name="code"]').val();
 	$.ajax({
-		url : 'register',
+		url : 'registerCode',
 		data : "{\"requestContext\":{\"email\":\"" + email
 				+ "\",\"password\":\"" + password + "\",\"nickName\":\""
-				+ nickName + "\"}}",
+				+ nickName + "\",\"code\":\"" + code + "\"}}",
 		type : 'post',
 		dataType : 'json',
 		headers : {
 			"Content-Type" : "application/json"
 		},
 		success : function(data) {
+			var message = data.success ? '注册成功' : data.message;
 			BootstrapDialog.show({
 				title : "消息",
-				message : data.message,
+				message : message,
 				onshown : function(dialog) {
 					setTimeout(function() {
 						$('button[type="submit"]').removeAttr("disabled");
 						dialog.close();
+						if (data.success) {
+							window.location.href = "../main/index";
+						}
 					}, 1000);
 
 				}

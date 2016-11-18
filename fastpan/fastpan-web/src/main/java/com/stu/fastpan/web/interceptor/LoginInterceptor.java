@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.stu.fastpan.util.StringUtil;
+import com.stu.fastpan.dao.pojo.user.User;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	private final Logger log = LoggerFactory.getLogger(LoginInterceptor.class);
@@ -32,27 +32,35 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String requestUri = request.getRequestURI();
-		//log.info(requestUri);
+		// log.info(requestUri);
 		String contextPath = request.getContextPath();
-	//	log.info(contextPath);
+		// log.info(contextPath);
 		String url = requestUri.substring(contextPath.length());
 
 		//log.info("url:" + url);
 		uncheckUrls.contains(url);
 		boolean flag = false;
 		for (String string : uncheckUrls) {
-			if (url.startsWith(string)) {
-				flag = true;
-				break;
+			if (string.endsWith("*")) {
+				if (url.startsWith(string.substring(0, string.length()-2))) {
+					flag = true;
+					break;
+				}
+			} else {
+				if (string.equals(url)) {
+					flag = true;
+					break;
+				}
 			}
 		}
 		if (flag) {
+			//log.info(url + "在拦截列表外");
 			return true;
 		} else {
-			String username = (String) request.getSession().getAttribute("user");
-			if (username == null) {
-				log.info(this.getClass().getSimpleName() + "：此url被拦截,跳转到login页面！");
-				response.sendRedirect(contextPath+"/user/login");
+			User user = (User) request.getSession().getAttribute("user");
+			if (user == null) {
+				log.info(this.getClass().getSimpleName() + "：此url("+url+")被拦截,跳转到login页面！");
+				response.sendRedirect(contextPath + "/user/login");
 				return false;
 			} else
 				return true;
