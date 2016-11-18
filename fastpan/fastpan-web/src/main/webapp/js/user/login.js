@@ -38,7 +38,7 @@ $(function() {
 									}
 								}
 							},
-							verificationCode : {
+							code : {
 								validators : {
 									notEmpty : {
 										message : '验证码不能为空'
@@ -51,14 +51,18 @@ $(function() {
 							}
 						}
 					});
+	$('#pictureCode').click(function(){
+		$('#pictureCode').attr('src','./pictureCode?'+new Date().getTime());
+	});
 });
 function login() {
 	var email = $('form input[name="email"]').val();
 	var password = $('form input[name="password"]').val();
+	var code = $('form input[name="code"]').val();
 	$.ajax({
-		url : 'loginAccount',
+		url : 'loginCode',
 		data : "{\"requestContext\":{\"email\":\"" + email
-				+ "\",\"password\":\"" + password + "\"}}",
+				+ "\",\"password\":\"" + password + "\",\"code\":\"" + code + "\"}}",
 		type : 'post',
 		dataType : 'json',
 		headers : {

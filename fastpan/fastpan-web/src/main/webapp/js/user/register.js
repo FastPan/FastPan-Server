@@ -39,7 +39,7 @@ $(function() {
 									}
 								}
 							},
-							verificationCode : {
+							code : {
 								validators : {
 									notEmpty : {
 										message : '验证码不能为空'
@@ -75,16 +75,64 @@ $(function() {
 						}
 					});
 });
+/**
+ * 获取验证码
+ * 
+ * @returns
+ */
+function getCode() {
+	var email = $('form input[name="email"]').val();
+	$.ajax({
+		url : 'sendEmail',
+		data : "{\"requestContext\":\"" + email + "\"}",
+		type : 'post',
+		dataType : 'json',
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		success : function(data) {
+			var message=data.success?'验证码发送成功':data.message;
+			BootstrapDialog.show({
+				title : "消息",
+				message : message,
+				onshown : function(dialog) {
+					setTimeout(function() {
+						$('button[type="submit"]').removeAttr("disabled");
+						dialog.close();
+					}, 1000);
+
+				}
+			});
+		},
+		error : function(error) {
+			BootstrapDialog.show({
+				title : "消息",
+				message : "验证码发送失败,服务器出错了",
+				onshown : function(dialog) {
+					setTimeout(function() {
+						$('button[type="submit"]').removeAttr("disabled");
+						dialog.close();
+					}, 1000);
+				}
+			});
+		}
+	});
+}
+/**
+ * 注册
+ * 
+ * @returns
+ */
 function register() {
-	var nickName=$('form input[name="nickName"]').val();
+	var nickName = $('form input[name="nickName"]').val();
 	var email = $('form input[name="email"]').val();
 	var password = $('form input[name="password"]').val();
-	var verificationCode=$('form input[name="verificationCode"]').val();
-	BootstrapDialog.alert(verificationCode);
+	var code = $('form input[name="code"]').val();
 	$.ajax({
 		url : 'register',
 		data : "{\"requestContext\":{\"email\":\"" + email
-				+ "\",\"password\":\"" + password + "\",\"nickName\":\"" + nickName + "\"}}",
+				+ "\",\"password\":\"" + password + "\",\"nickName\":\""
+				+ nickName + "\"}}",
 		type : 'post',
 		dataType : 'json',
 		headers : {

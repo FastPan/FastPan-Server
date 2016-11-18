@@ -127,14 +127,14 @@ public class UserController {
 
 		if (pictureCode == null) {
 			pictureCode = new PictureCode();
-			pictureCode.setHeight(30);
-			pictureCode.setWidth(120);
+			pictureCode.setHeight(40);
+			pictureCode.setWidth(140);
 		} else {
 			if (pictureCode.getHeight() == 0) {
-				pictureCode.setHeight(30);
+				pictureCode.setHeight(40);
 			}
 			if (pictureCode.getWidth() == 0) {
-				pictureCode.setWidth(120);
+				pictureCode.setWidth(140);
 			}
 		}
 		
