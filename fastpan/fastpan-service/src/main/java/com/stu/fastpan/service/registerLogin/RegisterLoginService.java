@@ -1,21 +1,16 @@
 package com.stu.fastpan.service.registerLogin;
 
 import java.io.InputStream;
-import java.util.Iterator;
 import java.util.Properties;
-
 import io.jstack.sendcloud4j.SendCloud;
 import io.jstack.sendcloud4j.mail.Email;
 import io.jstack.sendcloud4j.mail.Result;
 import io.jstack.sendcloud4j.mail.Substitution;
-
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.stu.fastpan.dao.mapper.user.UserMapper;
 import com.stu.fastpan.dao.pojo.user.User;
 import com.stu.fastpan.dao.pojo.user.UserCode;
@@ -192,6 +187,26 @@ public class RegisterLoginService extends ResponseMeService<User, Long>
 			user.setEmail(userCode.getEmail());
 			user.setPassword(userCode.getPassword());
 			return login(user, session);
+		}else{
+			return FAIL(1005, "验证码错误");
+		}
+		
+	}
+	
+	/**
+	 * 加强版注册和验证码一起
+	 */
+	
+	@Override
+	public Object registerCode(UserCode userCode, HttpSession session){
+		User user = new User();
+		sendPicCodeService.testPictureCode(userCode.getCode(), session);
+		if (sendPicCodeService.testPictureCode(userCode.getCode(), session).isSuccess()) {
+
+			user.setEmail(userCode.getEmail());
+			user.setPassword(userCode.getPassword());
+			user.setNickName(userCode.getNickName());
+			return register(user);
 		}else{
 			return FAIL(1005, "验证码错误");
 		}

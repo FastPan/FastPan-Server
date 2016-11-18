@@ -27,8 +27,6 @@ public class UserCode extends TestCode{
 
     private Date updateTime;
 
-    private Byte sex;
-
     public Long getUserId() {
         return userId;
     }
@@ -93,11 +91,4 @@ public class UserCode extends TestCode{
         this.updateTime = updateTime;
     }
 
-    public Byte getSex() {
-        return sex;
-    }
-
-    public void setSex(Byte sex) {
-        this.sex = sex;
-    }
 }

@@ -10,11 +10,9 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="sex" property="sex" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    user_id, email, password, nick_name, role_id, create_time, last_login_time, update_time, 
-    sex
+    user_id, email, password, nick_name, role_id, create_time, last_login_time, update_time
   </sql>
   
   <!-- 根据账号查询所有数据 -->
@@ -43,11 +41,11 @@
   <insert id="insert" parameterType="com.stu.fastpan.dao.pojo.user.User" >
     insert into users (user_id, email, password, 
       nick_name, role_id, create_time, 
-      last_login_time, update_time, sex
+      last_login_time, update_time
       )
     values (#{userId,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{nickName,jdbcType=VARCHAR}, #{roleId,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{lastLoginTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{sex,jdbcType=TINYINT}
+      #{lastLoginTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
   
@@ -76,10 +74,7 @@
         last_login_time,
       </if>
       <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="sex != null" >
-        sex,
+        update_time
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -105,10 +100,7 @@
         #{lastLoginTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="sex != null" >
-        #{sex,jdbcType=TINYINT},
+        #{updateTime,jdbcType=TIMESTAMP}
       </if>
     </trim>
   </insert>
@@ -135,10 +127,7 @@
         last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="sex != null" >
-        sex = #{sex,jdbcType=TINYINT},
+        update_time = #{updateTime,jdbcType=TIMESTAMP}
       </if>
     </set>
     where user_id = #{userId,jdbcType=BIGINT}
@@ -152,8 +141,7 @@
       role_id = #{roleId,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      sex = #{sex,jdbcType=TINYINT}
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
   
