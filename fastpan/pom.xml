@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.stu</groupId>
 	<artifactId>fastpan</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
+		<java.home>D:\Program Files (x86)\Java\jdk1.7.0_04</java.home>
 		<java.version>1.7</java.version>
 		<org.springframework.version>4.0.3.RELEASE</org.springframework.version>
 		<lombok.version>1.16.4</lombok.version>
@@ -285,17 +287,10 @@
 				<version>${commons-logging.version}</version>
 				<scope>compile</scope>
 			</dependency>
-	<!--		<dependency>
-				<groupId>net.sf.json-lib</groupId>
-				<artifactId>json-lib</artifactId>
-				<version>${json-lib.version}</version>
-				<classifier>jdk15</classifier>
-			</dependency>
- 			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>fastjson</artifactId>
-				<version>1.2.6</version>
-			</dependency> -->
+			<!-- <dependency> <groupId>net.sf.json-lib</groupId> <artifactId>json-lib</artifactId> 
+				<version>${json-lib.version}</version> <classifier>jdk15</classifier> </dependency> 
+				<dependency> <groupId>com.alibaba</groupId> <artifactId>fastjson</artifactId> 
+				<version>1.2.6</version> </dependency> -->
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>servlet-api</artifactId>
@@ -328,6 +323,10 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 					<encoding>UTF-8</encoding>
+					<compilerArguments>
+						<verbose />
+						<bootclasspath>${java.home}\jre\lib\rt.jar;${java.home}\jre\lib\jce.jar</bootclasspath>
+					</compilerArguments>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -347,12 +346,12 @@
 			</plugin>
 		</plugins>
 	</build>
-  <modules>
-    <module>fastpan-common</module>
-    <module>fastpan-dao</module>
-    <module>fastpan-service</module>
-    <module>fastpan-web</module>
-    <module>fastpan-manage-web</module>
-    <module>fastpan-manage-service</module>
-  </modules>
+	<modules>
+		<module>fastpan-common</module>
+		<module>fastpan-dao</module>
+		<module>fastpan-service</module>
+		<module>fastpan-web</module>
+		<module>fastpan-manage-web</module>
+		<module>fastpan-manage-service</module>
+	</modules>
 </project>
