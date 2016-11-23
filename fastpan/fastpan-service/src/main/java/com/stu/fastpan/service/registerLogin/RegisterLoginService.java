@@ -1,16 +1,15 @@
 package com.stu.fastpan.service.registerLogin;
 
-import java.io.InputStream;
-import java.util.Properties;
-import io.jstack.sendcloud4j.SendCloud;
-import io.jstack.sendcloud4j.mail.Email;
-import io.jstack.sendcloud4j.mail.Result;
-import io.jstack.sendcloud4j.mail.Substitution;
+
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.stu.fastpan.dao.mapper.user.UserMapper;
 import com.stu.fastpan.dao.pojo.user.User;
 import com.stu.fastpan.dao.pojo.user.UserCode;
@@ -18,7 +17,6 @@ import com.stu.fastpan.message.ResponseMessage;
 import com.stu.fastpan.service.base.ResponseMeService;
 import com.stu.fastpan.service.sendPicCode.SendPicCodeService;
 import com.stu.fastpan.util.MD5;
-import com.stu.fastpan.util.NumberUtil;
 
 @Service
 public class RegisterLoginService extends ResponseMeService<User, Long>
@@ -28,16 +26,16 @@ public class RegisterLoginService extends ResponseMeService<User, Long>
 
 	@Autowired
 	private UserMapper usermapper;
-	
+
 	@Autowired
 	private SendPicCodeService sendPicCodeService;
 
 	/**
-	 * 注册功能
+	 * 注册功能 暂时不用了
 	 */
 
 	@Override
-	public ResponseMessage register(User user) {
+	public ResponseMessage register(User user, HttpSession session) {
 
 		// 进行密码加密
 		String password = user.getPassword();
@@ -56,12 +54,14 @@ public class RegisterLoginService extends ResponseMeService<User, Long>
 			return FAIL(1001, "添加失败");
 		} else {
 			log.info("注册成功");
+			user.setPassword(password);
+			session.setAttribute("user", user);
 			return SUCCESS(result);
 		}
 	}
 
 	/**
-	 * 登录功能
+	 * 登录功能 暂时不用了
 	 */
 
 	@Override
@@ -88,7 +88,14 @@ public class RegisterLoginService extends ResponseMeService<User, Long>
 				log.info("登录成功");
 				// 将登陆返回的值放入session中
 				session.setAttribute("user", user);
-				return SUCCESS(user);
+				
+				User userTime = new User();
+	
+				Date date = new Date();			
+				userTime.setUserId(user.getUserId());
+				userTime.setLastLoginTime(date);
+				usermapper.updateByPrimaryKeySelective(userTime);
+				return SUCCESS("登录成功");
 			} else {
 				log.info("登录失败");
 				return FAIL(1002, "密码错误");
@@ -127,90 +134,48 @@ public class RegisterLoginService extends ResponseMeService<User, Long>
 	}
 
 	/**
-	 * 发送邮件功能
-	 */
-
-	@Override
-	public Object sendEmail(String email1,HttpSession session) {
-
-		Properties prop = new Properties();
-		try{
-
-		InputStream in = RegisterLoginService.class.getClassLoader().getResourceAsStream("email.properties"); 
-		prop.load(in);     //加载属性列表
-//		Iterator<String> it=prop.stringPropertyNames().iterator();
-//		while(it.hasNext()){
-//		        String key=it.next();
-//		        System.out.println(key+":"+prop.getProperty(key));
-//		       }
-//		in.close();
-		}catch(Exception e){
-			System.out.println(e);
-		}
-		
-		String number = NumberUtil.getRandomCharAndNumr(6);
-		String apiUser = prop.getProperty("apiUser");
-		String apiKey = prop.getProperty("apiKey");
-		String templateInvokeName = prop.getProperty("templateInvokeName");
-		String from = prop.getProperty("from");
-		String fromname = prop.getProperty("fromname");
-		SendCloud webapi = SendCloud.createWebApi(apiUser, apiKey);
-
-		@SuppressWarnings("rawtypes")
-		Email email = Email.template(templateInvokeName)
-				.from(from).fromName(fromname)
-				.substitutionVars(Substitution.sub() // 模板变量替换
-						.set("email", email1).set("number", number)).to(email1);
-
-		Result result = webapi.mail().send(email);
-
-		// System.out.println(result.getStatusCode());
-
-		if (result.isSuccess()) {
-			session.setAttribute("EmailCode",number);
-			return SUCCESS();
-		} else {
-			return FAIL(result.getStatusCode(), result.getMessage());
-		}
-	}
-
-	/**
 	 * 加强版登录和验证码一起
+	 * 和图片验证码一起
 	 */
 
 	@Override
-	public Object loginCode(UserCode userCode, HttpSession session) {
+	public ResponseMessage loginCode(UserCode userCode, HttpSession session) {
 		User user = new User();
 		sendPicCodeService.testPictureCode(userCode.getCode(), session);
-		if (sendPicCodeService.testPictureCode(userCode.getCode(), session).isSuccess()) {
+		if (sendPicCodeService.testPictureCode(userCode.getCode(), session)
+				.isSuccess()) {
 
 			user.setEmail(userCode.getEmail());
 			user.setPassword(userCode.getPassword());
 			return login(user, session);
-		}else{
+		} else {
 			return FAIL(1005, "验证码错误");
 		}
-		
+
 	}
-	
+
 	/**
 	 * 加强版注册和验证码一起
+	 * 和邮件验证码一起
 	 */
-	
+
 	@Override
-	public Object registerCode(UserCode userCode, HttpSession session){
+	public ResponseMessage registerCode(UserCode userCode, HttpSession session) {
 		User user = new User();
+
 		sendPicCodeService.testEmailCode(userCode.getCode(), session);
-		if (sendPicCodeService.testEmailCode(userCode.getCode(), session).isSuccess()) {
+
+		if (sendPicCodeService.testEmailCode(userCode.getCode(), session)
+				.isSuccess()) {
 
 			user.setEmail(userCode.getEmail());
 			user.setPassword(userCode.getPassword());
 			user.setNickName(userCode.getNickName());
-			return register(user);
-		}else{
+			return register(user, session);
+		} else {
 			return FAIL(1005, "验证码错误");
 		}
-		
+
 	}
 
 }

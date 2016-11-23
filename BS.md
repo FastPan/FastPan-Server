@@ -11,7 +11,7 @@ request.getSession(true).setAttribute("pictureCode", randomString);
 
 1.发送邮件接口
 
-url : http://127.0.0.1:8080/fastpan/user/sendEmail
+url : http://127.0.0.1:8080/fastpan/verify/sendEmail
 
 参数
 
@@ -38,8 +38,7 @@ url : http://127.0.0.1:8080/fastpan/user/register
     "requestContext": {
         "email": "1171084616@qq.com",
         "password": "abc123",
-        "nickName": "PBI",
-        "sex": 1
+        "nickName": "PBI"
     }
 }
 
@@ -54,7 +53,7 @@ url : http://127.0.0.1:8080/fastpan/user/register
 
 3.邮箱验证接口
 
-url : http://127.0.0.1:8080/fastpan/user/checkAccount
+url : http://127.0.0.1:8080/fastpan/verify/checkAccount
 
 参数
 
@@ -98,20 +97,19 @@ url : http://127.0.0.1:8080/fastpan/user/loginAccount
         "roleId": 0,
         "createTime": 1478596283000,
         "lastLoginTime": null,
-        "updateTime": null,
-        "sex": 1
+        "updateTime": null
     }
 }
 
 5.生成图片验证码
 
-url : http://127.0.0.1:8080/fastpan/user/pictureCode
+url : http://127.0.0.1:8080/fastpan/verify/pictureCode
 
 参数
 
-{
-    "requestContext": {"width":30,"height":18}
-}
+
+  width=30   height=18 改了变成get提交了
+
 
 结果
 
@@ -119,7 +117,7 @@ url : http://127.0.0.1:8080/fastpan/user/pictureCode
 
 6.验证图片验证码
 
-url : http://127.0.0.1:8080/fastpan/user/testPictureCode
+url : http://127.0.0.1:8080/fastpan/verify/testPictureCode
 
 参数
 
@@ -141,7 +139,7 @@ url : http://127.0.0.1:8080/fastpan/user/loginCode
     "requestContext": {
         "email": "1171084616@qq.com",
         "password": "abc123",
-        "code":"M6RNHB"
+        "code":"PW9RKM"
     }
 }
 
@@ -159,7 +157,50 @@ url : http://127.0.0.1:8080/fastpan/user/loginCode
         "roleId": 0,
         "createTime": 1478596283000,
         "lastLoginTime": null,
-        "updateTime": null,
-        "sex": 1
+        "updateTime": null
     }
 }
+
+8.验证邮箱发送验证码
+
+url : http://127.0.0.1:8080/fastpan/verify/testEmailCode
+
+参数
+
+{
+    "requestContext":"N9M11E"
+}
+
+结果
+
+{
+    "code": 0,
+    "message": "",
+    "success": true,
+    "result": "验证码正确"
+}
+
+9.注册接口添加验证码
+
+url : http://127.0.0.1:8080/fastpan/user/registerCode
+
+参数
+
+{
+    "requestContext": {
+        "email": "1171084616@qq.com",
+        "password": "abc123",
+        "nickName": "PBI",
+        "code":"PW9RKM"
+    }
+}
+
+结果
+
+{
+    "code": 0,
+    "message": "",
+    "success": true,
+    "result": 1
+}
+

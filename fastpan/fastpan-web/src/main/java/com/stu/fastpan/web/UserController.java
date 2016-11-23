@@ -1,20 +1,14 @@
 package com.stu.fastpan.web;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.stu.fastpan.dao.pojo.user.PictureCode;
 import com.stu.fastpan.dao.pojo.user.User;
 import com.stu.fastpan.dao.pojo.user.UserCode;
 import com.stu.fastpan.message.RequestMessage;
@@ -23,7 +17,7 @@ import com.stu.fastpan.service.sendPicCode.SendPicCodeFacade;
 
 /**
  * 
- * Description:MVO:用户的登录和注册
+ * Description:用户的登录和注册
  * 
  * @date 创建时间： 2016年10月31日
  * @version 1.0
@@ -35,7 +29,7 @@ public class UserController {
 
 	@Autowired
 	private RegisterLoginFacade registerLoginFacade;
-	
+
 	@Autowired
 	private SendPicCodeFacade sendPicCodeFacade;
 
@@ -77,11 +71,12 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping(value = "register", method = RequestMethod.POST)
-	public Object register(@RequestBody RequestMessage<User> info) {
+	public Object register(@RequestBody RequestMessage<User> info,
+			HttpSession session) {
 
 		User user = info.getRequestContext();
 		System.out.println(user);
-		Object obj = registerLoginFacade.register(user);
+		Object obj = registerLoginFacade.register(user, session);
 		return obj;
 	}
 
@@ -101,90 +96,20 @@ public class UserController {
 	}
 
 	/**
-	 * 用户的发送邮件功能
-	 */
-
-	@ResponseBody
-	@RequestMapping(value = "sendEmail", method = RequestMethod.POST)
-	public Object sendEmail(@RequestBody RequestMessage<String> info,HttpSession session) {
-
-		String email = info.getRequestContext();
-		System.out.println(email);
-		Object obj = registerLoginFacade.sendEmail(email,session);
-		return obj;
-	}
-
-	/**
-	 * 发送图片验证码
-	 */
-
-	@RequestMapping(value = "pictureCode", method = RequestMethod.GET)
-	@ResponseBody
-	public void pictureCode(HttpServletRequest request,
-			HttpServletResponse response,
-			PictureCode pictureCode, HttpSession session)
-			throws ServletException, IOException {
-
-		if (pictureCode == null) {
-			pictureCode = new PictureCode();
-			pictureCode.setHeight(40);
-			pictureCode.setWidth(140);
-		} else {
-			if (pictureCode.getHeight() == 0) {
-				pictureCode.setHeight(40);
-			}
-			if (pictureCode.getWidth() == 0) {
-				pictureCode.setWidth(140);
-			}
-		}
-		
-		sendPicCodeFacade.sendPictureCode(request, response, pictureCode,
-				session);
-	}
-	
-	/**
-	 * 图片验证码验证功能
-	 */
-
-	@RequestMapping(value = "testPictureCode", method = RequestMethod.POST)
-	@ResponseBody
-	public Object testPictureCode(HttpSession session,
-			@RequestBody RequestMessage<String> info) throws ServletException,
-			IOException {
-		String str = info.getRequestContext();
-		Object obj = sendPicCodeFacade.testPictureCode(str, session);
-		return obj;
-	}
-	
-	/**
-	 * 邮件验证码验证功能
-	 */
-
-	@RequestMapping(value = "testEmailCode", method = RequestMethod.POST)
-	@ResponseBody
-	public Object testEmailCode(HttpSession session,
-			@RequestBody RequestMessage<String> info) throws ServletException,
-			IOException {
-		String str = info.getRequestContext();
-		Object obj = sendPicCodeFacade.testEmailCode(str, session);
-		return obj;
-	}
-	
-	/**
 	 * 合并验证码功能加强版登录
 	 */
 
 	@RequestMapping(value = "loginCode", method = RequestMethod.POST)
 	@ResponseBody
 	public Object loginCode(HttpSession session,
-			@RequestBody RequestMessage<UserCode> info) throws ServletException,
-			IOException {
+			@RequestBody RequestMessage<UserCode> info)
+			throws ServletException, IOException {
 		UserCode userCode = info.getRequestContext();
 		Object obj = registerLoginFacade.loginCode(userCode, session);
-		
+
 		return obj;
 	}
-	
+
 	/**
 	 * 合并验证码功能加强版注册
 	 */
@@ -192,8 +117,8 @@ public class UserController {
 	@RequestMapping(value = "registerCode", method = RequestMethod.POST)
 	@ResponseBody
 	public Object registerCode(HttpSession session,
-			@RequestBody RequestMessage<UserCode> info) throws ServletException,
-			IOException {
+			@RequestBody RequestMessage<UserCode> info)
+			throws ServletException, IOException {
 		UserCode userCode = info.getRequestContext();
 		Object obj = registerLoginFacade.registerCode(userCode, session);
 		return obj;

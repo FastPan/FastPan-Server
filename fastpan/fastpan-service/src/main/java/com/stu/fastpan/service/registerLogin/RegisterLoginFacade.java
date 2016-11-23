@@ -7,14 +7,12 @@ import com.stu.fastpan.dao.pojo.user.UserCode;
 
 public interface RegisterLoginFacade {
 
-	Object register(User user);
+	Object register(User user , HttpSession session);
 
 	Object login(User user, HttpSession session);
 
 	Object checkAccount(String email);
 
-	Object sendEmail(String email,HttpSession session);
-	
 	Object loginCode(UserCode userCode,HttpSession session);
 	
 	Object registerCode(UserCode userCode, HttpSession session);
