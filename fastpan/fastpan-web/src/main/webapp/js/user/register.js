@@ -1,3 +1,4 @@
+submit = 0;
 $(function() {
 	$('form').submit(function() {
 		return false;
@@ -124,6 +125,10 @@ function getCode() {
  * @returns
  */
 function register() {
+	if (submit == 1) {
+		return;
+	}
+	submit++;
 	var nickName = $('form input[name="nickName"]').val();
 	var email = $('form input[name="email"]').val();
 	var password = $('form input[name="password"]').val();
@@ -139,6 +144,7 @@ function register() {
 			"Content-Type" : "application/json"
 		},
 		success : function(data) {
+			submit--;
 			var message = data.success ? '注册成功' : data.message;
 			BootstrapDialog.show({
 				title : "消息",
@@ -156,6 +162,7 @@ function register() {
 			});
 		},
 		error : function(error) {
+			submit--;
 			BootstrapDialog.show({
 				title : "消息",
 				message : "注册失败,服务器出错了",
