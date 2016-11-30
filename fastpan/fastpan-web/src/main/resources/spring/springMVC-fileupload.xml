@@ -15,38 +15,9 @@
       http://www.springframework.org/schema/mvc/spring-mvc.xsd
       	  http://www.springframework.org/schema/task
 	  http://www.springframework.org/schema/task/spring-task-4.0.xsd">
-
-
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/**" />
-			<bean class="com.stu.fastpan.web.interceptor.LoginInterceptor">
-				<property name="uncheckUrls">
-					<list>
-						<value>/js/*</value>
-						<value>/css/*</value>
-						<value>/images/*</value>
-						<value>/fonts/*</value>
-						<value>/pages/*</value>
-						<value>/plug-in/*</value>
-
-
-						<!-- controller -->
-						<value>/</value>
-						<value>/index</value>
-						<value>/user/login</value>
-						<value>/user/loginCode</value>
-						<value>/verify/pictureCode</value>
-						<value>/user/sendEmail</value>
-						<value>/user/loginAccount</value>
-						<value>/user/register</value>
-						<value>/user/registerCode</value>
-						<value>/user/doRegister</value>
-					</list>
-				</property>
-			</bean>
-		</mvc:interceptor>
-
-	</mvc:interceptors>
-
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="maxUploadSize" value="2000000000" />
+	</bean>
 </beans>

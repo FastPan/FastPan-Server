@@ -16,7 +16,7 @@ import com.stu.fastpan.dao.pojo.user.UserCode;
 import com.stu.fastpan.message.ResponseMessage;
 import com.stu.fastpan.service.base.ResponseMeService;
 import com.stu.fastpan.service.sendPicCode.SendPicCodeService;
-import com.stu.fastpan.util.MD5;
+import com.stu.fastpan.util.MD5Utils;
 
 @Service
 public class RegisterLoginService extends ResponseMeService<User, Long>
@@ -39,7 +39,7 @@ public class RegisterLoginService extends ResponseMeService<User, Long>
 
 		// 进行密码加密
 		String password = user.getPassword();
-		String mPassword = MD5.getMD5(password.getBytes());
+		String mPassword = MD5Utils.getMD5(password.getBytes());
 		user.setPassword(mPassword);
 		user.setUserId(user.createConstraint());
 
@@ -83,7 +83,7 @@ public class RegisterLoginService extends ResponseMeService<User, Long>
 			return FAIL(1000, "用户不存在");
 		} else {
 
-			String newPassword = MD5.getMD5(user2.getPassword().getBytes());
+			String newPassword = MD5Utils.getMD5(user2.getPassword().getBytes());
 
 			if (user.getPassword().equals(newPassword)) {
 				log.info("登录成功");

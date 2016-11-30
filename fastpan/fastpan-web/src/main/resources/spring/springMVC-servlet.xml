@@ -67,5 +67,6 @@
 	<mvc:view-controller path="/" view-name="index" />
 
 	<import resource="springMVC-interceptor.xml" />
-	<import resource="classpath*:spring/applicationContext-bus.xml" />
+	<import resource="springMVC-fileupload.xml" />
+	
 </beans>

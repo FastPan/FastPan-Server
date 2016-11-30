@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping ("/main")
 public class MainPageController {
-	//login页面
+	//首页
 	@RequestMapping ("/index")
 	public String login(){
 		return "/pages/main/myPan.html";

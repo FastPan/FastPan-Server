@@ -58,12 +58,17 @@ public class UserController {
 	public String register() {
 		return "/pages/user/register.html";
 	}
-
+	
 	// 注册页面
-	@RequestMapping(value = "doRegister", method = RequestMethod.POST)
-	public String doRegister() {
-		return "redirect:/main/index";
+	@RequestMapping("accountInfo")
+	public String accountInfo() {
+		return "/pages/user/accountInfo.html";
 	}
+//	// 注册页面
+//	@RequestMapping(value = "doRegister", method = RequestMethod.POST)
+//	public String doRegister() {
+//		return "redirect:/main/index";
+//	}
 
 	/**
 	 * 用户的验证账号功能

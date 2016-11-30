@@ -1,7 +1,6 @@
 package com.stu.fastpan.service.forgetPass;
 
 import java.util.Date;
-
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,7 @@ import com.stu.fastpan.message.ResponseMessage;
 import com.stu.fastpan.service.base.ResponseMeService;
 import com.stu.fastpan.service.registerLogin.RegisterLoginService;
 import com.stu.fastpan.service.sendPicCode.SendPicCodeService;
-import com.stu.fastpan.util.MD5;
+import com.stu.fastpan.util.MD5Utils;
 
 @Service
 public class ForgetPassService extends
@@ -44,7 +43,7 @@ public class ForgetPassService extends
 		String userId = forgetPassword.getUserId();
 		if (userId != null) {
 			User user2 = userMapper2.selectByPrimaryKey(userId);
-			String newPassword = MD5.getMD5(forgetPassword.getPassword()
+			String newPassword = MD5Utils.getMD5(forgetPassword.getPassword()
 					.getBytes());
 
 			if (sendPicCodeService.testEmailCode(forgetPassword.getCode(),

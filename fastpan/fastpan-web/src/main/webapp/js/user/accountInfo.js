@@ -14,7 +14,7 @@ $(function() {
 	var options = {
 		thumbBox : '.thumbBox',
 		spinner : '.spinner',
-		imgSrc : '../images/avatar.png'
+		imgSrc : '../plug-in/cropbox/images/avatar.png'
 	};
 	var cropper = $('.imageBox').cropbox(options);
 	$('#upload-file').on('change', function() {

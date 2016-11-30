@@ -16,7 +16,8 @@ import com.stu.fastpan.dao.pojo.user.User;
 import com.stu.fastpan.message.ResponseMessage;
 import com.stu.fastpan.service.base.ResponseMeService;
 import com.stu.fastpan.service.sendPicCode.SendPicCodeService;
-import com.stu.fastpan.util.MD5;
+import com.stu.fastpan.util.MD5Utils;
+
 
 @Service
 public class AccountSetService extends ResponseMeService<User, String>
@@ -178,10 +179,10 @@ public class AccountSetService extends ResponseMeService<User, String>
 		}
 
 		// 用户输入的旧密码
-		String oldPassword = MD5.getMD5(password.getPassword().getBytes());
+		String oldPassword = MD5Utils.getMD5(password.getPassword().getBytes());
 		if (user.getPassword().equals(oldPassword)) {
 			// 用户输入的新密码
-			String newPassword = MD5.getMD5(password.getNewPassword()
+			String newPassword = MD5Utils.getMD5(password.getNewPassword()
 					.getBytes());
 			try {
 				Date date = new Date();
