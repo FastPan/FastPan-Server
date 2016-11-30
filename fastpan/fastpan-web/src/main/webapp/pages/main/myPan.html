@@ -14,6 +14,7 @@
 <link href="../css/main/myPan.css" rel="stylesheet">
 <link href="../plug-in/bootstrapDialog/css/bootstrap-dialog.min.css"
 	rel="stylesheet">
+<link rel="stylesheet" href="../plug-in/webuploader/webuploader.css">
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 <script src="../plug-in/ie/js/ie-emulation-modes-warning.js"></script>
@@ -38,7 +39,7 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="../user/accountInfo"><img
+					<li><a href="../user/accountInfo" target="_black"><img
 							src='https://ss0.bdstatic.com/7Ls0a8Sm1A5BphGlnYG/sys/portrait/item/11ddd637.jpg'
 							style="height: 30px; width: 30px;" class="img-circle"></img>好聚不好散</a>
 					</li>
@@ -49,201 +50,168 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div id="sidebar" class="col-sm-3 col-md-2 sidebar">
-				<ul id="left-sidebar" class="nav nav-sidebar">
-					<li class="active"><a href="#">全部文件</a></li>
-					<li><a class="glyphicon glyphicon-picture" href="#"><span>图片</span></a>
+				<ul class="nav nav-sidebar">
+					<li class="active"><a>全部文件</a></li>
+					<li><a class="glyphicon glyphicon-picture"><span>图片</span></a>
 					</li>
-					<li><a class="glyphicon glyphicon-briefcase" href="#"><span>文档</span></a>
+					<li><a class="glyphicon glyphicon-briefcase"><span>文档</span></a>
 					</li>
-					<li><a class="glyphicon glyphicon-facetime-video" href="#"><span>视频</span></a>
+					<li><a class="glyphicon glyphicon-facetime-video"><span>视频</span></a>
 					</li>
-					<li><a class="glyphicon glyphicon-music" href="#"><span>音乐</span></a>
-					</li>
-					<li><a class="glyphicon glyphicon-th-large" href="#"><span>其他</span></a>
+					<li><a class="glyphicon glyphicon-music"><span>音乐</span></a></li>
+					<li><a class="glyphicon glyphicon-th-large"><span>其他</span></a>
 					</li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li id="my-delete"><a class="glyphicon glyphicon-trash"
-						href="#"><span>回收站</span></a>
+					<li id="my-delete"><a class="glyphicon glyphicon-trash"><span>回收站</span></a></li>
 					<li id="my-share"><a href="#"><div class="batch">&#xF159;</div>
-							<span>我的分享</span></a>
+							<span>我的分享</span></a></li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li id="my-upload"><a class="glyphicon glyphicon-cloud-upload"><span>我的上传</span></a></li>
 				</ul>
 			</div>
 			<div id="main-content"
 				class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<div id="table-head">
-					<button type="button" class="btn btn-primary">上传</button>
-					<button type="button" class="btn btn-default">新建文件夹</button>
-					<button type="button" class="btn btn-default">移动至</button>
-					<button type="button" class="btn btn-default">删除</button>
-					<button type="button" class="btn btn-default">下载</button>
-					<button type="button" class="btn btn-default">分享</button>
-					<form class="pull-right">
-						<input type="text" class="form-control" placeholder="搜索" />
-					</form>
-				</div>
-				<table id="table-thead" class="table table-hover" style="margin: 0">
-					<thead>
-						<tr id="thead_show">
-							<th><input id="select-all" type="checkbox"> </input><a
-								id="filename">文件名<font size=1><span class="glyphicon"></span></font></a></th>
-							<th></th>
-							<th><a id="filesize">大小<font size=1><span
-										class="glyphicon"></span></font></a></th>
-							<th><a id="updatetime">日期<font size=1><span
-										class="glyphicon"></span></font></a></th>
-						</tr>
-					</thead>
-				</table>
-				<div id="table" class="table-responsive" style="overflow-y: scroll">
-					<table class="table table-hover">
-						<tbody>
-							<tr>
-								<td><input type="checkbox"> <a>文件夹1</a></input></td>
-								<td></td>
-								<td></td>
-								<td>2016-05-12 12:05</td>
+				<div id="main-content-file">
+					<div id="table-head">
+						<button type="button" class="btn btn-primary">上传</button>
+						<button type="button" class="btn btn-default">新建文件夹</button>
+						<button type="button" class="btn btn-default">移动至</button>
+						<button type="button" class="btn btn-default">删除</button>
+						<button type="button" class="btn btn-default">下载</button>
+						<button type="button" class="btn btn-default">分享</button>
+						<form class="pull-right">
+							<input type="text" class="form-control" placeholder="搜索" />
+						</form>
+					</div>
+					<table id="table-thead" class="table table-hover" style="margin: 0">
+						<thead>
+							<tr id="thead_show">
+								<th><input id="select-all" type="checkbox"> </input><a
+									id="filename">文件名<font size=1><span
+											class="glyphicon"></span></font></a></th>
+								<th></th>
+								<th><a id="filesize">大小<font size=1><span
+											class="glyphicon"></span></font></a></th>
+								<th><a id="updatetime">日期<font size=1><span
+											class="glyphicon"></span></font></a></th>
 							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件夹2</a></input></td>
-								<td></td>
-								<td></td>
-								<td>2016-05-12 12:06</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件夹3</a></input></td>
-								<td></td>
-								<td></td>
-								<td>2016-05-12 12:05</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件1</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:06</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件2</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:05</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件3</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:06</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件4</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件5</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件6</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件7</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件8</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件9</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件10</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"><a>文件11</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件12</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件13</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件14</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件15</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件16</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件17</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件18</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件19</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件20</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"> <a>文件21</a></input></td>
-								<td></td>
-								<td>152.9M</td>
-								<td>2016-05-12 12:15</td>
-							</tr>
-						</tbody>
+						</thead>
 					</table>
+					<div id="table" class="table-responsive" style="overflow-y: scroll">
+						<table class="table table-hover">
+							<tbody>
+								<tr>
+									<td><input type="checkbox"> <a>文件夹1</a></input></td>
+									<td></td>
+									<td></td>
+									<td>2016-05-12 12:05</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox"> <a>文件夹2</a></input></td>
+									<td></td>
+									<td></td>
+									<td>2016-05-12 12:06</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox"> <a>文件夹3</a></input></td>
+									<td></td>
+									<td></td>
+									<td>2016-05-12 12:05</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox"> <a>文件1</a></input></td>
+									<td></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:06</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox"> <a>文件2</a></input></td>
+									<td></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:05</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox"> <a>文件3</a></input></td>
+									<td></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:06</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox"> <a>文件4</a></input></td>
+									<td></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox"> <a>文件5</a></input></td>
+									<td></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox"> <a>文件6</a></input></td>
+									<td></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox"> <a>文件7</a></input></td>
+									<td></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox"> <a>文件8</a></input></td>
+									<td></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox"> <a>文件9</a></input></td>
+									<td></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox"> <a>文件10</a></input></td>
+									<td></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox"><a>文件11</a></input></td>
+									<td></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:15</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div id="main-content-upload" class="_hide">
+					<div id="uploader">
+						<div class="btns">
+							<div id="picker" class="btn btn-default" style="float: right;">选择文件</div>
+							<button id="ctlBtn" class="btn btn-primary" style="float: right;">开始上传</button>
+						</div>
+						<div>
+							<table class="table table-hover" style="table-layout: fixed;">
+								<thead>
+									<tr>
+										<th>文件名</th>
+										<th>进度</th>
+										<th>速度</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="thelist">
+
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -255,9 +223,12 @@
 	<script src="../plug-in/jquery/js/jquery.min.js"></script>
 	<script src="../plug-in/bootstrap/js/bootstrap.min.js"></script>
 	<script src="../plug-in/bootstrapDialog/js/bootstrap-dialog.min.js"></script>
+	<script src="../plug-in/webuploader/webuploader.js"></script>
 	<!-- <script src="../js/plug-in/docs.min.js"></script> -->
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="../plug-in/ie/js/ie10-viewport-bug-workaround.js"></script>
+	<script src="../js/main/fileupload.js"></script>
 	<script src="../js/main/myPan.js"></script>
+
 </body>
 </html>

@@ -68,5 +68,5 @@
 			advice-ref="txAdvice" order="5" />
 	</aop:config>
 
-	<import resource="classpath*:spring/applicationContext-datasource.xml" />
+	<import resource="applicationContext-datasource.xml" />
 </beans>

@@ -178,3 +178,9 @@ a:hover {
 #table  td span {
 	margin-left: 10px;
 }
+._hide {
+	display: none;
+}
+._hidden{
+	visibility:hidden
+}

@@ -38,7 +38,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		String url = requestUri.substring(contextPath.length());
 
 		//log.info("url:" + url);
-		uncheckUrls.contains(url);
 		boolean flag = false;
 		for (String string : uncheckUrls) {
 			if (string.endsWith("*")) {
