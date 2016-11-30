@@ -1,6 +1,7 @@
 package com.stu.fastpan.dao.pojo.user;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * 
@@ -12,7 +13,7 @@ import java.util.Date;
 
 public class User {
 
-	private Long userId;
+	private String userId;
 
 	private String email;
 
@@ -28,11 +29,13 @@ public class User {
 
 	private Date updateTime;
 
-	public Long getUserId() {
+	private String image;
+
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
@@ -92,11 +95,26 @@ public class User {
 		this.updateTime = updateTime;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", email=" + email + ", password=" + password + ", nickName=" + nickName
-				+ ", roleId=" + roleId + ", createTime=" + createTime + ", lastLoginTime=" + lastLoginTime
-				+ ", updateTime=" + updateTime + "]";
+		return "User [userId=" + userId + ", email=" + email + ", password="
+				+ password + ", nickName=" + nickName + ", roleId=" + roleId
+				+ ", createTime=" + createTime + ", lastLoginTime="
+				+ lastLoginTime + ", updateTime=" + updateTime + ", image="
+				+ image + "]";
+	}
+
+	// 生成UUID
+	public String createConstraint() {
+		return UUID.randomUUID().toString().replace("-", "");
 	}
 
 }

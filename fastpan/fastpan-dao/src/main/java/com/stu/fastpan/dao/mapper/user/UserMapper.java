@@ -10,15 +10,16 @@ import com.stu.fastpan.dao.pojo.user.User;
  * @date 创建时间： 2016年10月31日
  * @version 1.0
  */
+
 public interface UserMapper {
 	
-    int deleteByPrimaryKey(Long userId);
+    int deleteByPrimaryKey(String userId);
 
     int insert(User record);
 
     int insertSelective(User record);
 
-    User selectByPrimaryKey(Long userId);
+    User selectByPrimaryKey(String userId);
 
     int updateByPrimaryKeySelective(User record);
 

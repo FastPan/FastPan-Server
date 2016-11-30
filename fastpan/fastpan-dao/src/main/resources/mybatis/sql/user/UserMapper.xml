@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.stu.fastpan.dao.mapper.user.UserMapper" >
   <resultMap id="BaseResultMap" type="com.stu.fastpan.dao.pojo.user.User" >
-    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
@@ -10,9 +10,10 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    user_id, email, password, nick_name, role_id, create_time, last_login_time, update_time
+    user_id, email, password, nick_name, role_id, create_time, last_login_time, update_time, image
   </sql>
   
   <!-- 根据账号查询所有数据 -->
@@ -26,26 +27,26 @@
   
   <!-- 根据主键查询所有数据 -->
   
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from users
-    where user_id = #{userId,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=VARCHAR}
   </select>
   
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from users
-    where user_id = #{userId,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=VARCHAR}
   </delete>
   
   <insert id="insert" parameterType="com.stu.fastpan.dao.pojo.user.User" >
     insert into users (user_id, email, password, 
       nick_name, role_id, create_time, 
-      last_login_time, update_time
+      last_login_time, update_time, image
       )
-    values (#{userId,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+    values (#{userId,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{nickName,jdbcType=VARCHAR}, #{roleId,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{lastLoginTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      #{lastLoginTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{image,jdbcType=VARCHAR}
       )
   </insert>
   
@@ -74,12 +75,15 @@
         last_login_time,
       </if>
       <if test="updateTime != null" >
-        update_time
+        update_time,
+      </if>
+      <if test="image != null" >
+        image
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
-        #{userId,jdbcType=BIGINT},
+        #{userId,jdbcType=VARCHAR},
       </if>
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
@@ -100,7 +104,10 @@
         #{lastLoginTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP}
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>
@@ -127,10 +134,13 @@
         last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP}
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR}
       </if>
     </set>
-    where user_id = #{userId,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=VARCHAR}
   </update>
   
   <update id="updateByPrimaryKey" parameterType="com.stu.fastpan.dao.pojo.user.User" >
@@ -141,8 +151,9 @@
       role_id = #{roleId,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where user_id = #{userId,jdbcType=BIGINT}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      image = #{image,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
   </update>
   
 </mapper>
