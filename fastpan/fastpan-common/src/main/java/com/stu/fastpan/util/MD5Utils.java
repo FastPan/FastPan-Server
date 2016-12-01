@@ -1,4 +1,4 @@
-package com.stu.fastpan.util;
+﻿package com.stu.fastpan.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,8 +39,8 @@ public class MD5Utils {
 				str[k++] = hexDigits[byte0 & 0xf]; // 取字节中低 4 位的数字转换
 			}
 			s = new String(str); // 换后的结果转换为字符串
-*/
-			s=byteArrayToHex(tmp);
+*/		
+            s=byteArrayToHex(tmp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
