@@ -37,7 +37,7 @@
 						<value>/user/login</value>
 						<value>/user/loginCode</value>
 						<value>/verify/pictureCode</value>
-						<value>/user/sendEmail</value>
+						<value>/verify/sendEmail</value>
 						<value>/user/loginAccount</value>
 						<value>/user/register</value>
 						<value>/user/registerCode</value>

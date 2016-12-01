@@ -84,7 +84,7 @@ $(function() {
 function getCode() {
 	var email = $('form input[name="email"]').val();
 	$.ajax({
-		url : 'sendEmail',
+		url : '../verify/sendEmail',
 		data : "{\"requestContext\":\"" + email + "\"}",
 		type : 'post',
 		dataType : 'json',
