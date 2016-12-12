@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.stu.fastpan.dao.mapper.userfile.UserFileMapper">
+	<resultMap id="BaseResultMap" type="com.stu.fastpan.dao.pojo.userfile.UserFile">
+		<id column="user_file_id" property="userFileId" jdbcType="CHAR" />
+		<result column="user_file_name" property="userFileName"
+			jdbcType="VARCHAR" />
+		<result column="path" property="path" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="CHAR" />
+		<result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="file_id" property="fileId" jdbcType="CHAR" />
+		<result column="state" property="state" jdbcType="TINYINT" />
+	</resultMap>
+	<resultMap id="BaseResultMapWithFile" type="com.stu.fastpan.dao.pojo.userfile.UserFile">
+		<id column="user_file_id" property="userFileId" jdbcType="CHAR" />
+		<result column="user_file_name" property="userFileName"
+			jdbcType="VARCHAR" />
+		<result column="path" property="path" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="CHAR" />
+		<result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="file_id" property="fileId" jdbcType="CHAR" />
+		<result column="state" property="state" jdbcType="TINYINT" />
+		<association column="file_id" property="file" 
+			select="com.stu.fastpan.dao.mapper.file.FileMapper.selectByPrimaryKey" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		user_file_id, user_file_name, path, user_id, delete_time, create_time, file_id,
+		state
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from user_file
+		where user_file_id = #{userFileId,jdbcType=CHAR}
+	</select>
+	<select id="selectByUserId" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user_file
+		where user_id = #{userId,jdbcType=CHAR}
+	</select>
+	<select id="selectByUserIdAndPath" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user_file
+		where user_id = #{userId,jdbcType=CHAR} and path=#{path,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByUserIdPathState" resultMap="BaseResultMapWithFile">
+		select *
+		from user_file
+		where user_id = #{userId,jdbcType=CHAR} and path=#{path,jdbcType=VARCHAR}
+		and state=#{state,jdbcType=TINYINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from user_file
+		where user_file_id = #{userFileId,jdbcType=CHAR}
+	</delete>
+	<insert id="insert" parameterType="com.stu.fastpan.dao.pojo.userfile.UserFile">
+		insert into user_file (user_file_id, user_file_name, path,
+		user_id, delete_time, create_time,
+		file_id, state)
+		values (#{userFileId,jdbcType=CHAR}, #{userFileName,jdbcType=VARCHAR},
+		#{path,jdbcType=VARCHAR},
+		#{userId,jdbcType=CHAR}, #{deleteTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
+		#{fileId,jdbcType=CHAR}, #{state,jdbcType=TINYINT})
+	</insert>
+	<insert id="insertSelective" parameterType="com.stu.fastpan.dao.pojo.userfile.UserFile">
+		insert into user_file
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userFileId != null">
+				user_file_id,
+			</if>
+			<if test="userFileName != null">
+				user_file_name,
+			</if>
+			<if test="path != null">
+				path,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="deleteTime != null">
+				delete_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="fileId != null">
+				file_id,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userFileId != null">
+				#{userFileId,jdbcType=CHAR},
+			</if>
+			<if test="userFileName != null">
+				#{userFileName,jdbcType=VARCHAR},
+			</if>
+			<if test="path != null">
+				#{path,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=CHAR},
+			</if>
+			<if test="deleteTime != null">
+				#{deleteTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="fileId != null">
+				#{fileId,jdbcType=CHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=TINYINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.stu.fastpan.dao.pojo.userfile.UserFile">
+		update user_file
+		<set>
+			<if test="userFileName != null">
+				user_file_name = #{userFileName,jdbcType=VARCHAR},
+			</if>
+			<if test="path != null">
+				path = #{path,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=CHAR},
+			</if>
+			<if test="deleteTime != null">
+				delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="fileId != null">
+				file_id = #{fileId,jdbcType=CHAR},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=TINYINT},
+			</if>
+		</set>
+		where user_file_id = #{userFileId,jdbcType=CHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.stu.fastpan.dao.pojo.userfile.UserFile">
+		update user_file
+		set user_file_name = #{userFileName,jdbcType=VARCHAR},
+		path = #{path,jdbcType=VARCHAR},
+		user_id = #{userId,jdbcType=CHAR},
+		delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		file_id = #{fileId,jdbcType=CHAR},
+		state = #{state,jdbcType=TINYINT}
+		where user_file_id = #{userFileId,jdbcType=CHAR}
+	</update>
+</mapper>

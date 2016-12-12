@@ -75,7 +75,7 @@
 				class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<div id="main-content-file">
 					<div id="table-head">
-						<button type="button" class="btn btn-primary">上传</button>
+						<!-- <span id="picker1">上传</span> -->
 						<button type="button" class="btn btn-default">新建文件夹</button>
 						<button type="button" class="btn btn-default">移动至</button>
 						<button type="button" class="btn btn-default">删除</button>
@@ -101,21 +101,9 @@
 					</table>
 					<div id="table" class="table-responsive" style="overflow-y: scroll">
 						<table class="table table-hover">
-							<tbody>
-								<tr>
+							<tbody id="all-file-list">
+								<!-- <tr>
 									<td><input type="checkbox"> <a>文件夹1</a></input></td>
-									<td></td>
-									<td></td>
-									<td>2016-05-12 12:05</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox"> <a>文件夹2</a></input></td>
-									<td></td>
-									<td></td>
-									<td>2016-05-12 12:06</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox"> <a>文件夹3</a></input></td>
 									<td></td>
 									<td></td>
 									<td>2016-05-12 12:05</td>
@@ -125,67 +113,7 @@
 									<td></td>
 									<td>152.9M</td>
 									<td>2016-05-12 12:06</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox"> <a>文件2</a></input></td>
-									<td></td>
-									<td>152.9M</td>
-									<td>2016-05-12 12:05</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox"> <a>文件3</a></input></td>
-									<td></td>
-									<td>152.9M</td>
-									<td>2016-05-12 12:06</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox"> <a>文件4</a></input></td>
-									<td></td>
-									<td>152.9M</td>
-									<td>2016-05-12 12:15</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox"> <a>文件5</a></input></td>
-									<td></td>
-									<td>152.9M</td>
-									<td>2016-05-12 12:15</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox"> <a>文件6</a></input></td>
-									<td></td>
-									<td>152.9M</td>
-									<td>2016-05-12 12:15</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox"> <a>文件7</a></input></td>
-									<td></td>
-									<td>152.9M</td>
-									<td>2016-05-12 12:15</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox"> <a>文件8</a></input></td>
-									<td></td>
-									<td>152.9M</td>
-									<td>2016-05-12 12:15</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox"> <a>文件9</a></input></td>
-									<td></td>
-									<td>152.9M</td>
-									<td>2016-05-12 12:15</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox"> <a>文件10</a></input></td>
-									<td></td>
-									<td>152.9M</td>
-									<td>2016-05-12 12:15</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox"><a>文件11</a></input></td>
-									<td></td>
-									<td>152.9M</td>
-									<td>2016-05-12 12:15</td>
-								</tr>
+								</tr> -->
 							</tbody>
 						</table>
 					</div>
@@ -193,42 +121,65 @@
 				<div id="main-content-upload" class="_hide">
 					<div id="uploader">
 						<div class="btns">
-							<div id="picker" class="btn btn-default" style="float: right;">选择文件</div>
-							<button id="ctlBtn" class="btn btn-primary" style="float: right;">开始上传</button>
+							<span id="picker" style="float: right; margin-left: 2px">上传</span>
+							<button id="ctlBtn" class="btn btn-default" style="float: right;">开始上传</button>
 						</div>
 						<div>
-							<table class="table table-hover" style="table-layout: fixed;">
-								<thead>
-									<tr>
-										<th>文件名</th>
-										<th>进度</th>
-										<th>速度</th>
-										<th>操作</th>
-									</tr>
-								</thead>
-								<tbody id="thelist">
+							<div>
+								<table id="table_upload-thead" class="table table-hover"
+									style="table-layout: fixed; margin-bottom: 0px;">
+									<thead id="thead_upload_show">
+										<tr>
+											<th>文件名</th>
+											<th>进度</th>
+											<th>速度</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+							<div id="table_upload" class="table-responsive"
+								style="overflow-y: scroll">
+								<table class="table table-hover">
+									<tbody id="thelist">
 
-								</tbody>
-							</table>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<!-- Bootstrap core JavaScript
+		<!-- Bootstrap core JavaScript
 		================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="../plug-in/jquery/js/jquery.min.js"></script>
-	<script src="../plug-in/bootstrap/js/bootstrap.min.js"></script>
-	<script src="../plug-in/bootstrapDialog/js/bootstrap-dialog.min.js"></script>
-	<script src="../plug-in/webuploader/webuploader.js"></script>
-	<!-- <script src="../js/plug-in/docs.min.js"></script> -->
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="../plug-in/ie/js/ie10-viewport-bug-workaround.js"></script>
-	<script src="../js/main/fileupload.js"></script>
-	<script src="../js/main/myPan.js"></script>
-
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="../plug-in/jquery/js/jquery.min.js"></script>
+		<script src="../plug-in/bootstrap/js/bootstrap.min.js"></script>
+		<script src="../plug-in/bootstrapDialog/js/bootstrap-dialog.min.js"></script>
+		<script src="../plug-in/jquery-tmpl/js/jquery.tmpl.min.js"></script>
+		<script src="../plug-in/webuploader/webuploader.js"></script>
+		<!-- <script src="../js/plug-in/docs.min.js"></script> -->
+		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+		<script src="../plug-in/ie/js/ie10-viewport-bug-workaround.js"></script>
+		<script src="../plug-in/jquery-time/js/jquery-time.js"></script>
+		<script src="../js/main/fileupload.js"></script>
+		<script src="../js/main/myPan.js"></script>
+		<script id="allFile-tmpl" type="text/x-jquery-tmpl">
+     		<tr>
+        	{{if fileId==null}}
+           		<td><input type="checkbox"> <a>${userFileName}</a></input></td>
+				<td></td>
+				<td></td>
+				<td>${$.myTime.UnixToDate(createTime,true)}</td>
+        	{{else}}
+            	<td><input type="checkbox"> <a>${userFileName}</a></input></td>
+				<td></td>
+				<td>152.9M</td>
+				<td>${$.myTime.UnixToDate(createTime,true)}</td>
+        	{{/if}}
+       	 	</tr>
+</script>
 </body>
 </html>

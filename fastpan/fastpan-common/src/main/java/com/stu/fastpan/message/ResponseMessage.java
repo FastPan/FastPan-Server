@@ -68,6 +68,12 @@ public class ResponseMessage {
         this.success = success;
     }
 
+	@Override
+	public String toString() {
+		return "ResponseMessage [code=" + code + ", message=" + message + ", success=" + success + ", result=" + result
+				+ "]";
+	}
+
 
     
 }

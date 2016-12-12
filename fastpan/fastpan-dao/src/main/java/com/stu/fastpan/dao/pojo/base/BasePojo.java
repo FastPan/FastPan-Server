@@ -1,12 +1,13 @@
 package com.stu.fastpan.dao.pojo.base;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class BasePojo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	public int currentPage;
-	public int pageSize;
+	private int currentPage;
+	private int pageSize;
 
 	public int getCurrentPage() {
 		return currentPage;
@@ -24,4 +25,8 @@ public class BasePojo implements Serializable {
 		this.pageSize = pageSize;
 	}
 
+	// 生成UUID
+	public static String createUUID() {
+		return UUID.randomUUID().toString().replace("-", "");
+	}
 }

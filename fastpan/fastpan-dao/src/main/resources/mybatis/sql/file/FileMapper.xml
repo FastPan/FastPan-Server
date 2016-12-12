@@ -2,22 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.stu.fastpan.dao.mapper.file.FileMapper" >
   <resultMap id="BaseResultMap" type="com.stu.fastpan.dao.pojo.file.File" >
-    <id column="file_id" property="fileId" jdbcType="BIGINT" />
+    <id column="file_id" property="fileId" jdbcType="CHAR" />
+    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
     <result column="file_url" property="fileUrl" jdbcType="VARCHAR" />
     <result column="file_type" property="fileType" jdbcType="TINYINT" />
     <result column="file_state" property="fileState" jdbcType="TINYINT" />
+    <result column="file_size" property="fileSize" jdbcType="BIGINT" />
     <result column="file_md5" property="fileMD5" jdbcType="CHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    file_id,file_url, file_type, file_state,file_md5, create_time, update_time
+    file_id,file_url, file_type, file_state,file_size,file_md5, create_time, update_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from file
-    where file_id = #{fileId,jdbcType=BIGINT}
+    where file_id = #{fileId,jdbcType=CHAR}
   </select>
   <select id="selectByMD5" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -27,13 +29,13 @@
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from file
-    where file_id = #{fileId,jdbcType=BIGINT}
+    where file_id = #{fileId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.stu.fastpan.dao.pojo.file.File" >
-    insert into file (file_url, 
+    insert into file (file_id, file_url, file_name, file_size,
       file_type, file_state, file_md5, create_time,
       update_time)
-    values (#{fileUrl,jdbcType=VARCHAR}, 
+    values (#{fileId,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR},#{fileSize,jdbcType=BIGINT},
       #{fileType,jdbcType=TINYINT}, #{fileState,jdbcType=TINYINT},#{fileMD5,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
@@ -67,7 +69,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="fileId != null" >
-        #{fileId,jdbcType=BIGINT},
+        #{fileId,jdbcType=VARCHAR},
       </if>
       <if test="fileName != null" >
         #{fileName,jdbcType=VARCHAR},
@@ -114,7 +116,7 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where file_id = #{fileId,jdbcType=BIGINT}
+    where file_id = #{fileId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.stu.fastpan.dao.pojo.file.File" >
     update file
@@ -124,6 +126,6 @@
       file_state = #{fileState,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where file_id = #{fileId,jdbcType=BIGINT}
+    where file_id = #{fileId,jdbcType=VARCHAR}
   </update>
 </mapper>

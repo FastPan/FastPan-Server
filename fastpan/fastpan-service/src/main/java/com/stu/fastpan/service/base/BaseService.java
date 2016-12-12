@@ -1,20 +1,6 @@
 package com.stu.fastpan.service.base;
 
-import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.stu.fastpan.dao.pojo.base.BaseMapper;
 import com.stu.fastpan.message.ResponseMessage;
-import com.stu.fastpan.page.PageInfo;
-import com.stu.fastpan.page.PageObject;
 
 //<T, PK extends Serializable>
 public abstract class BaseService {

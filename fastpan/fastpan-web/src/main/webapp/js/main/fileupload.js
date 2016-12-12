@@ -1,7 +1,8 @@
-//文件上传
+//stopId=[];
+// 文件上传
 function WebUploaderInit() {
 	// $('#main-content-upload').css("visibility","visible");
-	var $list = $('#thelist'), $btn = $('#ctlBtn'), $picker = $('#picker'), state = 'pending', uploader;
+	var $list = $('#thelist'), $btn = $('#ctlBtn'), $picker = $('#picker'), state = 'pending';
 	var lastTime,lastProgress,startTime=-1;
 	WebUploader.Uploader
 			.register(
@@ -22,6 +23,7 @@ function WebUploaderInit() {
 
 							// md5值计算完成
 							.then(function(md5) {
+								// console.log('md5 over');
 								file.md5 = md5;
 								file.date = new Date().getTime();
 								$.ajax({
@@ -33,16 +35,22 @@ function WebUploaderInit() {
 									},
 									success : function(response) {
 										if (response.success === true) {
-											if (response.code == 0) {// 文件不存在
+											if(file.getStatus()!='cancelled'&&file.getStatus()!='interrupt'){
+												if (response.code == 0) {// 文件不存在
 
-											} else if (response.code == 1000) {// 秒传
-												owner.skipFile(file);
-												file.skip = true;
+												} else if (response.code == 1000) {// 秒传
+													owner.skipFile(file);
+													file.skip = true;
+												}
+											}else{
+												file.cancelled=true;
 											}
 											deferred.resolve();
 										} else {
-											alert(response.message);
-											deferred.reject();
+											if(file.getStatus()!='cancelled'){
+												alert(response.message);
+												deferred.reject();
+											}
 										}
 
 									}
@@ -71,8 +79,12 @@ function WebUploaderInit() {
 
 
 	});
-	alert('使用的运行时：'+uploader.predictRuntimeType());
-	alert('ie:'+WebUploader.Base.browser.ie+"\n"+'webkit:'+WebUploader.Base.browser.webkit+"\n"+'chrome :'+WebUploader.Base.browser.chrome +"\n"+'firefox:'+WebUploader.Base.browser.firefox +"\n"+'safari :'+WebUploader.Base.browser.safari +"\n"+'opera :'+WebUploader.Base.browser.opera +"\n");
+	// alert('使用的运行时：'+uploader.predictRuntimeType());
+	// alert('ie:'+WebUploader.Base.browser.ie+"\n"+'webkit:'+WebUploader.Base.browser.webkit+"\n"+'chrome
+	// :'+WebUploader.Base.browser.chrome
+	// +"\n"+'firefox:'+WebUploader.Base.browser.firefox +"\n"+'safari
+	// :'+WebUploader.Base.browser.safari +"\n"+'opera
+	// :'+WebUploader.Base.browser.opera +"\n");
 	// 当有文件添加进来的时候
 	uploader
 			.on(
@@ -84,21 +96,49 @@ function WebUploaderInit() {
 						// + '<p class="state">等待上传...</p>' + '</div>');
 						// <td class="progress progress-striped">' + '<div
 						// class="progress-bar" role="progressbar" style="width:
-						// 0%">'+ '</div>' + '</td>
+						// 0%">'+ '</div>' + '</td><button class="btn
+						// btn-primary stop">暂停</button>
 						$list
 								.append('<tr id="'
 										+ file.id
 										+ '"><td style="vertical-align: middle;overflow-x: hidden;text-overflow: ellipsis;">'
 										+ file.name+ '</td>'
-										+'<td class="state" style="vertical-align: middle;">等待上传...</td><td class="speed" style="vertical-align: middle;">-</td><td></td></tr>');// <button
-																																													// class="btn
-																																													// btn-primary">暂停</button><button
-																																													// class="btn
-																																													// btn-default">取消</button>
+										+'<td class="state" style="vertical-align: middle;">等待上传...</td><td class="speed" style="vertical-align: middle;">-</td><td><button class="btn btn-default remove-this">取消</button></td></tr>');
 					});
+	uploader
+	.on(
+			'filesQueued',
+			function(files) {
+				BootstrapDialog.show({
+					title: '请选择存储位置',
+					message: $('<div></div>').load('./savePath'),
+				    buttons: [{
+				        label: '确定',
+				        cssClass: 'btn-primary',
+				        action: function(dialogItself){
+				        	// 取路径
+				        	var path=getSavePath();
+				        	if(path!=null){
+				        		files.forEach(function(e){
+				        			e.fileSavePath=path;
+				        		});
+				        		dialogItself.close();
+				        	}
+				        }
+				    },{
+				        label: '取消',
+				        action: function(dialogItself){
+				        	// 删除这些文件
+				        	files.forEach(function(e){
+				        		uploader.removeFile(e,true);
+				        	})
+				        	dialogItself.close();
+				        }
+				    }]});
+			});
 
 	// 文件上传过程中创建进度条实时显示。
-	uploader.on('uploadProgress', function(file, percentage) {
+	uploader.on('uploadProgress', function(file, percentage) {		
 		var nowTime=new Date().getTime();
 		var $li = $('#' + file.id);
 		$li.find('td.state').css("color", "#3c78d8");
@@ -106,7 +146,7 @@ function WebUploaderInit() {
 		$li.find('td.state').text(Math.round(progress * 10000)/100 + '%');
 		var size=(file.size*(percentage-lastProgress))/((nowTime-lastTime)/1000);
 		
-		if(isFinite(size)){
+		if(isFinite(size)&&size>0){
 			var speed=WebUploader.Base.formatSize(size);
 			$li.find('td.speed').text(speed+"/S");
 		}
@@ -119,12 +159,19 @@ function WebUploaderInit() {
 		var text = '已上传';
 		if (file.skip) {
 			text = "已秒传";
+		}else if(file.cancelled){
+			text = "已取消";
 		}
+		
 		var $li = $('#' + file.id);
 		$li.find('td.state').text(text);
-		$li.find('td.state').css("color", "#66b82b");
-		var speed=WebUploader.Base.formatSize((file.size)/(startTime==-1?1:(new Date().getTime()-startTime)/1000));
-		$li.find('td.speed').text(speed+"/S");
+		if(file.cancelled){
+			$li.find('td.speed').text('-');
+		}else{
+			$li.find('td.state').css("color", "#66b82b");
+			var speed=WebUploader.Base.formatSize((file.size)/(startTime==-1?1:(new Date().getTime()-startTime)/1000));
+			$li.find('td.speed').text(speed+"/S");
+		}
 		
 	});
 
@@ -135,8 +182,14 @@ function WebUploaderInit() {
 
 	uploader.on('uploadComplete', function(file) {
 		$('#' + file.id).find('.progress').fadeOut();
+		$('#' + file.id).find('.remove-this').siblings().hide();
+		$('#' + file.id).find('.remove-this').hide();
+		
 	});
 
+	uploader.on('fileDequeued', function(file) {
+		$('#' + file.id).find('td.state').text('已取消');
+	});
 	uploader.on('all', function(type) {
 		if (type === 'startUpload') {
 			state = 'uploading';
@@ -145,12 +198,13 @@ function WebUploaderInit() {
 		} else if (type === 'uploadFinished') {
 			state = 'done';
 		}
-
+		
 		if (state === 'uploading') {
 			$btn.text('全部暂停');
-		} else {
+		} else{
 			$btn.text('开始上传');
 		}
+	
 	});
 	uploader.on('uploadBeforeSend', function(block, data) {
 		// block为分块数据。
@@ -160,7 +214,6 @@ function WebUploaderInit() {
 		// 将存在file对象中的md5数据携带发送过去。
 		data.fileMd5 = file.md5;
 		data.lastModifiedDate = file.date;
-		data.userId = "lzp";
 		data.fileSavePath = "/"
 		// 删除其他数据
 		// delete data.key;
@@ -181,8 +234,27 @@ function WebUploaderInit() {
 			innerHTML : '选择文件'
 		});
 	});
-	// $picker.on('click',function(){
-	//		
-	// });
-
+	uploader.addButton({
+		id : '#picker1',
+		innerHTML : '文件上传'
+	});
+	$list.on('click', '.remove-this', function() {
+		uploader.cancelFile($(this).parent().parent().attr('id'));
+		$(this).hide();
+		$(this).siblings().hide();
+	})
+// $list.on('click', '.stop', function() {
+// console.log($(this).html());
+// if($(this).html()=='暂停'){
+// uploader.stop($(this).parent().parent().attr('id'));
+// //stopId[stopId.length]=$(this).parent().parent().attr('id');
+// $(this).text('开始');
+// $(this).siblings().hide();
+// }else{
+// uploader.upload($(this).parent().parent().attr('id'));
+// $(this).text('暂停');
+// $(this).siblings().show();
+// }
+//		
+// })
 }

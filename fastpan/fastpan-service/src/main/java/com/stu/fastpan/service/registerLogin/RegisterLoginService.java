@@ -42,7 +42,7 @@ public class RegisterLoginService extends ResponseMeService<User, Long>
 		String mPassword = MD5Utils.getMD5(password.getBytes());
 		user.setPassword(mPassword);
 		user.setUserId(user.createConstraint());
-
+		System.out.println(user);
 		int result = 0;
 		try {
 			result = usermapper.insertSelective(user);
