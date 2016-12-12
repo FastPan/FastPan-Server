@@ -1,6 +1,6 @@
-﻿package com.stu.fastpan.util;
+package com.stu.fastpan.util;
 
-import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.DigestInputStream;
