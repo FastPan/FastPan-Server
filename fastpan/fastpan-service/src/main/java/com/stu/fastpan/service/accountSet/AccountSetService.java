@@ -47,6 +47,7 @@ public class AccountSetService extends ResponseMeService<User, String>
 		}
 		try {
 			user2 = usermapper.selectByPrimaryKey(user.getUserId());
+			user2.setPassword(null);
 		} catch (Exception e) {
 			log.info("数据库语句问题");
 			System.out.println(e.getMessage());
@@ -227,6 +228,43 @@ public class AccountSetService extends ResponseMeService<User, String>
 			Date date = new Date();
 			user2.setUserId(user.getUserId());
 			user2.setNickName(nickName);
+			user2.setUpdateTime(date);
+			obj = usermapper.updateByPrimaryKeySelective(user2);
+		} catch (Exception e) {
+			log.info("数据库语句问题");
+			System.out.println(e.getMessage());
+			return FAIL(1003, "业务参数错误");
+		}
+
+		if (obj == 1) {
+			log.info("更新成功");
+			session.setAttribute("user", user2);
+			return SUCCESS("更新昵称成功");
+		}
+		log.info("更新失败了");
+		return FAIL(1007, "更新失败");
+	}
+	
+	/**
+	 * 修改邮箱和昵称
+	 */
+
+	@Override
+	public Object updateNameEm(String nickName,String email, HttpSession session) {
+		int obj;
+		User user2;
+		User user = (User) session.getAttribute("user");
+
+		if (user == null) {
+			log.info("session失效了");
+			return FAIL(1006, "session失效");
+		}
+		try {
+			user2 = new User();
+			Date date = new Date();
+			user2.setUserId(user.getUserId());
+			user2.setNickName(nickName);
+			user2.setEmail(email);
 			user2.setUpdateTime(date);
 			obj = usermapper.updateByPrimaryKeySelective(user2);
 		} catch (Exception e) {

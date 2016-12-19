@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.stu.fastpan.dao.pojo.user.ForgetPassMax;
 import com.stu.fastpan.dao.pojo.user.Password;
 import com.stu.fastpan.dao.pojo.user.UpdateEmail;
+import com.stu.fastpan.dao.pojo.user.UpdateInfor;
 import com.stu.fastpan.dao.pojo.user.User;
 import com.stu.fastpan.dao.pojo.user.UserCode;
 import com.stu.fastpan.message.RequestMessage;
@@ -193,7 +194,7 @@ public class UserController {
 		Object obj = accountSetFacade.updateEmail(updateEmail, session);
 		return obj;
 	}
-	
+
 	/**
 	 * 修改邮箱第二步
 	 */
@@ -230,6 +231,19 @@ public class UserController {
 			throws ServletException, IOException {
 		ForgetPassMax forgetPassMax = info.getRequestContext();
 		Object obj = forgetPassFacade.forgetPassEmail(forgetPassMax, session);
+		return obj;
+	}
+	
+	/**
+	 * 修改邮箱和昵称
+	 */
+	
+	@RequestMapping(value = "updateInfo", method = RequestMethod.POST)
+	@ResponseBody
+	public Object updateEmailName(@RequestBody RequestMessage<UpdateInfor> info,HttpSession session)
+			throws ServletException, IOException {
+		UpdateInfor updateInfor = info.getRequestContext();
+		Object obj = accountSetFacade.updateNameEm(updateInfor.getNickName(), updateInfor.getEmail(), session);
 		return obj;
 	}
 	
