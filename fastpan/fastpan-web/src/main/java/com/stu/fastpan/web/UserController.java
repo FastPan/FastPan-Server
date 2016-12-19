@@ -85,35 +85,35 @@ public class UserController {
 		return obj;
 	}
 
-	/**
-	 * 用户的注册功能
-	 */
+//	/**
+//	 * 用户的注册功能
+//	 */
+//
+//	@ResponseBody
+//	@RequestMapping(value = "register", method = RequestMethod.POST)
+//	public Object register(@RequestBody RequestMessage<User> info,
+//			HttpSession session) {
+//
+//		User user = info.getRequestContext();
+//		System.out.println(user);
+//		Object obj = registerLoginFacade.register(user, session);
+//		return obj;
+//	}
 
-	@ResponseBody
-	@RequestMapping(value = "register", method = RequestMethod.POST)
-	public Object register(@RequestBody RequestMessage<User> info,
-			HttpSession session) {
-
-		User user = info.getRequestContext();
-		System.out.println(user);
-		Object obj = registerLoginFacade.register(user, session);
-		return obj;
-	}
-
-	/**
-	 * 用户的登录功能
-	 */
-
-	@ResponseBody
-	@RequestMapping(value = "loginAccount", method = RequestMethod.POST)
-	public Object login(@RequestBody RequestMessage<User> info,
-			HttpSession session) {
-
-		User user = info.getRequestContext();
-		System.out.println(user);
-		Object obj = registerLoginFacade.login(user, session);
-		return obj;
-	}
+//	/**
+//	 * 用户的登录功能
+//	 */
+//
+//	@ResponseBody
+//	@RequestMapping(value = "loginAccount", method = RequestMethod.POST)
+//	public Object login(@RequestBody RequestMessage<User> info,
+//			HttpSession session) {
+//
+//		User user = info.getRequestContext();
+//		System.out.println(user);
+//		Object obj = registerLoginFacade.login(user, session);
+//		return obj;
+//	}
 
 	/**
 	 * 合并验证码功能加强版登录
@@ -126,7 +126,7 @@ public class UserController {
 			throws ServletException, IOException {
 		UserCode userCode = info.getRequestContext();
 		Object obj = registerLoginFacade.loginCode(userCode, session);
-
+		
 		return obj;
 	}
 

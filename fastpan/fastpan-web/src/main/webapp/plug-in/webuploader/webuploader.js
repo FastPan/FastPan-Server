@@ -1889,11 +1889,11 @@
              * });
              */
             addBtn: function( pick ) {
+            	
                 var me = this,
                     opts = me.options,
                     accept = opts.accept,
                     promises = [];
-    
                 if ( !pick ) {
                     return;
                 }
@@ -1913,9 +1913,7 @@
                         runtimeOrder: opts.runtimeOrder,
                         id: this
                     });
-    
                     picker = new FilePicker( options );
-    
                     picker.once( 'ready', deferred.resolve );
                     picker.on( 'select', function( files ) {
                         me.owner.request( 'add-file', [ files ]);
@@ -2993,12 +2991,12 @@
              */
             removeFile: function( file, remove ) {
                 var me = this;
-    
+                
                 file = file.id ? file : me.queue.getFile( file );
     
                 this.request( 'cancel-file', file );
-    
                 if ( remove ) {
+                	
                     this.queue.removeFile( file );
                 }
             },
