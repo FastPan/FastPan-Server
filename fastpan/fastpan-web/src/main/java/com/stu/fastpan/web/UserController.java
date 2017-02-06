@@ -10,13 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.stu.fastpan.dao.pojo.user.ForgetPassMax;
 import com.stu.fastpan.dao.pojo.user.Password;
 import com.stu.fastpan.dao.pojo.user.UpdateEmail;
 import com.stu.fastpan.dao.pojo.user.UpdateInfor;
-import com.stu.fastpan.dao.pojo.user.User;
 import com.stu.fastpan.dao.pojo.user.UserCode;
 import com.stu.fastpan.message.RequestMessage;
 import com.stu.fastpan.service.accountSet.AccountSetFacade;
@@ -166,6 +167,18 @@ public class UserController {
 			throws ServletException, IOException {
 		String image = info.getRequestContext();
 		Object obj = accountSetFacade.updateImage(image, session);
+		return obj;
+	}
+	
+	/**
+	 * 头像上传
+	 */
+	
+	@RequestMapping(value = "uploadImage", method = RequestMethod.POST)
+	@ResponseBody
+	public Object uploadImage(@RequestParam(value = "file") MultipartFile file,HttpSession session)
+			throws ServletException, IOException {
+		Object obj = accountSetFacade.uploadImg(file, session);
 		return obj;
 	}
 	

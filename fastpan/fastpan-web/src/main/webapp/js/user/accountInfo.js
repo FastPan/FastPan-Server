@@ -374,3 +374,42 @@ function updatePass() {
 		}
 	});
 }
+
+function uploadImages() {
+
+	alert("in");
+	/*var formData = new FormData();
+	for(var i = 0; i < count; i++) {
+		formData.append("file." + i, fileArr[i]);
+
+	}*/
+
+	var file = $("#file").val();
+
+	$.ajax({
+		url: "user/uploadImage", //Server script to process data
+		type: 'POST',
+		xhr: function() { // Custom XMLHttpRequest
+			var myXhr = $.ajaxSettings.xhr();
+			if(myXhr.upload) {
+				myXhr.upload.addEventListener('progress', progressHandlingFunction, false);
+			}
+			return myXhr;
+		},
+		//Ajax events
+		beforeSend: beforeSendHandler,
+		error: errorHandler,
+		// filesArray
+		data: file,
+		//Options to tell jQuery not to process data or worry about content-type.
+		cache: false,
+		contentType: false,
+		processData: false,
+		success: function(data) {
+			alert(data);
+			var d = JSON.parse(data);	
+
+		}
+
+	});
+}

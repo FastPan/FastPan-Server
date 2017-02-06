@@ -1,5 +1,9 @@
 package com.stu.fastpan.service.accountSet;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
@@ -8,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.stu.fastpan.dao.mapper.user.UserMapper;
 import com.stu.fastpan.dao.pojo.user.Password;
@@ -16,6 +21,7 @@ import com.stu.fastpan.dao.pojo.user.User;
 import com.stu.fastpan.message.ResponseMessage;
 import com.stu.fastpan.service.base.ResponseMeService;
 import com.stu.fastpan.service.sendPicCode.SendPicCodeService;
+import com.stu.fastpan.util.FileName;
 import com.stu.fastpan.util.MD5Utils;
 
 
@@ -282,4 +288,36 @@ public class AccountSetService extends ResponseMeService<User, String>
 		return FAIL(1007, "更新失败");
 	}
 
+	/**
+	 * 上传头像
+	 */
+	
+	@Override
+	public Object uploadImg(MultipartFile file,HttpSession session) {
+		
+		String fileImge = FileName.makePath(file.getName(), FileName.getPath());
+        System.out.println(fileImge);
+
+		if (!file.isEmpty()) {
+			try {
+				FileOutputStream os = new FileOutputStream(fileImge);
+				InputStream in = file.getInputStream();
+				int b = 0;
+				while ((b = in.read()) != -1) { // 读取文件
+					os.write(b);
+				}
+				os.flush(); // 关闭流
+				in.close();
+				os.close();
+				return SUCCESS(fileImge);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return FAIL(0,"文件不存在，请上传");
+	}
+	
 }

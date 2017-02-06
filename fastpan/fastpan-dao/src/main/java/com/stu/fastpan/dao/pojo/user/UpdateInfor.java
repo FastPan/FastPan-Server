@@ -1,5 +1,12 @@
 package com.stu.fastpan.dao.pojo.user;
 
+/**
+ * 
+ * Description:用于更新用户邮箱和昵称的实体类
+ * 
+ * @date 创建时间： 2016年11月25日
+ * @version 1.0
+ */
 public class UpdateInfor {
 
 	private String nickName;

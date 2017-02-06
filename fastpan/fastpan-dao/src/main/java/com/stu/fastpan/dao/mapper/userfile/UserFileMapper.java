@@ -1,9 +1,7 @@
 package com.stu.fastpan.dao.mapper.userfile;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
-
 import com.stu.fastpan.dao.pojo.userfile.UserFile;
 
 public interface UserFileMapper {

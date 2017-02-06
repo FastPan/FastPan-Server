@@ -2,6 +2,8 @@ package com.stu.fastpan.service.accountSet;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.stu.fastpan.dao.pojo.user.Password;
 import com.stu.fastpan.dao.pojo.user.UpdateEmail;
 
@@ -22,4 +24,6 @@ public interface AccountSetFacade {
 	Object updateNickName(String nickName,HttpSession session);
 
 	Object updateNameEm(String nickName, String email, HttpSession session);
+	
+	Object uploadImg(MultipartFile file,HttpSession session);
 }
