@@ -31,7 +31,9 @@ function WebUploaderInit() {
 									method : "post",
 									dataType : 'json',
 									data : {
-										MD5 : md5
+										MD5 : md5,
+										savePath: file.fileSavePath,
+										fileName:file.name
 									},
 									success : function(response) {
 										if (response.success === true) {
@@ -118,9 +120,11 @@ function WebUploaderInit() {
 				        action: function(dialogItself){
 				        	// 取路径
 				        	var path=getSavePath();
+				        	console.log(path);
 				        	if(path!=null){
 				        		files.forEach(function(e){
 				        			e.fileSavePath=path;
+				        			console.log(e);
 				        		});
 				        		dialogItself.close();
 				        	}
@@ -214,7 +218,7 @@ function WebUploaderInit() {
 		// 将存在file对象中的md5数据携带发送过去。
 		data.fileMd5 = file.md5;
 		data.lastModifiedDate = file.date;
-		data.fileSavePath = "/"
+		data.fileSavePath =file.fileSavePath;
 		// 删除其他数据
 		// delete data.key;
 		lastTime=new Date().getTime();

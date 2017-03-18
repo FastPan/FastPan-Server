@@ -40,22 +40,22 @@ $(function() {
 
 	});
 	$('#table table tbody')
-	.on(
-			'mouseenter mouseleave',
-			'tr',
-			function(event) {
-				if (event.type == "mouseenter") {
-					if (!$('#my-share').hasClass('active')
-							&& !$('#my-delete').hasClass('active')) {
-						$(this)
-								.find('td:nth-of-type(2)')
-								.html(
-										'<span class="batch blue" title="分享">&#xF159;</span><span class="glyphicon glyphicon-download-alt blue" title="下载"></span><span class="glyphicon glyphicon-trash blue" title="删除"></span>');
-					}
-				} else if(event.type == "mouseleave"){
-					$(this).find('td:nth-of-type(2)').html('');
-				}
-			});
+			.on(
+					'mouseenter mouseleave',
+					'tr',
+					function(event) {
+						if (event.type == "mouseenter") {
+							if (!$('#my-share').hasClass('active')
+									&& !$('#my-delete').hasClass('active')) {
+								$(this)
+										.find('td:nth-of-type(2)')
+										.html(
+												'<span class="batch blue" title="分享">&#xF159;</span><span class="glyphicon glyphicon-download-alt blue" title="下载"></span><span class="glyphicon glyphicon-trash blue" title="删除"></span>');
+							}
+						} else if (event.type == "mouseleave") {
+							$(this).find('td:nth-of-type(2)').html('');
+						}
+					});
 	$('.nav-sidebar li').click(function() {
 		$('.nav-sidebar li').removeClass("active");
 		$(this).addClass("active");
@@ -73,6 +73,16 @@ $(function() {
 				$('#table_upload-thead').css('width',
 						$('#table_upload table').width() + 'px');
 			});
+
+	$('#all-file-list').on('click', 'a', function() {
+		if ($(this).parent().find('span').hasClass('glyphicon-folder-open')) {
+			// console.log($(this).attr('path')+$(this).html()+'/');
+			getAllFileList($(this).attr('path') + $(this).html() + '/');
+		}
+	});
+	$('#home-path').on('click', 'a', function() {
+		getAllFileList($(this).attr('path'));
+	});
 	WebUploaderInit();
 
 	// var data = [ {
@@ -103,9 +113,24 @@ function getAllFileList(path) {
 		},
 		success : function(result) {
 			if (result.success === true) {
-				var data=result.result;
+				// console.log(result);
+				var data = result.result;
 				$("#all-file-list").empty();
 				$("#allFile-tmpl").tmpl(data).appendTo("#all-file-list");
+				
+				var arr = path.split('/');
+				$('#home-path').empty();
+				$('#home-path').append('<a path="/">全部文件</a>');
+				temp='/';
+				for (var i = 0; i < arr.length; i++) {
+					if (arr[i] != '') {
+						temp+=arr[i];
+						temp+='/';
+						$('#home-path').append(
+								'<span	class="historylistmanager-separator">&gt;</span><a path="'
+										+ temp + '">' + arr[i] + '</a>');
+					}
+				}
 			}
 		},
 		error : function(error) {

@@ -54,6 +54,12 @@
 		where user_id = #{userId,jdbcType=CHAR} and path=#{path,jdbcType=VARCHAR}
 		and state=#{state,jdbcType=TINYINT}
 	</select>
+	<select id="selectFolderByUserIdPathState" resultMap="BaseResultMapWithFile">
+		select *
+		from user_file
+		where user_id = #{userId,jdbcType=CHAR} and path=#{path,jdbcType=VARCHAR}
+		and state=#{state,jdbcType=TINYINT} and file_id is null
+	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from user_file
 		where user_file_id = #{userFileId,jdbcType=CHAR}

@@ -16,11 +16,13 @@ public interface UserFileMapper {
     UserFile selectByPrimaryKey(String userFileId);
     
     List<UserFile>  selectByUserId(@Param("userId")String userId);
-    
+    				
     List<UserFile>  selectByUserIdAndPath(@Param("userId")String userId,@Param("path")String path);
     
     List<UserFile>  selectByUserIdPathState(@Param("userId")String userId,@Param("path")String path,@Param("state")Byte state);
-
+    
+    List<UserFile>  selectFolderByUserIdPathState(@Param("userId")String userId,@Param("path")String path,@Param("state")Byte state);
+    
     int updateByPrimaryKeySelective(UserFile record);
 
     int updateByPrimaryKey(UserFile record);

@@ -65,7 +65,8 @@ public class FileServiceImpl extends BaseService implements FileService {
 			rm = FAIL(9999, "md5失效");
 		}
 		Date getDate = new Date(fileUpload.getLastModifiedDate());
-		String fileName = fileUpload.getFileMd5();
+		String split =fileUpload.getName().indexOf(".")!=-1?fileUpload.getName().substring(fileUpload.getName().lastIndexOf(".")+1):"";
+		String fileName = fileUpload.getFileMd5()+split;
 		try {
 			for (MultipartFile mf : files) {
 				if (!mf.isEmpty()) {
@@ -104,7 +105,6 @@ public class FileServiceImpl extends BaseService implements FileService {
 					// 所有分片文件都上传完成
 					// 将所有分片文件合并到一个文件中
 					if (parentFileDir.listFiles().length == fileUpload.getChunks()) {
-						System.out.println("上传完毕");
 						java.io.File destTempFile = new java.io.File(
 								getTempFilePath(getDate, fileUpload.getFileMd5(), userId), fileName);
 						for (int i = 0; i < fileUpload.getChunks(); i++) {
@@ -156,6 +156,7 @@ public class FileServiceImpl extends BaseService implements FileService {
 									rm = FAIL(9999, "删除临时文件异常");
 								}
 							}
+							System.out.println(fileUpload.getFileSavePath());
 							// 关联至用户文件表
 							byte state = 0;
 							rm = userFileService.insert(new UserFile(UserFile.createUUID(), fileUpload.getName(),
@@ -188,6 +189,10 @@ public class FileServiceImpl extends BaseService implements FileService {
 		if (checkMD5File != null) {
 			// 文件存在
 			System.out.println("直接秒传");
+			// 关联至用户文件表
+			byte state = 0;
+			rm = userFileService.insert(new UserFile(UserFile.createUUID(), fileName,
+					savePath, userId, checkMD5File.getFileId(), state));
 			rm = new ResponseMessage(1000, "文件秒传", null, true);
 		} else {
 			rm = new ResponseMessage(0, "文件不存在，请上传", null, true);

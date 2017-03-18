@@ -40,5 +40,16 @@ public class UserFileServiceImpl extends BaseService implements UserFileService{
 		}
 		return rm;
 	}
+	@Override
+	public ResponseMessage selectFolderByUserIdPathState(String userId, String path, Byte state) {
+		ResponseMessage rm=null;
+		try{
+			rm=SUCCESS(userFileMapper.selectFolderByUserIdPathState(userId, path, state));
+		}catch (Exception e) {
+			e.printStackTrace();
+			rm=FAIL(9998, "数据库执行异常");
+		}
+		return rm;
+	}
 	
 }

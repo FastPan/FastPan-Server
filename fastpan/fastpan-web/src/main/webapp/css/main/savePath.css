@@ -1,25 +1,26 @@
-/* .modal-body{
-	font-family: Arial;
-	background-color: #2C3E50;
-	
-} */
-.tree {
-	color: #46CFB0;
-	height:300px;
+.module-list .module-history-list .historylistmanager-history {
+	height: 16px;
+	line-height: 16px;
+	padding-left: 5px;
 }
 
-.tree li, .tree li>a, .tree li>span {
-	padding: 4pt;
-	border-radius: 4px;
+.historylistmanager-history {
+	height: 42px;
+    line-height: 21px;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    padding-left: 2px;
+    font-size: 1px;
 }
 
-.tree li a {
-	text-decoration: none;
-	line-height: 20pt;
-	border-radius: 4px;
+li {
+	list-style-type: none;
 }
 
-.tree li a:hover {
-	background-color: #34BC9D;
-	color: #fff;
+.historylistmanager-history li {
+	float: left;
+}
+.historylistmanager-separator{
+	padding: 0 2px 0 2px;
 }
