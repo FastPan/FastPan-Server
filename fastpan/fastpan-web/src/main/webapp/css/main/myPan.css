@@ -202,3 +202,31 @@ a:hover {
 ._hidden{
 	visibility:hidden
 }
+
+
+.module-list .module-history-list .historylistmanager-history {
+	height: 16px;
+	line-height: 16px;
+	padding-left: 5px;
+}
+
+.historylistmanager-history {
+	/*height: 42px;*/
+    line-height: 21px;
+   /* overflow: hidden;*/
+    white-space: nowrap;
+    display: block;
+    padding-left: 2px;
+    font-size: 1px;
+}
+
+li {
+	list-style-type: none;
+}
+
+.historylistmanager-history li {
+	float: left;
+}
+.historylistmanager-separator{
+	padding: 0 2px 0 2px;
+}

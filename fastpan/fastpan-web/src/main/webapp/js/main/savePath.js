@@ -1,9 +1,41 @@
 $(function() {
-	var tree = $(".tree").treemenu(getSavePathList);
+	$('#savePath').on('click', 'tr', function() {
+		showPath($(this).find('.userFileName').html(), true);
+	});
+	$('#path').on('click', 'a', function() {
+		// getSavePathList($(this).attr('path'));
+		showPath($(this).attr('path'), false);
+	});
+
+	getSavePathList('/');
 });
-function getSavePathList(path, id, func) {
+function showPath(path, isAppend) {
+	//var node = $('#path :not(.historylistmanager-separator)');
+	if (isAppend === true) {
+		path = getSavePath() + path + '/';
+	}
+	getSavePathList(path, function() {
+		var arr = path.split('/');
+		$('#path').empty();
+		$('#path').append('<a path="/">全部文件</a>');
+		temp='/';
+		for (var i = 0; i < arr.length; i++) {
+			if (arr[i] != '') {
+				temp+=arr[i];
+				temp+='/';
+				$('#path').append(
+						'<span	class="historylistmanager-separator">&gt;</span><a path="'
+								+ temp + '">' + arr[i] + '</a>');
+			}
+		}
+
+	});
+}
+
+function getSavePathList(path, func) {
+	var argumentsLength = arguments.length;
 	$.ajax({
-		url : '../userFile/getFileList',
+		url : '../userFile/getSavePathList',
 		data : {
 			path : path,
 			state : 0
@@ -16,7 +48,16 @@ function getSavePathList(path, id, func) {
 		success : function(result) {
 			if (result.success === true) {
 				var data = result.result;
-				func(id, data);
+				// console.log(data);
+				switch (argumentsLength) {
+				case 2:
+					func();
+				case 1:
+					$("#savePath").empty();
+					$("#savePath-tmpl").tmpl(data).appendTo("#savePath");
+					break;
+				}
+
 			}
 		},
 		error : function(error) {
@@ -29,53 +70,66 @@ function getSavePathList(path, id, func) {
 					}, 1000);
 				}
 			});
+		},
+		fail : function() {
+			alert('fail');
 		}
 	});
 }
 function clickNewSaveFolder() {
-	var node;
-	if($('.checked').length==0){
-		$('.tree li').toggleClass('tree-opened');
-		node=$('.tree li a').siblings();
-	}else{
-		node=$('.checked').siblings();
-	}
-	var path=$('.tree').getPath(node.attr('id'));
-	node.append(
-			'<li class="tree-empty"><input type="text"></input></li>');
-	node.find('input').blur(function() {newSaveFolder(node,path,$(this).val());});
-	node.find('input').bind('keypress', function(event) {
-		if (event.keyCode == "13"){
-			newSaveFolder(node,path,$(this).val());
-		}
-	});
+	BootstrapDialog
+			.show({
+				title : '新建文件夹',
+				message : '<div><label>请输入文件夹名：</label><input id="newFloder"style="width:100%"/></div>',
+				onshown:function(){
+					$('#newFloder').focus();
+				},
+				buttons : [ {
+					label : '确定',
+					cssClass : 'btn-primary',
+					action : function(dialogItself) {
+						var newFloder = $('#newFloder').val();
+						if (newFloder != '' && newFloder !== undefined) {
+							newSaveFolder(getSavePath(), newFloder);
+						}
+						dialogItself.close();
+					}
+				}, {
+					label : '取消',
+					action : function(dialogItself) {
+						dialogItself.close();
+					}
+				} ]
+			});
 }
-function getSavePath(){
-	var path=null;
-	if($('.checked').length!=0){
-		path=$('.tree').getPath($('.checked').siblings().attr('id'));
-	}
-	return path;
+function getSavePath() {
+	return $('#path').children("a:last-child").attr('path');
 }
-function newSaveFolder(node,path,newFolder){
-	//node.find('input').parent().remove();
+function newSaveFolder(path, newFolder) {
 	$.ajax({
-		url : '../userFile/newUserFile',
+		url : '../userFile/newFloder',
 		data : {
 			path : path,
-			userFileName:newFolder,
+			userFileName : newFolder,
 			state : 0
 		},
 		type : 'post',
 		dataType : 'json',
-		headers : {
-			"Content-Type" : "application/json"
-		},
 		success : function(result) {
 			if (result.success === true) {
-				node.find('input').parent().remove();
-				//node.append('<li class="tree-empty"><input type="text"></input></li>');
+				getSavePathList(path);
+			} else {
+				BootstrapDialog.show({
+					title : "消息",
+					message : " 获取文件列表失败,服务器出错了",
+					onshown : function(dialog) {
+						setTimeout(function() {
+							dialog.close();
+						}, 1000);
+					}
+				});
 			}
+
 		},
 		error : function(error) {
 			BootstrapDialog.show({
@@ -89,4 +143,7 @@ function newSaveFolder(node,path,newFolder){
 			});
 		}
 	});
+}
+function back(){
+	getSavePath()
 }

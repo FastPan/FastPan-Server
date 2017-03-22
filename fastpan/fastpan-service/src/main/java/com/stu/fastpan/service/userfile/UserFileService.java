@@ -9,6 +9,7 @@ public interface UserFileService {
 
 	ResponseMessage  selectByUserIdPathState(@Param("userId") String userId, @Param("path") String path,
 			@Param("state") Byte state);
-
+	ResponseMessage  selectFolderByUserIdPathState(@Param("userId") String userId, @Param("path") String path,
+			@Param("state") Byte state);
 	ResponseMessage insert(UserFile userFile);
 }

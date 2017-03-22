@@ -8,13 +8,34 @@
 <link href="../css/main/savePath.css" rel="stylesheet">
 </head>
 <body class="body">
-	<button type="button" class="btn btn-default" onclick="clickNewSaveFolder()">新建文件夹</button>
-	<ul class="tree" style="overflow-y: scroll;">
-		<li class="tree-closed"><a class="toggler">/</a>
-			<ul id="1"></ul></li>
-	</ul>
+	<button type="button" class="btn btn-default"
+		onclick="clickNewSaveFolder()">新建文件夹</button>
+	<div class="module-history-list">
+		<ul class="historylistmanager-history">
+			<li><a href="javascript:;" onclick="back()">返回上一级</a><span
+				class="historylistmanager-separator">|</span></li>
+			<li id="path"><a path="/">全部文件</a></li>
+		</ul>
+	</div>
+	<div style="overflow-y: scroll; height: 300px">
+		<table class="table table-hover">
+			<tbody id="savePath">
+
+			</tbody>
+		</table>
+	</div>
 </body>
 <script src="../plug-in/jquery/js/jquery.min.js"></script>
-<script src="../plug-in/jquery-treemenu/js/jquery.treemenu.js"></script>
+
+<script src="../plug-in/jquery-time/js/jquery-time.js"></script>
+<script src="../plug-in/jquery-tmpl/js/jquery.tmpl.min.js"></script>
 <script src="../js/main/savePath.js"></script>
+<script id="savePath-tmpl" type="text/x-jquery-tmpl">
+     		<tr>
+           		<td><span class="glyphicon glyphicon-folder-open">&nbsp;</span><span class="userFileName">${userFileName}</span></input></td>
+				<td></td>
+				<td></td>
+				<td>${$.myTime.UnixToDate(createTime,true)}</td>
+       	 	</tr>
+</script>
 </html>
