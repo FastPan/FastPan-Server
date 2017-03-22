@@ -42,6 +42,8 @@
 						<value>/user/register</value>
 						<value>/user/registerCode</value>
 						<value>/user/doRegister</value>
+						<value>/user/forgetPassword</value>
+						<value>/user/forgetPassEmail</value>
 					</list>
 				</property>
 			</bean>

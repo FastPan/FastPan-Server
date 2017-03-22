@@ -123,7 +123,10 @@ $(function() {
 });
 
 function getCode() {
-	
+	if (submit == 1) {
+		return;
+	}
+	submit++;
 	var email = $('form input[name="email"]').val();
 	$.ajax({
 		url : '../verify/sendEmail',
@@ -134,6 +137,7 @@ function getCode() {
 			"Content-Type" : "application/json"
 		},
 		success : function(data) {
+			submit--;
 			var message = data.success ? '验证码发送成功' : data.message;
 			BootstrapDialog.show({
 				title : "消息",
@@ -148,6 +152,7 @@ function getCode() {
 			});
 		},
 		error : function(error) {
+			submit--;
 			BootstrapDialog.show({
 				title : "消息",
 				message : "验证码发送失败,服务器出错了",
@@ -215,7 +220,10 @@ function getCode() {
 //}
 
 function findPassword() {
-	alert("11");
+	if (submit == 1) {
+		return;
+	}
+	submit++;
 	var password = $('form input[name="newPassword"]').val();
 	var email = $('form input[name="email"]').val();
 	var code = $('form input[name="verificationCode"]').val();
@@ -230,6 +238,7 @@ function findPassword() {
 			"Content-Type" : "application/json"
 		},
 		success : function(data) {
+			submit--;
 			console.log(data);
 			var message = data.success ? data.result : data.message;
 			BootstrapDialog.show({
@@ -251,6 +260,7 @@ function findPassword() {
 
 		},
 		error : function(error) {
+			submit--;
 			console.log("========"+data);
 			BootstrapDialog.show({
 				title : "消息",
