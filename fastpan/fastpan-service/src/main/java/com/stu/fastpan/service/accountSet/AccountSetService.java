@@ -1,11 +1,13 @@
 package com.stu.fastpan.service.accountSet;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.stu.fastpan.dao.mapper.user.UserMapper;
 import com.stu.fastpan.dao.pojo.user.Password;
@@ -72,7 +75,6 @@ public class AccountSetService extends ResponseMeService<User, String>
 		User user2=new User();
 		int obj;
 		User user = (User) session.getAttribute("user");
-
 		if (user == null) {
 			return FAIL(1006, "session失效");
 		}
@@ -290,21 +292,28 @@ public class AccountSetService extends ResponseMeService<User, String>
 
 	/**
 	 * 上传头像
+	 * 无限上传不确定。。。
 	 */
 	
 	@Override
-	public Object uploadImg(MultipartFile file,HttpSession session) {
+	public Object uploadImg(CommonsMultipartFile file,HttpSession session) {
+		System.out.println(file.getOriginalFilename());
 		
-		String fileImge = FileName.makePath(file.getName(), FileName.getPath());
-        System.out.println(fileImge);
-
+//      String path = this.getClass().getClassLoader().getResource("/").getPath();
+//      String path2 = path.substring(1, (path.length()-17))+"/img";
+        
+        String path3 = "D:/fastPan/FastPan-Server/fastpan/fastpan-web/src/main/webapp/images";
+        
+        String fileImge = FileName.makePath(FileName.makeFileName(file.getOriginalFilename()), path3);
 		if (!file.isEmpty()) {
 			try {
-				FileOutputStream os = new FileOutputStream(fileImge);
+				FileOutputStream os = new FileOutputStream(new File(fileImge));
 				InputStream in = file.getInputStream();
+				byte[] arr=new byte[400];
 				int b = 0;
-				while ((b = in.read()) != -1) { // 读取文件
-					os.write(b);
+				while ((b = in.read(arr)) != -1) { // 读取文件
+					os.write(arr, 0, b);
+//					os.write(b);
 				}
 				os.flush(); // 关闭流
 				in.close();

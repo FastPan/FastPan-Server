@@ -42,6 +42,7 @@ public class RegisterLoginService extends ResponseMeService<User, Long>
 		String mPassword = MD5Utils.getMD5(password.getBytes());
 		user.setPassword(mPassword);
 		user.setUserId(user.createConstraint());
+		user.setImage("../images/1234.jpg");
 		System.out.println(user);
 		int result = 0;
 		try {

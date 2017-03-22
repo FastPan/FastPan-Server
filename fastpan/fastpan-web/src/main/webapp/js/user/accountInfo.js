@@ -33,6 +33,7 @@ $(function() {
 					'click',
 					function() {
 						var img = cropper.getDataURL();
+						console.log("图像路径："+img);
 						$('.cropped').html('');
 						$('.cropped')
 								.append(
@@ -372,6 +373,35 @@ function updatePass() {
 				}
 			});
 		}
+	});
+}
+
+function fileBets(){
+	var a=$("#file").val();
+//	var b =a.lastIndexOf(".");
+//	var c = a.substr(b+1);
+//	if(b>-1&&b<a.length-1){
+//		if(c !=='jpg' ){
+//			BootstrapDialog.alert("图片格式不正确");
+//			return false;
+//		}
+//	}
+	BootstrapDialog.show({
+		title:'提示信息',
+		message:'确定要上传新的宣传图片么',
+		buttons:[{
+			label:'取消',
+			 action: function(dialogItself){
+                 dialogItself.close();
+             }
+			
+		},{
+			label:'确定',
+			action:function(dialogItself){
+				dialogItself.close();
+				fileBets1();
+			}
+		}]
 	});
 }
 

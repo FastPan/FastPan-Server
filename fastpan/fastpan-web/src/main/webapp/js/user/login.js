@@ -53,7 +53,7 @@ $(function() {
 						}
 					});
 	$('#pictureCode').click(function() {
-		$('#pictureCode').attr('src', './pictureCode?' + new Date().getTime());
+		$('#pictureCode').attr('src', '../verify/pictureCode?' + new Date().getTime());
 	});
 });
 function login() {
@@ -86,6 +86,7 @@ function login() {
 						$('button[type="submit"]').removeAttr("disabled");
 						dialog.close();
 						if (data.success) {
+							
 							window.location.href = "../main/index";
 						}
 					}, 1000);

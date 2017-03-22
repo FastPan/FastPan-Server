@@ -121,3 +121,50 @@ function getAllFileList(path) {
 		}
 	});
 }
+
+$(document).ready(function() {
+	$.ajax({
+		url : '../user/getPersonInfor',
+		data : "",
+		type : 'get',
+		dataType : 'json',
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		success : function(data) {
+			if (data.success) {
+//				console.log(data.result.nickName);
+//				$('form input[name="nickName"]').val(data.result.nickName);
+//				$('form input[name="email"]').val(data.result.email);
+				$("#nickName").html(data.result.nickName);
+				$("#imageId").attr("src",data.result.image);
+
+			} else {
+				BootstrapDialog.show({
+					title : "消息",
+					message : "请登录",
+					onshown : function(dialog) {
+						setTimeout(function() {
+							$('button[type="submit"]').removeAttr("disabled");
+							dialog.close();
+						}, 1000);
+					}
+				});
+			}
+
+		},
+		error : function(error) {
+
+			BootstrapDialog.show({
+				title : "消息",
+				message : "服务器出错了",
+				onshown : function(dialog) {
+					setTimeout(function() {
+						$('button[type="submit"]').removeAttr("disabled");
+						dialog.close();
+					}, 1000);
+				}
+			});
+		}
+	});
+});

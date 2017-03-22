@@ -55,7 +55,7 @@
 	<mvc:resources mapping="/css/**" location="/css/" />
 	<mvc:resources mapping="/js/**" location="/js/" />
 	<mvc:resources mapping="/fonts/**" location="/fonts/" />
-	<mvc:resources mapping="/images/**" location="/images/" />
+	<mvc:resources mapping="/images/**.jpg" location="/images/" />
 	<mvc:resources mapping="/pages/**" location="/pages/" />
 	<mvc:resources mapping="/plug-in/**" location="/plug-in/" />
 	<bean
@@ -64,6 +64,7 @@
 		<property name="prefix" value="/"></property>
 		<property name="contentType" value="text/html"></property>
 	</bean>
+	
 	<mvc:view-controller path="/" view-name="index" />
 
 	<import resource="springMVC-interceptor.xml" />

@@ -62,15 +62,15 @@
 						<div class="action">
 							<div class="new-contentarea tc">
 								<a href="javascript:void(0)" class="upload-img"> <label
-									for="upload-file">上传图像</label>
-								</a> <input type="file" class="" name="file" id="file" />
+									for="upload-file" id="upload-file">上传图像</label>
+								</a> <input type="file" class="" name="file" id="file" onchange="fileBets()"/>
 								
 							</div>
 							<input type="button" id="btnCrop" class="Btnsty_peyton"
 								value="裁切"> <input type="button" id="btnZoomIn"
 								class="Btnsty_peyton" value="+"> <input type="button"
 								id="btnZoomOut" class="Btnsty_peyton" value="-">
-							<button id="upload">upload</button>
+							<button type="button" id="upload" class="btn btn-primary" onclick="uploadImages()">upload</button>
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-4">
@@ -90,7 +90,6 @@
 						<div class="form-group email">
 							<input type="email" class="form-control" name="email"
 								placeholder="邮箱" required="required" >
-							
 						</div>
 						<div class="form-inline">
 						<div class="form-group">

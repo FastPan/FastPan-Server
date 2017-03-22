@@ -3,6 +3,7 @@ package com.stu.fastpan.web;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.stu.fastpan.dao.pojo.user.ForgetPassMax;
 import com.stu.fastpan.dao.pojo.user.Password;
@@ -61,11 +63,18 @@ public class UserController {
 		return "/pages/user/register.html";
 	}
 	
-	// 注册页面
+	// 个人设置页面
 	@RequestMapping("accountInfo")
 	public String accountInfo() {
 		return "/pages/user/accountInfo.html";
 	}
+	
+	// 首页
+	@RequestMapping("/forgetPassword")
+	public String index() {
+		return "/pages/user/forgetPassword.html";
+	}
+	
 //	// 注册页面
 //	@RequestMapping(value = "doRegister", method = RequestMethod.POST)
 //	public String doRegister() {
@@ -176,7 +185,7 @@ public class UserController {
 	
 	@RequestMapping(value = "uploadImage", method = RequestMethod.POST)
 	@ResponseBody
-	public Object uploadImage(@RequestParam(value = "file") MultipartFile file,HttpSession session)
+	public Object uploadImage(@RequestParam(value ="file") CommonsMultipartFile file,HttpSession session)
 			throws ServletException, IOException {
 		Object obj = accountSetFacade.uploadImg(file, session);
 		return obj;
