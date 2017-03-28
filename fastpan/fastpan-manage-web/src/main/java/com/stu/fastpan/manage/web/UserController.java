@@ -17,7 +17,7 @@ public class UserController {
 
 	// 登录
 	@RequestMapping(value = "/doLogin", method = RequestMethod.POST)
-	public String doLogin(HttpSession session) {
+	public String doLogin(HttpSession session) { 
 		session.setAttribute("user", "test");
 		return "redirect:/main/index";
 	}

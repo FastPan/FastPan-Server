@@ -67,13 +67,5 @@ public class ResponseMessage {
     public void setSuccess(boolean success) {
         this.success = success;
     }
-
-	@Override
-	public String toString() {
-		return "ResponseMessage [code=" + code + ", message=" + message + ", success=" + success + ", result=" + result
-				+ "]";
-	}
-
-
     
 }

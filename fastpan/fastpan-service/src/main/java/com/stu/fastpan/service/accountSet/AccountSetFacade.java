@@ -14,9 +14,7 @@ import com.stu.fastpan.dao.pojo.user.UpdateEmail;
 public interface AccountSetFacade {
 
 	Object selectByPrimaryKey(HttpSession session);
-	
-	Object updateImage(String image ,HttpSession session);
-	
+		
 	Object updateEmail(UpdateEmail updateEmail , HttpSession session);
 	
 	Object updateEmail2(String newCode , HttpSession session);
@@ -27,5 +25,9 @@ public interface AccountSetFacade {
 
 	Object updateNameEm(String nickName, String email, HttpSession session);
 	
-	Object uploadImg(CommonsMultipartFile file,HttpSession session);
+//	Object uploadImg(CommonsMultipartFile file,HttpSession session);
+	
+	Object updateImage(HttpSession session);
+	
+    Object uploadImg(String strImg , HttpSession session);
 }

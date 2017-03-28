@@ -30,5 +30,5 @@
 		<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
 		<property name="filters" value="stat" />
 	</bean>
-
+	     	
 </beans>

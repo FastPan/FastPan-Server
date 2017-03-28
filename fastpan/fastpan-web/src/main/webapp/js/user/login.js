@@ -96,9 +96,10 @@ function login() {
 		},
 		error : function(error) {
 			submit--;
+			var message = data.success ? '登录成功' : data.message;
 			BootstrapDialog.show({
 				title : "消息",
-				message : "登录失败,服务器出错了",
+				message : message,
 				onshown : function(dialog) {
 					setTimeout(function() {
 						$('button[type="submit"]').removeAttr("disabled");

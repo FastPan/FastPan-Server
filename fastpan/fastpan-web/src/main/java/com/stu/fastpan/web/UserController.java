@@ -166,18 +166,41 @@ public class UserController {
 		return obj;
 	}
 
+//	/**
+//	 * 修改头像
+//	 */
+//	
+//	@RequestMapping(value = "updateImage", method = RequestMethod.POST)
+//	@ResponseBody
+//	public Object updateImage(@RequestBody RequestMessage<String> info,HttpSession session)
+//			throws ServletException, IOException {
+//		String image = info.getRequestContext();
+//		Object obj = accountSetFacade.updateImage(image, session);
+//		return obj;
+//	}
+	
 	/**
 	 * 修改头像
 	 */
-	
-	@RequestMapping(value = "updateImage", method = RequestMethod.POST)
+	@RequestMapping(value = "updateImage", method = RequestMethod.GET)
 	@ResponseBody
-	public Object updateImage(@RequestBody RequestMessage<String> info,HttpSession session)
+	public Object updateImage(HttpSession session)
 			throws ServletException, IOException {
-		String image = info.getRequestContext();
-		Object obj = accountSetFacade.updateImage(image, session);
+		Object obj = accountSetFacade.updateImage(session);
 		return obj;
 	}
+	
+//	/**
+//	 * 头像上传
+//	 */
+//	
+//	@RequestMapping(value = "uploadImage", method = RequestMethod.POST)
+//	@ResponseBody
+//	public Object uploadImage(@RequestParam(value ="file") CommonsMultipartFile file,HttpSession session)
+//			throws ServletException, IOException {
+//		Object obj = accountSetFacade.uploadImg(file, session);
+//		return obj;
+//	}
 	
 	/**
 	 * 头像上传
@@ -185,9 +208,9 @@ public class UserController {
 	
 	@RequestMapping(value = "uploadImage", method = RequestMethod.POST)
 	@ResponseBody
-	public Object uploadImage(@RequestParam(value ="file") CommonsMultipartFile file,HttpSession session)
+	public Object uploadImage(@RequestParam("imgStr") String imgStr,HttpSession session)
 			throws ServletException, IOException {
-		Object obj = accountSetFacade.uploadImg(file, session);
+		Object obj = accountSetFacade.uploadImg(imgStr, session);
 		return obj;
 	}
 	

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.stu.fastpan.dao.mapper.manageRole.ManageRoleMapper">
+	
+	<resultMap id="BaseResultMap"
+		type="com.stu.fastpan.dao.pojo.manageRole.ManageRole">
+		<id column="role_id" property="roleId" jdbcType="TINYINT" />
+		<result column="level" property="level" jdbcType="TINYINT" />
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		role_id, level, role_name
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Byte">
+		select
+		<include refid="Base_Column_List" />
+		from role
+		where role_id = #{roleId,jdbcType=TINYINT}
+	</select>
+	
+	<select id="selectRoleList" resultMap="BaseResultMap" >
+		select 
+        <include refid="Base_Column_List" />
+		from role
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Byte">
+		delete from role
+		where role_id = #{roleId,jdbcType=TINYINT}
+	</delete>
+	
+	<insert id="insert" parameterType="com.stu.fastpan.dao.pojo.manageRole.ManageRole">
+		insert into role (role_id, level, role_name
+		)
+		values (#{roleId,jdbcType=TINYINT}, #{level,jdbcType=TINYINT},
+		#{roleName,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.stu.fastpan.dao.pojo.manageRole.ManageRole">
+		insert into role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="roleId != null">
+				role_id,
+			</if>
+			<if test="level != null">
+				level,
+			</if>
+			<if test="roleName != null">
+				role_name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="roleId != null">
+				#{roleId,jdbcType=TINYINT},
+			</if>
+			<if test="level != null">
+				#{level,jdbcType=TINYINT},
+			</if>
+			<if test="roleName != null">
+				#{roleName,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.stu.fastpan.dao.pojo.manageRole.ManageRole">
+		update role
+		<set>
+			<if test="level != null">
+				level = #{level,jdbcType=TINYINT},
+			</if>
+			<if test="roleName != null">
+				role_name = #{roleName,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where role_id = #{roleId,jdbcType=TINYINT}
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="com.stu.fastpan.dao.pojo.manageRole.ManageRole">
+		update role
+		set level = #{level,jdbcType=TINYINT},
+		role_name = #{roleName,jdbcType=VARCHAR}
+		where role_id = #{roleId,jdbcType=TINYINT}
+	</update>
+</mapper>

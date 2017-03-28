@@ -76,12 +76,28 @@ $(function() {
 						}
 					});
 });
+
+function daojishi(){
+	var a=60;
+	tme=setInterval(function(){
+		a--;			
+		var time=document.getElementById('sendCode');
+		$(time).text(a)
+		if(a==0){
+			 clearTimeout(tme);
+			 $(time).text("重新发送")
+		}
+	},1000)
+}
+
+
 /**
  * 获取验证码
  * 
  * @returns
  */
 function getCode() {
+	daojishi();
 	var email = $('form input[name="email"]').val();
 	$.ajax({
 		url : '../verify/sendEmail',

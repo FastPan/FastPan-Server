@@ -8,6 +8,7 @@
 	</parent>
 	<artifactId>fastpan-web</artifactId>
 	<dependencies>
+		
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>fastpan-service</artifactId>
@@ -23,6 +24,7 @@
 			<artifactId>fastpan-common</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
@@ -64,9 +66,7 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 		</dependency>
-		
-
-
+	
 	</dependencies>
 	<profiles>
 		<profile>

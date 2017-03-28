@@ -40,6 +40,12 @@
 				</button>
 				<a class="navbar-brand" href="../">极速网盘</a>
 			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="../main/index" target="_black"><span id="nickName">后退</span></a>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</nav>
 	<div class="container-fluid">
@@ -55,29 +61,42 @@
 				class="col-sm-4 col-sm-offset-5 col-md-5 col-md-offset-4 main">
 				<div id="tab-head-img" class="row">
 					<div class="col-sm-12  col-md-8">
+						
 						<div class="imageBox">
 							<div class="thumbBox"></div>
 							<div class="spinner" style="display: none">Loading...</div>
 						</div>
+						
 						<div class="action">
 							<div class="new-contentarea tc">
-								<a href="javascript:void(0)" class="upload-img"> <label
-									for="upload-file" id="upload-file">上传图像</label>
-								</a> <input type="file" class="" name="file" id="file" onchange="fileBets()"/>
-								
+								<a href="javascript:void(0)" class="upload-img">
+								<label for="upload-file" id="upload-file">上传图像</label>
+									<input type="file" class="" name="fileImage" id="fileImage"/>
+								</a> 
+							</div>	
+							
+							<input type="button" id="btnCrop" class="Btnsty_peyton" value="裁切"> 
+							<input type="button" id="btnZoomIn" class="Btnsty_peyton" value="+"> 
+							<input type="button" id="btnZoomOut" class="Btnsty_peyton" value="-">
+						</div>
+						<div>
+							<div>
+							    <button type="button" id="saveImg" class="btn btn-primary" onclick="uploadImages()">保存</button>
 							</div>
-							<input type="button" id="btnCrop" class="Btnsty_peyton"
-								value="裁切"> <input type="button" id="btnZoomIn"
-								class="Btnsty_peyton" value="+"> <input type="button"
-								id="btnZoomOut" class="Btnsty_peyton" value="-">
-							<button type="button" id="upload" class="btn btn-primary" onclick="uploadImages()">upload</button>
+							<div>
+								<button type="button" id="updateImg" class="btn btn-primary" onclick="updateImages()">修改头像</button>
+							</div>
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-4">
 						<div class="cropped"></div>
 					</div>
-				</div>
+				</div> 
 				
+                <!-- <img id="pic" src="" >
+                <input  type="file" id="upload" name="file" accept="image/png,image/gif"/>
+                <input  type="button"  value="上传" onclick="return ajaxFileUpload();"/> -->
+
 				<div id="tab-myinfo" class="_hide">
 					<h2 class="form-signin-heading" align="center">个人信息修改</h2>
 					<form class="form-signin" role="form" action="#" onsubmit="testCode()"
@@ -133,8 +152,9 @@
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="../plug-in/jquery/js/jquery.min.js"></script>
 	<script src="../plug-in/bootstrap/js/bootstrap.min.js"></script>
-	<!-- 	<script src="../js/plug-in/docs.min.js"></script> -->
-	<script src="../plug-in/cropbox/js/cropbox.js"></script>
+	<script src="../plug-in/ajaxfileupload/ajaxfileupload.js"></script>
+	<script src="../plug-in/cropbox/js/cropbox.js"></script> 
+	
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="../plug-in/ie/js/ie10-viewport-bug-workaround.js"></script>
 	<script src="../plug-in/bootstrapDialog/js/bootstrap-dialog.min.js"></script>

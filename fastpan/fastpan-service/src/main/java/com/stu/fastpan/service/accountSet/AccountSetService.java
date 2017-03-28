@@ -1,21 +1,18 @@
 package com.stu.fastpan.service.accountSet;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import sun.misc.BASE64Decoder;
 
 import com.stu.fastpan.dao.mapper.user.UserMapper;
 import com.stu.fastpan.dao.pojo.user.Password;
@@ -64,39 +61,6 @@ public class AccountSetService extends ResponseMeService<User, String>
 		}
 		log.info("查询成功");
 		return SUCCESS(user2);
-	}
-
-	/**
-	 * 修改头像
-	 */
-
-	@Override
-	public ResponseMessage updateImage(String image, HttpSession session) {
-		User user2=new User();
-		int obj;
-		User user = (User) session.getAttribute("user");
-		if (user == null) {
-			return FAIL(1006, "session失效");
-		}
-		try {
-			Date date = new Date();
-			user2.setUserId(user.getUserId());
-			user2.setImage(image);
-			user2.setUpdateTime(date);
-			obj = usermapper.updateByPrimaryKeySelective(user2);
-		} catch (Exception e) {
-			log.info("数据库语句问题");
-			System.out.println(e.getMessage());
-			return FAIL(1003, "业务参数错误");
-		}
-
-		if (obj == 1) {
-			session.setAttribute("user", user2);
-			log.info("更新成功");
-			return SUCCESS("更新头像成功");
-		}
-		log.info("更新失败");
-		return FAIL(1007, "更新失败");
 	}
 
 	/**
@@ -290,42 +254,168 @@ public class AccountSetService extends ResponseMeService<User, String>
 		return FAIL(1007, "更新失败");
 	}
 
-	/**
-	 * 上传头像
-	 * 无限上传不确定。。。
-	 */
+//	/**
+//	 * 修改头像
+//	 */
+//
+//	@Override
+//	public ResponseMessage updateImage(String image, HttpSession session) {
+//		User user2=new User();
+//		int obj;
+//		
+//		//项目目录下
+//		String path3 = "D:/fastPan/FastPan-Server/fastpan/fastpan-web/src/main/webapp/images";
+//		
+//		User user = (User) session.getAttribute("user");
+//		if (user == null) {
+////			return FAIL(1006, "session失效");
+//			return FAIL(1006, "请重新登录");
+//		}
+//		try {
+//			//将头像移动到项目目录下
+//			File file = new File(image);
+//			file.renameTo(new File(path3+file.getName()));
+//			
+//			Date date = new Date();
+//			user2.setUserId(user.getUserId());
+//			user2.setImage("../images/"+file.getName());
+//			user2.setUpdateTime(date);
+//			obj = usermapper.updateByPrimaryKeySelective(user2);
+//		} catch (Exception e) {
+//			log.info("数据库语句问题");
+//			System.out.println(e.getMessage());
+//			return FAIL(1003, "业务参数错误");
+//		}
+//
+//		if (obj == 1) {
+//			session.setAttribute("user", user2);
+//			log.info("更新成功");
+//			return SUCCESS("更新头像成功");
+//		}
+//		log.info("更新失败");
+//		return FAIL(1007, "更新失败");
+//	}
 	
-	@Override
-	public Object uploadImg(CommonsMultipartFile file,HttpSession session) {
-		System.out.println(file.getOriginalFilename());
-		
+//	/**
+//	 * 上传头像
+//	 * 无限上传不确定。。。
+//	 */
+//	
+//	@Override
+//	public Object uploadImg(CommonsMultipartFile file,HttpSession session) {
+//    
+//		String fileName = FileName.makeFileName(file.getOriginalFilename());
+//	    System.out.println(fileName);
+//	    
 //      String path = this.getClass().getClassLoader().getResource("/").getPath();
 //      String path2 = path.substring(1, (path.length()-17))+"/img";
-        
-        String path3 = "D:/fastPan/FastPan-Server/fastpan/fastpan-web/src/main/webapp/images";
-        
-        String fileImge = FileName.makePath(FileName.makeFileName(file.getOriginalFilename()), path3);
-		if (!file.isEmpty()) {
-			try {
-				FileOutputStream os = new FileOutputStream(new File(fileImge));
-				InputStream in = file.getInputStream();
-				byte[] arr=new byte[400];
-				int b = 0;
-				while ((b = in.read(arr)) != -1) { // 读取文件
-					os.write(arr, 0, b);
-//					os.write(b);
-				}
-				os.flush(); // 关闭流
-				in.close();
-				os.close();
-				return SUCCESS(fileImge);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+//        
+//      String fileImge = FileName.makePath(fileName, path2);
+//		if (!file.isEmpty()) {
+//			try {
+//				FileOutputStream os = new FileOutputStream(new File(fileImge));
+//				InputStream in = file.getInputStream();
+//				byte[] arr=new byte[400];
+//				int b = 0;
+//				while ((b = in.read(arr)) != -1) { // 读取文件
+//					os.write(arr, 0, b);
+//				}
+//				os.flush(); // 关闭流
+//				in.close();
+//				os.close();
+//				
+////				//项目目录下
+////				String path3 = "D:/fastPan/FastPan-Server/fastpan/fastpan-web/src/main/webapp/images";
+////				File file3 = new File(fileImge);
+////				file3.renameTo(new File(path3+file.getName()));
+//				return fileImge;
+//			} catch (FileNotFoundException e) {
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//
+//		return FAIL(0,"文件不存在，请上传");
+//	}
+	
+	/**
+	 * 修改头像
+	 */
+
+	@Override
+	public ResponseMessage updateImage(HttpSession session) {
+		User user2=new User();
+		int obj;
+		
+		//项目目录下
+		String path3 = "D:/fastPan/FastPan-Server/fastpan/fastpan-web/src/main/webapp/images/";
+		
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+//			return FAIL(1006, "session失效");
+			return FAIL(1006, "请重新登录");
+		}
+		try {
+			//将头像移动到项目目录下
+			
+			String oldImage = (String) session.getAttribute("imageFile");
+			File file = new File(oldImage);
+			System.out.println(file.getName());
+			file.renameTo(new File(path3+file.getName()));
+			
+			Date date = new Date();
+			user2.setUserId(user.getUserId());
+			user2.setImage("../images/"+file.getName());
+			user2.setUpdateTime(date);
+			obj = usermapper.updateByPrimaryKeySelective(user2);
+		} catch (Exception e) {
+			log.info("数据库语句问题");
+			System.out.println(e.getMessage());
+			return FAIL(1003, "业务参数错误");
 		}
 
+		if (obj == 1) {
+			session.setAttribute("user", user2);
+			log.info("更新成功");
+			return SUCCESS("更新头像成功");
+		}
+		log.info("更新失败");
+		return FAIL(1007, "更新失败");
+	}	
+	
+	
+	@Override
+	public Object uploadImg(String strImg,HttpSession session) {
+		
+		BASE64Decoder decoder = new BASE64Decoder();
+		String fileName = FileName.makeFileName("abc.jpg");
+        String path = this.getClass().getClassLoader().getResource("/").getPath();
+        String path2 = path.substring(1, (path.length()-17))+"/img";
+        String fileImge = FileName.makePath(fileName, path2);
+        
+		if(strImg != null && !strImg.equals("")){	
+	    String str = strImg.split(",")[1];	  
+	            // Base64解码
+	            try {
+	            	
+	            	byte[] bytes = decoder.decodeBuffer(str);
+	                for (int i = 0; i < bytes.length; i++) {
+	                    if (bytes[i] < 0) {// 调整异常数据
+	                    	bytes[i] += 256;
+	                    }
+	                }
+	                // 生成jpeg图片
+	                OutputStream out = new FileOutputStream(fileImge);
+	                out.write(bytes);
+	                out.flush();
+	                out.close();
+	                session.setAttribute("imageFile", fileImge);
+	                return SUCCESS("上传成功");
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+		}
 		return FAIL(0,"文件不存在，请上传");
 	}
 	

@@ -33,6 +33,7 @@
 		<property name="typeAliasesPackage" value="com.stu.fastpan.dao.pojo.*" />
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="mapperLocations" value="classpath*:mybatis/sql/*/*.xml" />
+		<property name="configLocation" value= "classpath:spring/sqlMapConfig.xml"></property>
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -68,5 +69,5 @@
 			advice-ref="txAdvice" order="5" />
 	</aop:config>
 
-	<import resource="classpath*:spring/applicationContext-datasource.xml" />
+	<import resource="applicationContext-datasource.xml" />
 </beans>

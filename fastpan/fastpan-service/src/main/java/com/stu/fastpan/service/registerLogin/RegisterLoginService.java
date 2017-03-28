@@ -1,6 +1,5 @@
 package com.stu.fastpan.service.registerLogin;
 
-
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
@@ -82,18 +81,21 @@ public class RegisterLoginService extends ResponseMeService<User, Long>
 		if (user == null) {
 			log.info("登录失败,用户不存在");
 			return FAIL(1000, "用户不存在");
+		} else if (user.getRoleId() == 3) {
+			return FAIL(1100, "用户已冻结");
 		} else {
 
-			String newPassword = MD5Utils.getMD5(user2.getPassword().getBytes());
+			String newPassword = MD5Utils
+					.getMD5(user2.getPassword().getBytes());
 
 			if (user.getPassword().equals(newPassword)) {
 				log.info("登录成功");
 				// 将登陆返回的值放入session中
 				session.setAttribute("user", user);
-				
+
 				User userTime = new User();
-	
-				Date date = new Date();			
+
+				Date date = new Date();
 				userTime.setUserId(user.getUserId());
 				userTime.setLastLoginTime(date);
 				usermapper.updateByPrimaryKeySelective(userTime);
@@ -136,12 +138,12 @@ public class RegisterLoginService extends ResponseMeService<User, Long>
 	}
 
 	/**
-	 * 加强版登录和验证码一起
-	 * 和图片验证码一起
+	 * 加强版登录和验证码一起 和图片验证码一起
 	 */
 
 	@Override
 	public ResponseMessage loginCode(UserCode userCode, HttpSession session) {
+
 		User user = new User();
 		sendPicCodeService.testPictureCode(userCode.getCode(), session);
 		if (sendPicCodeService.testPictureCode(userCode.getCode(), session)
@@ -157,8 +159,7 @@ public class RegisterLoginService extends ResponseMeService<User, Long>
 	}
 
 	/**
-	 * 加强版注册和验证码一起
-	 * 和邮件验证码一起
+	 * 加强版注册和验证码一起 和邮件验证码一起
 	 */
 
 	@Override

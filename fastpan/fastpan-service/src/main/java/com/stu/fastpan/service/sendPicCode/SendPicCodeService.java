@@ -111,6 +111,7 @@ public class SendPicCodeService extends ResponseMeService<PictureCode, Long>
 			} else {
 				if (verCode.equals(code)) {
 					log.info("调用成功");
+//					session.setAttribute("pictureCode", null);
 					return SUCCESS("验证码正确");
 				} else {
 					log.info("验证码错误");
@@ -142,6 +143,7 @@ public class SendPicCodeService extends ResponseMeService<PictureCode, Long>
 			} else {
 				if (verCode.equals(code)) {
 					log.info("调用成功");
+//					session.setAttribute("EmailCode", null);
 					return SUCCESS("验证码正确");
 				} else {
 					log.info("验证码错误");

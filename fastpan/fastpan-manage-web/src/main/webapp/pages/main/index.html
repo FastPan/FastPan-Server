@@ -3,15 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>极速网盘管理页面</title>
-<link rel="stylesheet" type="text/css"
-	href="../plug-in/easy-ui/themes/default/easyui.css">
-<link rel="stylesheet" type="text/css"
-	href="../plug-in/easy-ui/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="../plug-in/easy-ui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../plug-in/easy-ui/themes/icon.css">
 <link rel="stylesheet" type="text/css" href="../css/main/index.css">
 <script type="text/javascript" src="../plug-in/jquery/js/jquery.min.js"></script>
-<script type="text/javascript"
-	src="../plug-in/easy-ui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../plug-in/easy-ui/jquery.easyui.min.js"></script>
 </head>
+
 <body class="easyui-layout">
 	<div data-options="region:'north',border:false"
 		style="height: 80px; background: #B3DFDA; padding: 5px">
@@ -20,27 +18,46 @@
 	<div data-options="region:'west',split:true" title="菜单"
 		style="width: 150px;">
 		<div class="easyui-accordion" data-options="fit:true,border:false">
+			
 			<ul class="easyui-datalist" title="用户管理" lines="true">
-				<li value="UM">普通用户管理</li>
-				<li value="AUM">管理员用户管理</li>
+				<li value="UM">
+					<a class="a1" target="iframe" href=../main/managePerson >普通用户管理</a>
+				</li>
+<!-- 			<li value="AUM">管理员用户管理</li> -->
 			</ul>
+			
 			<ul class="easyui-datalist" title="文件管理" lines="true">
-				<li value="UNFM">未审核文件管理</li>
-				<li value="FM">禁用文件管理</li>
+				
+				<li value="UNFM" >
+				<a class="a1" target="iframe" href=../main/manageFile >未审核文件管理</a>
+				</li>
+				
+				<li value="FM" >
+				<a class="a1" target="iframe" href=../main/manageFile2 >禁用文件管理</a>
+				</li>
 			</ul>
+			
 			<ul class="easyui-datalist" title="权限管理" lines="true">
-				<li value="UNFM">权限管理</li>
+				
+				<li value="AUM">
+				<a class="a1" target="iframe" href=../main/manageRole >权限管理</a>
+				</li>
 			</ul>
 		</div>
 	</div>
+	
 	<!-- <div
 		data-options="region:'east',split:true,collapsed:true,title:'East'"
 		style="width: 100px; padding: 10px;">east region</div> -->
 	<div data-options="region:'south',border:false"
 		style="height: 50px; background: #A9FACD; padding: 10px;">底部待定</div>
+	
 	<div data-options="region:'center'" class="easyui-tabs">
-		<div title="test" data-options="closable:true"
-			style="padding: 10px">测试页面</div>
+		<div title="管理" data-options="closable:true"
+			style="padding: 10px">
+    <iframe id="iframe" name="iframe" 
+	style="width: 100%;  height:100% ; margin: 0; padding: 0; border: none; "></iframe>
+	</div>
 	</div>
 </body>
 </html>

@@ -17,49 +17,6 @@ $(function() {
 		$('#tab-pass').hide();
 		$('#tab-' + $(this).attr('id')).show();
 	});
-	var options = {
-		thumbBox : '.thumbBox',
-		spinner : '.spinner',
-		imgSrc : '../plug-in/cropbox/images/avatar.png'
-	};
-	var cropper = $('.imageBox').cropbox(options);
-	$('#upload-file').on('change', function() {
-		var reader = new FileReader();
-		reader.onload = function(e) {
-			options.imgSrc = e.target.result;
-			cropper = $('.imageBox').cropbox(options);
-		}
-		reader.readAsDataURL(this.files[0]);
-		this.files = [];
-	})
-	$('#btnCrop')
-			.on(
-					'click',
-					function() {
-						var img = cropper.getDataURL();
-						$('.cropped').html('');
-						$('.cropped')
-								.append(
-										'<img src="'
-												+ img
-												+ '" align="absmiddle" style="width:64px;margin-top:4px;border-radius:64px;box-shadow:0px 0px 12px #7E7E7E;" ><p>64px*64px</p>');
-						$('.cropped')
-								.append(
-										'<img src="'
-												+ img
-												+ '" align="absmiddle" style="width:128px;margin-top:4px;border-radius:128px;box-shadow:0px 0px 12px #7E7E7E;"><p>128px*128px</p>');
-						$('.cropped')
-								.append(
-										'<img src="'
-												+ img
-												+ '" align="absmiddle" style="width:180px;margin-top:4px;border-radius:180px;box-shadow:0px 0px 12px #7E7E7E;"><p>180px*180px</p>');
-					});
-	$('#btnZoomIn').on('click', function() {
-		cropper.zoomIn();
-	});
-	$('#btnZoomOut').on('click', function() {
-		cropper.zoomOut();
-	});
 	$('form')
 			.bootstrapValidator(
 					{
@@ -122,7 +79,21 @@ $(function() {
 					});
 });
 
+function daojishi(){
+	var a=60;
+	tme=setInterval(function(){
+		a--;			
+		var time=document.getElementById('sendCode');
+		$(time).text(a)
+		if(a==0){
+			 clearTimeout(tme);
+			 $(time).text("重新发送")
+		}
+	},1000)
+}
+
 function getCode() {
+	daojishi();
 	if (submit == 1) {
 		return;
 	}
@@ -166,58 +137,6 @@ function getCode() {
 		}
 	});
 }
-
-
-
-//function testCode() {
-//	if (submit == 1) {
-//		return;
-//	}
-//	submit++;
-//	var emailCode = $('form input[name="verificationCode"]').val();
-//	$.ajax({
-//		url : '../verify/testEmailCode',
-//		data : "{\"requestContext\":\"" + emailCode + "\"}",
-//		type : 'post',
-//		dataType : 'json',
-//		headers : {
-//			"Content-Type" : "application/json"
-//		},
-//		success : function(data) {
-//			submit--;
-//			var message = data.success ? data.result : data.message;
-//			BootstrapDialog.show({
-//				title : "消息",
-//				message : message,
-//				onshown : function(dialog) {
-//					/*
-//					 * setTimeout(function() {
-//					 * $('button[type="submit"]').removeAttr("disabled");
-//					 * dialog.close(); }, 1000);
-//					 */
-//				}
-//
-//			});
-//
-//			if (data.success) {
-//				findPassword();
-//			}
-//		},
-//		error : function(error) {
-//			submit--;
-//			BootstrapDialog.show({
-//				title : "消息",
-//				message : "服务器出错了",
-//				onshown : function(dialog) {
-//					setTimeout(function() {
-//						$('button[type="submit"]').removeAttr("disabled");
-//						dialog.close();
-//					}, 1000);
-//				}
-//			});
-//		}
-//	});
-//}
 
 function findPassword() {
 	if (submit == 1) {
@@ -275,46 +194,3 @@ function findPassword() {
 		}
 	});
 }
-
-// $(document).ready(function() {
-// $.ajax({
-// url : '../user/getPersonInfor',
-// data : "",
-// type : 'get',
-// dataType : 'json',
-// headers : {
-// "Content-Type" : "application/json"
-// },
-// success : function(data) {
-// if (data.success) {
-// $('form input[name="nickName"]').val(data.result.nickName);
-// $('form input[name="email"]').val(data.result.email);
-// } else {
-// BootstrapDialog.show({
-// title : "消息",
-// message : "请登录",
-// onshown : function(dialog) {
-// setTimeout(function() {
-// $('button[type="submit"]').removeAttr("disabled");
-// dialog.close();
-// }, 1000);
-// }
-// });
-// }
-//
-// },
-// error : function(error) {
-//
-// BootstrapDialog.show({
-// title : "消息",
-// message : "服务器出错了",
-// onshown : function(dialog) {
-// setTimeout(function() {
-// $('button[type="submit"]').removeAttr("disabled");
-// dialog.close();
-// }, 1000);
-// }
-// });
-// }
-// });
-// });

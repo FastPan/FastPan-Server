@@ -1,0 +1,66 @@
+<head>
+<meta charset="UTF-8">
+	<title>文件管理</title>
+	<link rel="stylesheet" type="text/css" href="../plug-in/easy-ui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../plug-in/easy-ui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../css/manage/manageFile.css">
+    <script type="text/javascript" src="../plug-in/jquery/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../plug-in/easy-ui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/manage/manageFile.js"></script>
+</head>
+<body>
+
+<h2>未审核文件管理</h2>
+	<div style="margin:20px 0;"></div>
+	<table id="dg" class="easyui-datagrid" 
+	           title="未审核" 
+	           style="width:100%;height:auto"
+			    data-options="
+				iconCls: 'icon-edit',
+				singleSelect: true,
+				toolbar: '#tb',
+				url: '../manageFile/getcheckFileList',
+				method: 'get',
+				onClickRow: onClickRow
+			">
+		<thead>
+			<tr>
+				<th data-options="field:'fileId',width:200 ,align:'left' , editor:'textbox'">文件ID</th>
+				<th data-options="field:'fileName',width:200,align:'left',
+				">文件名称</th>
+				<th data-options="field:'fileSize',width:50,align:'left' ">文件大小</th>
+				<th data-options="field:'fileUrl',width:200 ,align:'left' ">文件路径</th>
+				<th data-options="field:'fileMd5',width:100,align:'left' ">文件加密</th>
+				<th data-options="field:'fileType',width:50,align:'left' ">文件类型</th>
+				<th data-options="field:'fileState',width:100,align:'left',
+						formatter:function(value,row){
+						console.log(row);
+							return row.examineName;
+						},
+						editor:{
+							type:'combobox',
+							options:{
+								valueField:'fileState',
+								textField:'examineName',
+								method:'get',
+								url:'../manageFile/getExamineInfor',
+								required:true
+							}
+						}">文件状态</th>
+				<th data-options="field:'createTime',width:100,align:'left' ">文件创建时间</th>
+				<th data-options="field:'updateTime',width:100,align:'left' ">文件修改时间</th>
+				<th data-options="field:'status',width:50,align:'center',
+				editor:{type:'checkbox',options:{on:'P',off:''}}">Status</th>
+			</tr>
+		</thead>
+	</table>
+ 
+	<div id="tb" style="height:auto">
+<!--  		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">添加</a>
+ 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject()">回退</a>  -->
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">更改</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+<!-- 		<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getChanges()">查看改变</a>  -->
+	</div>
+</body>
+</html>
