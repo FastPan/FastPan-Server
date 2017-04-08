@@ -27,7 +27,7 @@ import com.stu.fastpan.service.sendPicCode.SendPicCodeFacade;
  */
 
 @Controller
-@RequestMapping("/verify/")
+@RequestMapping("/verify")
 public class VerificationController {
 
 	@Autowired

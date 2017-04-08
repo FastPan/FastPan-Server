@@ -1,7 +1,8 @@
 package com.stu.fastpan.dao.pojo.file;
 
 public class FileUpload {
-	private Long chunks;Long chunk;
+	private Long chunks;
+	Long chunk;
 	private String fileMd5;
 	private String name;
 	private Long size;

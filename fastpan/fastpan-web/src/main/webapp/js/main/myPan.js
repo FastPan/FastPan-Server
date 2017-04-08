@@ -30,6 +30,9 @@ $(function() {
 			$(this).find('font span').addClass("glyphicon-arrow-down");
 		}
 	});
+	$('#all-file').click(function() {
+		getAllFileList('/');
+	});
 	$('#filename').click(function() {
 
 	});

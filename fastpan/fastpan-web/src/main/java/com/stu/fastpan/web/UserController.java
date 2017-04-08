@@ -36,7 +36,7 @@ import com.stu.fastpan.service.sendPicCode.SendPicCodeFacade;
  */
 
 @Controller
-@RequestMapping("/user/")
+@RequestMapping("/user")
 public class UserController {
 
 	@Autowired
@@ -70,7 +70,7 @@ public class UserController {
 	}
 	
 	// 首页
-	@RequestMapping("/forgetPassword")
+	@RequestMapping("forgetPassword")
 	public String index() {
 		return "/pages/user/forgetPassword.html";
 	}

@@ -175,7 +175,9 @@ public class FileServiceImpl extends BaseService implements FileService {
 	private String getTempFilePath(Date date, String fileMd5, String userId) {
 		SimpleDateFormat df = new SimpleDateFormat("\\yyyy\\MM\\dd\\HH\\mm\\ss");
 		TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
-		return "f:\\filetemp" + df.format(date) + java.io.File.separator + fileMd5 + java.io.File.separator + userId;
+		
+//		return "f:\\filetemp" + df.format(date) + java.io.File.separator + fileMd5 + java.io.File.separator + userId;
+		return "d:\\fastPanFile" + df.format(date) + java.io.File.separator + fileMd5 + java.io.File.separator + userId;
 	}
 
 	@Override
