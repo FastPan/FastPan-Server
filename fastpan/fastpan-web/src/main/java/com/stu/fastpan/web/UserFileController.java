@@ -24,30 +24,49 @@ public class UserFileController {
 
 	@Autowired
 	UserFileService userFileService;
-	
-	@RequestMapping(value="/getFileList",method=RequestMethod.GET)
+
+	@RequestMapping(value = "/getFileList", method = RequestMethod.GET)
 	@ResponseBody
-	public Object getFileList(HttpSession session,String path,Byte state){
-		ResponseMessage selectByUserIdPathState = userFileService.selectByUserIdPathState(SessionUtils.getUserId(session), path, state);
+	public Object getFileList(HttpSession session, String path, Byte state) {
+		ResponseMessage selectByUserIdPathState = userFileService
+				.selectByUserIdPathState(SessionUtils.getUserId(session), path, state);
 		System.out.println(selectByUserIdPathState);
 		return selectByUserIdPathState;
 	}
-	@RequestMapping(value="/getSavePathList",method=RequestMethod.GET)
+
+	@RequestMapping(value = "/getSavePathList", method = RequestMethod.GET)
 	@ResponseBody
-	public Object getSavePathList(HttpSession session,String path,Byte state){
-		ResponseMessage selectByUserIdPathState = userFileService.selectFolderByUserIdPathState(SessionUtils.getUserId(session), path, state);
+	public Object getSavePathList(HttpSession session, String path, Byte state) {
+		ResponseMessage selectByUserIdPathState = userFileService
+				.selectFolderByUserIdPathState(SessionUtils.getUserId(session), path, state);
 		System.out.println(selectByUserIdPathState);
 		return selectByUserIdPathState;
 	}
-	
-	@RequestMapping(value="/newFloder",method=RequestMethod.POST)
+
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	@ResponseBody
-	public Object newFloder(UserFile userFile,HttpSession session){
+	public Object search(HttpSession session, String filename) {
+		ResponseMessage selectByUserIdPathState = userFileService.selectLikeFileName(SessionUtils.getUserId(session),
+				filename);
+		return selectByUserIdPathState;
+	}
+
+	@RequestMapping(value = "/newFloder", method = RequestMethod.POST)
+	@ResponseBody
+	public Object newFloder(UserFile userFile, HttpSession session) {
 		userFile.setUserId(SessionUtils.getUserId(session));
 		userFile.setUserFileId(UserFile.createUUID());
 		System.out.println(userFile);
 		ResponseMessage rm = userFileService.insert(userFile);
 		System.out.println(rm);
 		return rm;
+	}
+
+	@RequestMapping(value = "/getFileByType", method = RequestMethod.GET)
+	@ResponseBody
+	public Object getFileByType(HttpSession session, Byte type) {
+		ResponseMessage selectByUserIdPathState = userFileService.selectByFileType(SessionUtils.getUserId(session),
+				type);
+		return selectByUserIdPathState;
 	}
 }

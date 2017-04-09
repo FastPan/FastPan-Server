@@ -65,8 +65,25 @@ public class FileServiceImpl extends BaseService implements FileService {
 			rm = FAIL(9999, "md5失效");
 		}
 		Date getDate = new Date(fileUpload.getLastModifiedDate());
-		String split =fileUpload.getName().indexOf(".")!=-1?fileUpload.getName().substring(fileUpload.getName().lastIndexOf(".")+1):"";
-		String fileName = fileUpload.getFileMd5()+"."+split;
+		String split = fileUpload.getName().indexOf(".") != -1
+				? fileUpload.getName().substring(fileUpload.getName().lastIndexOf(".") + 1) : "";
+		split = split.toLowerCase();
+		String fileName = fileUpload.getFileMd5() + "." + split;
+		Byte type = 0;
+		if (split.equals("gif") || split.equals("bmp") || split.equals("jpg") || split.equals("png")) {
+			type = 0;
+		} else if (split.equals("txt") || split.equals("doc") || split.equals("docx")) {
+			type = 1;
+		} else if (split.equals("mp4") || split.equals("avi") || split.equals("rmvb") || split.equals("rm")
+				|| split.equals("vob") || split.equals("wmv") || split.equals("mov") || split.equals("mkv")
+				|| split.equals("flv") || split.equals("3gp") || split.equals("f4v") || split.equals("m4v")
+				|| split.equals("dat") || split.equals("mpeg")) {
+			type = 2;
+		} else if (split.equals("wav") || split.equals("mp3") || split.equals("wma") || split.equals("ra")
+				|| split.equals("midi") || split.equals("ogg") || split.equals("ape") || split.equals("flac")
+				|| split.equals("aac")) {
+			type = 3;
+		}
 		try {
 			for (MultipartFile mf : files) {
 				if (!mf.isEmpty()) {
@@ -142,7 +159,7 @@ public class FileServiceImpl extends BaseService implements FileService {
 							com.stu.fastpan.dao.pojo.file.File file = checkMD5FileExist(fileUpload.getFileMd5());
 							if (file == null) {
 								byte temp = 0;
-								file = new com.stu.fastpan.dao.pojo.file.File(destTempFile.getAbsolutePath(), temp,
+								file = new com.stu.fastpan.dao.pojo.file.File(destTempFile.getAbsolutePath(), type,
 										temp, fileUpload.getSize(), fileUpload.getFileMd5());
 								insert(file);
 								// 如果出错了，要清理文件
@@ -175,8 +192,9 @@ public class FileServiceImpl extends BaseService implements FileService {
 	private String getTempFilePath(Date date, String fileMd5, String userId) {
 		SimpleDateFormat df = new SimpleDateFormat("\\yyyy\\MM\\dd\\HH\\mm\\ss");
 		TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
-		
-//		return "f:\\filetemp" + df.format(date) + java.io.File.separator + fileMd5 + java.io.File.separator + userId;
+
+		// return "f:\\filetemp" + df.format(date) + java.io.File.separator +
+		// fileMd5 + java.io.File.separator + userId;
 		return "e:\\fastPanFile" + df.format(date) + java.io.File.separator + fileMd5 + java.io.File.separator + userId;
 	}
 
@@ -193,8 +211,8 @@ public class FileServiceImpl extends BaseService implements FileService {
 			System.out.println("直接秒传");
 			// 关联至用户文件表
 			byte state = 0;
-			rm = userFileService.insert(new UserFile(UserFile.createUUID(), fileName,
-					savePath, userId, checkMD5File.getFileId(), state));
+			rm = userFileService.insert(
+					new UserFile(UserFile.createUUID(), fileName, savePath, userId, checkMD5File.getFileId(), state));
 			rm = new ResponseMessage(1000, "文件秒传", null, true);
 		} else {
 			rm = new ResponseMessage(0, "文件不存在，请上传", null, true);

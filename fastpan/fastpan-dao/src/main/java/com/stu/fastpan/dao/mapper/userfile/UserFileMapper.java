@@ -13,6 +13,10 @@ public interface UserFileMapper {
 
     UserFile selectByPrimaryKey(String userFileId);
     
+	List<UserFile> selectLikeFileName(@Param("userId") String userId, @Param("fileName") String fileName);
+
+	List<UserFile> selectByFileType(@Param("userId") String userId, @Param("type") Byte type);
+	
     List<UserFile>  selectByUserId(@Param("userId")String userId);
     				
     List<UserFile>  selectByUserIdAndPath(@Param("userId")String userId,@Param("path")String path);

@@ -33,6 +33,18 @@ $(function() {
 	$('#all-file').click(function() {
 		getAllFileList('/');
 	});
+	$('#all-img').click(function() {
+		getFileByType(0);
+	});
+	$('#all-txt').click(function() {
+		getFileByType(1);
+	});
+	$('#all-video').click(function() {
+		getFileByType(2);
+	});
+	$('#all-music').click(function() {
+		getFileByType(3);
+	});
 	$('#filename').click(function() {
 
 	});
@@ -41,6 +53,11 @@ $(function() {
 	});
 	$('#updatetime').click(function() {
 
+	});
+	$('#search').bind('keypress', function(event) {
+		if (event.keyCode == "13") {
+			searchFile($(this).val());
+		}
 	});
 	$('#table table tbody')
 			.on(
@@ -59,6 +76,10 @@ $(function() {
 							$(this).find('td:nth-of-type(2)').html('');
 						}
 					});
+	$('#table table tbody').on('click', '.glyphicon-download-alt',
+			function(event) {
+				window.open($(this).parent().parent().find('a').attr('href'));
+			});
 	$('.nav-sidebar li').click(function() {
 		$('.nav-sidebar li').removeClass("active");
 		$(this).addClass("active");
@@ -102,6 +123,98 @@ $(function() {
 	// $("#allFile-tmpl").tmpl(data).appendTo("#all-file-list");
 	getAllFileList('/');
 });
+function searchFile(filename) {
+	$.ajax({
+		url : '../userFile/search',
+		data : {
+			filename : filename
+		},
+		type : 'get',
+		dataType : 'json',
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		success : function(result) {
+			if (result.success) {
+				var data = result.result;
+				$("#all-file-list").empty();
+				$("#allFile-tmpl").tmpl(data).appendTo("#all-file-list");
+
+				var arr = path.split('/');
+				$('#home-path').empty();
+				$('#home-path').append('<a path="/">全部文件</a>');
+				temp = '/';
+				for (var i = 0; i < arr.length; i++) {
+					if (arr[i] != '') {
+						temp += arr[i];
+						temp += '/';
+						$('#home-path').append(
+								'<span	class="historylistmanager-separator">&gt;</span><a path="'
+										+ temp + '">' + arr[i] + '</a>');
+					}
+				}
+			}
+
+		},
+		error : function(error) {
+			BootstrapDialog.show({
+				title : "消息",
+				message : " 获取文件列表失败,服务器出错了",
+				onshown : function(dialog) {
+					setTimeout(function() {
+						dialog.close();
+					}, 1000);
+				}
+			});
+		}
+	});
+}
+function getFileByType(type) {
+	$.ajax({
+		url : '../userFile/getFileByType',
+		data : {
+			type : type
+		},
+		type : 'get',
+		dataType : 'json',
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		success : function(result) {
+			if (result.success) {
+				var data = result.result;
+				$("#all-file-list").empty();
+				$("#allFile-tmpl").tmpl(data).appendTo("#all-file-list");
+
+				var arr = path.split('/');
+				$('#home-path').empty();
+				$('#home-path').append('<a path="/">全部文件</a>');
+				temp = '/';
+				for (var i = 0; i < arr.length; i++) {
+					if (arr[i] != '') {
+						temp += arr[i];
+						temp += '/';
+						$('#home-path').append(
+								'<span	class="historylistmanager-separator">&gt;</span><a path="'
+										+ temp + '">' + arr[i] + '</a>');
+					}
+				}
+			}
+
+		},
+		error : function(error) {
+			BootstrapDialog.show({
+				title : "消息",
+				message : " 获取文件列表失败,服务器出错了",
+				onshown : function(dialog) {
+					setTimeout(function() {
+						dialog.close();
+					}, 1000);
+				}
+			});
+		}
+	});
+}
 function getAllFileList(path) {
 	$.ajax({
 		url : '../userFile/getFileList',
@@ -120,15 +233,15 @@ function getAllFileList(path) {
 				var data = result.result;
 				$("#all-file-list").empty();
 				$("#allFile-tmpl").tmpl(data).appendTo("#all-file-list");
-				
+
 				var arr = path.split('/');
 				$('#home-path').empty();
 				$('#home-path').append('<a path="/">全部文件</a>');
-				temp='/';
+				temp = '/';
 				for (var i = 0; i < arr.length; i++) {
 					if (arr[i] != '') {
-						temp+=arr[i];
-						temp+='/';
+						temp += arr[i];
+						temp += '/';
 						$('#home-path').append(
 								'<span	class="historylistmanager-separator">&gt;</span><a path="'
 										+ temp + '">' + arr[i] + '</a>');
@@ -161,11 +274,11 @@ $(document).ready(function() {
 		},
 		success : function(data) {
 			if (data.success) {
-//				console.log(data.result.nickName);
-//				$('form input[name="nickName"]').val(data.result.nickName);
-//				$('form input[name="email"]').val(data.result.email);
+				// console.log(data.result.nickName);
+				// $('form input[name="nickName"]').val(data.result.nickName);
+				// $('form input[name="email"]').val(data.result.email);
 				$("#nickName").html(data.result.nickName);
-				$("#imageId").attr("src",data.result.image);
+				$("#imageId").attr("src", data.result.image);
 
 			} else {
 				BootstrapDialog.show({

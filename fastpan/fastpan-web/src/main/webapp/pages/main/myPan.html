@@ -51,14 +51,13 @@
 			<div id="sidebar" class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
 					<li class="active" id="all-file"><a>全部文件</a></li>
-					<li><a class="glyphicon glyphicon-picture"><span>图片</span></a>
+					<li><a class="glyphicon glyphicon-picture" id="all-img"><span>图片</span></a>
 					</li>
-					<li><a class="glyphicon glyphicon-briefcase"><span>文档</span></a>
+					<li><a class="glyphicon glyphicon-briefcase" id="all-txt"><span>文档</span></a>
 					</li>
-					<li><a class="glyphicon glyphicon-facetime-video"><span>视频</span></a>
+					<li><a class="glyphicon glyphicon-facetime-video" id="all-video"><span>视频</span></a>
 					</li>
-					<li><a class="glyphicon glyphicon-music"><span>音乐</span></a></li>
-					<li><a class="glyphicon glyphicon-th-large"><span>其他</span></a>
+					<li><a class="glyphicon glyphicon-music" id="all-music"><span>音乐</span></a></li>
 					</li>
 				</ul>
 				<ul class="nav nav-sidebar">
@@ -80,9 +79,9 @@
 						<button type="button" class="btn btn-default">删除</button>
 						<button type="button" class="btn btn-default">下载</button>
 						<button type="button" class="btn btn-default">分享</button>
-						<form class="pull-right">
-							<input type="text" class="form-control" placeholder="搜索" />
-						</form>
+						<div class="pull-right">
+							<input type="text" id="search" name="filename" class="form-control" placeholder="搜索" />
+						</div>
 					</div>
 					<div class="module-history-list">
 						<ul class="historylistmanager-history">
