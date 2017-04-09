@@ -1,4 +1,4 @@
-package com.stu.fastpan.service.file;
+﻿package com.stu.fastpan.service.file;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -66,7 +66,7 @@ public class FileServiceImpl extends BaseService implements FileService {
 		}
 		Date getDate = new Date(fileUpload.getLastModifiedDate());
 		String split =fileUpload.getName().indexOf(".")!=-1?fileUpload.getName().substring(fileUpload.getName().lastIndexOf(".")+1):"";
-		String fileName = fileUpload.getFileMd5()+split;
+		String fileName = fileUpload.getFileMd5()+"."+split;
 		try {
 			for (MultipartFile mf : files) {
 				if (!mf.isEmpty()) {
@@ -142,6 +142,7 @@ public class FileServiceImpl extends BaseService implements FileService {
 							com.stu.fastpan.dao.pojo.file.File file = checkMD5FileExist(fileUpload.getFileMd5());
 							if (file == null) {
 								byte temp = 0;
+								System.out.println(destTempFile.getAbsolutePath());
 								file = new com.stu.fastpan.dao.pojo.file.File(destTempFile.getAbsolutePath(), temp,
 										temp, fileUpload.getSize(), fileUpload.getFileMd5());
 								insert(file);
@@ -177,7 +178,7 @@ public class FileServiceImpl extends BaseService implements FileService {
 		TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
 		
 //		return "f:\\filetemp" + df.format(date) + java.io.File.separator + fileMd5 + java.io.File.separator + userId;
-		return "d:\\fastPanFile" + df.format(date) + java.io.File.separator + fileMd5 + java.io.File.separator + userId;
+		return "e:\\fastPanFile" + df.format(date) + java.io.File.separator + fileMd5 + java.io.File.separator + userId;
 	}
 
 	@Override
