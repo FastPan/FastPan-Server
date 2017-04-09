@@ -39,9 +39,9 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="../user/accountInfo" target="_black"><img id = "imageId" 
-							style="height: 30px; width: 30px;" class="img-circle"></img><span id="nickName"></span></a>
-					</li>
+					<li><a href="../user/accountInfo" target="_black"><img
+							id="imageId" style="height: 30px; width: 30px;"
+							class="img-circle"></img><span id="nickName"></span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -50,7 +50,7 @@
 		<div class="row">
 			<div id="sidebar" class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li class="active" id = "all-file"><a>全部文件</a></li>
+					<li class="active" id="all-file"><a>全部文件</a></li>
 					<li><a class="glyphicon glyphicon-picture"><span>图片</span></a>
 					</li>
 					<li><a class="glyphicon glyphicon-briefcase"><span>文档</span></a>
@@ -172,6 +172,29 @@
 		<script src="../plug-in/jquery-time/js/jquery-time.js"></script>
 		<script src="../js/main/fileupload.js"></script>
 		<script src="../js/main/myPan.js"></script>
+		<script type="text/javascript">
+			function formatFileSize(fileSize) {
+				if (fileSize < 1024) {
+					return fileSize + 'B';
+				} else if (fileSize < (1024 * 1024)) {
+					var temp = fileSize / 1024;
+					temp = temp.toFixed(2);
+					return temp + 'KB';
+				} else if (fileSize < (1024 * 1024 * 1024)) {
+					var temp = fileSize / (1024 * 1024);
+					temp = temp.toFixed(2);
+					return temp + 'MB';
+				} else {
+					var temp = fileSize / (1024 * 1024 * 1024);
+					temp = temp.toFixed(2);
+					return temp + 'GB';
+				}
+			}
+			function pathToUrl(path){
+				return path.substring(15,path.length);
+			}
+			
+		</script>
 		<script id="allFile-tmpl" type="text/x-jquery-tmpl">
      		<tr>
         	{{if fileId==null}}
@@ -180,9 +203,9 @@
 				<td></td>
 				<td>${$.myTime.UnixToDate(createTime,true)}</td>
         	{{else}}
-            	<td><input type="checkbox"><span class="glyphicon glyphicon-list-alt">&nbsp;</span> <a path="${path}">${userFileName}</a></input></td>
+            	<td><input type="checkbox"><span class="glyphicon glyphicon-list-alt">&nbsp;</span> <a href="../../download/${pathToUrl(file.fileUrl)}?filename=${userFileName}" path="${path}">${userFileName}</a></input></td>
 				<td></td>
-				<td>152.9M</td>
+				<td>${formatFileSize(file.fileSize)}</td>
 				<td>${$.myTime.UnixToDate(createTime,true)}</td>
         	{{/if}}
        	 	</tr>

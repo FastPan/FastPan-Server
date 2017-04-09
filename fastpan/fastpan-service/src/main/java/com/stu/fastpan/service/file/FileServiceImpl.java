@@ -142,7 +142,6 @@ public class FileServiceImpl extends BaseService implements FileService {
 							com.stu.fastpan.dao.pojo.file.File file = checkMD5FileExist(fileUpload.getFileMd5());
 							if (file == null) {
 								byte temp = 0;
-								System.out.println(destTempFile.getAbsolutePath());
 								file = new com.stu.fastpan.dao.pojo.file.File(destTempFile.getAbsolutePath(), temp,
 										temp, fileUpload.getSize(), fileUpload.getFileMd5());
 								insert(file);
