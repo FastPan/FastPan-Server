@@ -28,4 +28,6 @@ public interface UserFileMapper {
     int updateByPrimaryKeySelective(UserFile record);
 
     int updateByPrimaryKey(UserFile record);
+    
+    int updateFilesByManage(UserFile record);
 }

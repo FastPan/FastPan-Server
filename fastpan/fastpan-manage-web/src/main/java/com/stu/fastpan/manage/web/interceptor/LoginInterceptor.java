@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.stu.fastpan.dao.pojo.user.User;
 import com.stu.fastpan.util.StringUtil;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
@@ -49,7 +50,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		if (flag) {
 			return true;
 		} else {
-			String username = (String) request.getSession().getAttribute("user");
+			User username = (User) request.getSession().getAttribute("user");
 			if (username == null) {
 				log.info(this.getClass().getSimpleName() + "：此url被拦截,跳转到login页面！");
 				response.sendRedirect(contextPath + "/user/login");

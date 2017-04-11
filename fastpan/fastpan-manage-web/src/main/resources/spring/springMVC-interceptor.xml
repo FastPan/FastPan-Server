@@ -15,7 +15,7 @@
       http://www.springframework.org/schema/mvc/spring-mvc.xsd
       	  http://www.springframework.org/schema/task
 	  http://www.springframework.org/schema/task/spring-task-4.0.xsd">
- <!--
+
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
@@ -29,16 +29,17 @@
 						<value>/fonts/</value>
 						<value>/pages/</value>
 						
-						 controller 
+						<!--   controller -->
 						<value>/user/login</value>
 						<value>/user/doLogin</value>
-						<value>/main/index</value>
+						<value>/verify/pictureCode</value>
+						<value>/mainIndex</value>
 					</list>
 				</property>
 			</bean>
 		</mvc:interceptor>
 
 	</mvc:interceptors>
--->
+
 
 </beans>

@@ -1,10 +1,12 @@
 package com.stu.fastpan.service.manageFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,12 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.stu.fastpan.dao.mapper.manageFile.ManageFileMapper;
+import com.stu.fastpan.dao.mapper.userfile.UserFileMapper;
 import com.stu.fastpan.dao.pojo.manageFile.ExamineInformation;
 import com.stu.fastpan.dao.pojo.manageFile.ManageFile;
 import com.stu.fastpan.dao.pojo.manageUser.PageBean;
 import com.stu.fastpan.dao.pojo.manageUser.PageInforBefore;
+import com.stu.fastpan.dao.pojo.userfile.UserFile;
 import com.stu.fastpan.service.base.BaseService;
 
 @Service
@@ -27,6 +31,9 @@ public class ManageFileServiceImpl extends BaseService implements
 
 	@Autowired
 	private ManageFileMapper manageFileMapper;
+	
+	@Autowired
+    private UserFileMapper userFileMapper;
 
 	@Override
 	public Object getFileList(PageInforBefore pageInfor) {
@@ -59,7 +66,17 @@ public class ManageFileServiceImpl extends BaseService implements
 			log.info("调用失败");
 			return FAIL(1003, "入参失误");
 		}
+		
+		ManageFile manageFile = manageFileMapper.selectByPrimaryKey(fileId);
+		
+		UserFile userFile= new UserFile();
+		userFile.setFileId(fileId);
+		userFile.setDeleteTime(new Date());
+		userFile.setState(new Integer(2).byteValue());
+		
 		try {
+			FileUtils.deleteQuietly(new File(manageFile.getFileUrl()));
+			userFileMapper.updateFilesByManage(userFile);
 			result = manageFileMapper.deleteByPrimaryKey(fileId);
 		} catch (Exception e) {
 			log.info("数据库语句问题");
