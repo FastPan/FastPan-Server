@@ -212,4 +212,17 @@
 		like CONCAT(#{path},#{userFileName},'%')
 
 	</update>
+	
+	<update id="updateFilesByManage" parameterType="com.stu.fastpan.dao.pojo.userfile.UserFile">
+		update user_file
+		<set>
+			<if test="deleteTime != null">
+				delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=TINYINT},
+			</if>
+		</set>
+		where file_id = #{fileId,jdbcType=CHAR}
+	</update>
 </mapper>

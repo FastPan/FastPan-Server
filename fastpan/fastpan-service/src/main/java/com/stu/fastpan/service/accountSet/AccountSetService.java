@@ -384,7 +384,9 @@ public class AccountSetService extends ResponseMeService<User, String>
 		return FAIL(1007, "更新失败");
 	}	
 	
-	
+	/**
+	 * 上传头像
+	 */
 	@Override
 	public Object uploadImg(String strImg,HttpSession session) {
 		
