@@ -88,6 +88,7 @@ function clickNewSaveFolder() {
 					label : '确定',
 					cssClass : 'btn-primary',
 					action : function(dialogItself) {
+						console.log($('#newFloder').val());
 						var newFloder = $('#newFloder').val();
 						if (newFloder != '' && newFloder !== undefined) {
 							newSaveFolder(getSavePath(), newFloder);

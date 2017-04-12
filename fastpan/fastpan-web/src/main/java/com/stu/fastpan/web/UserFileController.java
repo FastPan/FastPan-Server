@@ -1,22 +1,23 @@
 package com.stu.fastpan.web;
 
-import java.io.IOException;
+import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.stu.fastpan.dao.pojo.userfile.FileListModel;
 import com.stu.fastpan.dao.pojo.userfile.UserFile;
 import com.stu.fastpan.message.ResponseMessage;
 import com.stu.fastpan.service.userfile.UserFileService;
 import com.stu.fastpan.web.utils.SessionUtils;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping("/userFile")
@@ -68,5 +69,35 @@ public class UserFileController {
 		ResponseMessage selectByUserIdPathState = userFileService.selectByFileType(SessionUtils.getUserId(session),
 				type);
 		return selectByUserIdPathState;
+	}
+
+	@RequestMapping(value = "/moveFile", method = RequestMethod.POST)
+	@ResponseBody
+	public Object moveFile(HttpSession session, @RequestBody FileListModel fileListModel) {
+		boolean flag = true;
+		// List<String> fileList = fileListModel.getFileList();
+		System.out.println();
+		List<String> fileList = fileListModel.getFileList();
+		// fileList=jsonArray.toList();
+		String path = fileListModel.getPath();
+		for (String id : fileList) {
+			UserFile selectByPrimaryKey = userFileService.selectByPrimaryKey(id);
+			System.out.println(selectByPrimaryKey);
+			if (userFileService.moveUserFile(selectByPrimaryKey.getUserFileId(), path).isSuccess() == false) {
+				flag = false;
+			}
+			if (selectByPrimaryKey.getFileId() == null) {
+				if (userFileService.moveUserFile2(selectByPrimaryKey.getUserFileName(),selectByPrimaryKey.getPath(), path).isSuccess() == false) {
+					flag = false;
+				}
+			}
+		}
+		ResponseMessage rm;
+		if (flag == false) {
+			rm = new ResponseMessage(0, "移动失败", null, false);
+		} else {
+			rm = new ResponseMessage(1);
+		}
+		return rm;
 	}
 }

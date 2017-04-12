@@ -20,4 +20,10 @@ public interface UserFileService {
 	ResponseMessage insert(UserFile userFile);
 
 	ResponseMessage selectLikeFileName(@Param("userId") String userId, @Param("fileName") String fileName);
+	
+	ResponseMessage moveUserFile(@Param("userFileId")String userFileId, @Param("moveTo") String path);
+	
+	ResponseMessage moveUserFile2(@Param("userFileName") String userFileName,@Param("path") String path, @Param("moveTo") String moveTo);
+	
+	UserFile selectByPrimaryKey(String userFileId);
 }

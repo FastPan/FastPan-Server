@@ -74,10 +74,9 @@
 				<div id="main-content-file">
 					<div id="table-head">
 						<!-- <span id="picker1">上传</span> -->
-						<button type="button" class="btn btn-default">新建文件夹</button>
-						<button type="button" class="btn btn-default">移动至</button>
+						<button type="button" id="newFloderBtn" class="btn btn-default">新建文件夹</button>
+						<button type="button" id="move" class="btn btn-default">移动至</button>
 						<button type="button" class="btn btn-default">删除</button>
-						<button type="button" class="btn btn-default">下载</button>
 						<button type="button" class="btn btn-default">分享</button>
 						<div class="pull-right">
 							<input type="text" id="search" name="filename" class="form-control" placeholder="搜索" />
@@ -169,6 +168,7 @@
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 		<script src="../plug-in/ie/js/ie10-viewport-bug-workaround.js"></script>
 		<script src="../plug-in/jquery-time/js/jquery-time.js"></script>
+		
 		<script src="../js/main/fileupload.js"></script>
 		<script src="../js/main/myPan.js"></script>
 		<script type="text/javascript">
@@ -197,17 +197,18 @@
 		<script id="allFile-tmpl" type="text/x-jquery-tmpl">
      		<tr>
         	{{if fileId==null}}
-           		<td><input type="checkbox"> <span class="glyphicon glyphicon-folder-open">&nbsp;</span><a path="${path}">${userFileName}</a></input></td>
+           		<td><input userFileId="${userFileId}" type="checkbox"> <span class="glyphicon glyphicon-folder-open">&nbsp;</span><a path="${path}">${userFileName}</a></input></td>
 				<td></td>
 				<td></td>
 				<td>${$.myTime.UnixToDate(createTime,true)}</td>
         	{{else}}
-            	<td><input type="checkbox"><span class="glyphicon glyphicon-list-alt">&nbsp;</span> <a href="../../download/${pathToUrl(file.fileUrl)}?filename=${userFileName}" path="${path}">${userFileName}</a></input></td>
+            	<td><input userFileId="${userFileId}" state="${file.fileState}" type="checkbox"><span class="glyphicon glyphicon-list-alt">&nbsp;</span> <a href2="../../download/${pathToUrl(file.fileUrl)}?filename=${userFileName }" path="${path}">${userFileName}</a></input></td>
 				<td></td>
 				<td>${formatFileSize(file.fileSize)}</td>
 				<td>${$.myTime.UnixToDate(createTime,true)}</td>
         	{{/if}}
        	 	</tr>
 </script>
-</body>
+<!-- 		-->
+	</body>
 </html>

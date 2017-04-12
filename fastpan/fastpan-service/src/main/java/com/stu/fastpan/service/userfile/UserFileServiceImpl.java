@@ -2,6 +2,7 @@ package com.stu.fastpan.service.userfile;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,6 +73,35 @@ public class UserFileServiceImpl extends BaseService implements UserFileService 
 		ResponseMessage rm = null;
 		try {
 			rm = SUCCESS(userFileMapper.selectByFileType(userId, type));
+		} catch (Exception e) {
+			e.printStackTrace();
+			rm = FAIL(9998, "数据库执行异常");
+		}
+		return rm;
+	}
+
+	@Override
+	public ResponseMessage moveUserFile(String userFileId,  String path){
+		ResponseMessage rm = null;
+		try {
+			rm = SUCCESS(userFileMapper.moveUserFile(userFileId, path));
+		} catch (Exception e) {
+			e.printStackTrace();
+			rm = FAIL(9998, "数据库执行异常");
+		}
+		return rm;
+	}
+
+	@Override
+	public UserFile selectByPrimaryKey(String userFileId) {
+		return userFileMapper.selectByPrimaryKey(userFileId);
+	}
+
+	@Override
+	public ResponseMessage moveUserFile2(String userFileName, String path, String moveTo) {
+		ResponseMessage rm = null;
+		try {
+			rm = SUCCESS(userFileMapper.moveUserFile2(userFileName, path, moveTo));
 		} catch (Exception e) {
 			e.printStackTrace();
 			rm = FAIL(9998, "数据库执行异常");

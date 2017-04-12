@@ -59,6 +59,34 @@ $(function() {
 			searchFile($(this).val());
 		}
 	});
+	$('#newFloderBtn').click(function() {
+		BootstrapDialog.show({
+			title : '新建文件夹',
+			message : $('<div></div>').load('./savePath'),
+			buttons : [ {
+				label : '确定',
+				cssClass : 'btn-primary',
+				action : function(dialogItself) {
+					getAllFileList('/');
+					dialogItself.close();
+				}
+			}, {
+				label : '取消',
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+			} ]
+		});
+	});
+	$('#move').click(function() {
+		var arr = new Array();
+		$("table input:checkbox").each(function() {
+			if ($(this).is(':checked')) {
+				arr[arr.length] = $(this).attr("userFileId");
+			}
+		})
+		moveFile(arr);
+	});
 	$('#table table tbody')
 			.on(
 					'mouseenter mouseleave',
@@ -76,10 +104,20 @@ $(function() {
 							$(this).find('td:nth-of-type(2)').html('');
 						}
 					});
-	$('#table table tbody').on('click', '.glyphicon-download-alt',
-			function(event) {
-				window.open($(this).parent().parent().find('a').attr('href'));
-			});
+	$('#table table tbody')
+			.on(
+					'click',
+					'.glyphicon-download-alt',
+					function(event) {
+						if ($(this).parent().parent().find('input').attr(
+								'state') != '2') {
+							window.open($(this).parent().parent().find('a')
+									.attr('href2'));
+						} else {
+							alert('此文件已被和谐');
+						}
+
+					});
 	$('.nav-sidebar li').click(function() {
 		$('.nav-sidebar li').removeClass("active");
 		$(this).addClass("active");
@@ -309,3 +347,49 @@ $(document).ready(function() {
 		}
 	});
 });
+function moveFile(arr) {
+	BootstrapDialog.show({
+		title : '请选择存储位置',
+		message : $('<div></div>').load('./savePath'),
+		buttons : [ {
+			label : '确定',
+			cssClass : 'btn-primary',
+			action : function(dialogItself) {
+				// 取路径
+				var path = getSavePath();
+				var fileListModel=new Object();
+				fileListModel.fileList=arr;
+				fileListModel.path=path;
+				$.ajax({
+					url : '../userFile/moveFile',
+					data : JSON.stringify(fileListModel),
+					type : 'post',
+					dataType : 'json',
+					headers : {
+						"Content-Type" : "application/json"
+					},
+					success : function(result) {
+						getAllFileList('/')
+						dialogItself.close();
+					},
+					error : function(error) {
+						BootstrapDialog.show({
+							title : "消息",
+							message : " 获取文件列表失败,服务器出错了",
+							onshown : function(dialog) {
+								setTimeout(function() {
+									dialog.close();
+								}, 1000);
+							}
+						});
+					}
+				});
+			}
+		}, {
+			label : '取消',
+			action : function(dialogItself) {
+				dialogItself.close();
+			}
+		} ]
+	});
+}
