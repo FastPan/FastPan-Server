@@ -30,4 +30,6 @@ public interface UserFileMapper {
     int updateByPrimaryKey(UserFile record);
     
     int updateFilesByManage(UserFile record);
+    
+    List<UserFile> selectDeleteFiles(String userId);
 }

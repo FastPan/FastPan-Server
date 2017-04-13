@@ -191,4 +191,12 @@
 		</set>
 		where file_id = #{fileId,jdbcType=CHAR}
 	</update>
+	
+	<select id="selectDeleteFiles" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		*
+		from user_file
+		where user_id = #{userId,jdbcType=CHAR} and state = 1
+	</select>
+	
 </mapper>

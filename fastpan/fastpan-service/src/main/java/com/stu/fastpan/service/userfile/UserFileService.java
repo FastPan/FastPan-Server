@@ -20,4 +20,17 @@ public interface UserFileService {
 	ResponseMessage insert(UserFile userFile);
 
 	ResponseMessage selectLikeFileName(@Param("userId") String userId, @Param("fileName") String fileName);
+	
+	ResponseMessage selectDeleteFiles(String userId);
+	
+	ResponseMessage updateDeleteFile(UserFile userFile);
+	
+	ResponseMessage updateDeleteFiles(List<String> userFileId);
+	
+	ResponseMessage backUserFiles(List<String> userFileId);
+	
+	ResponseMessage clearUserFiles(List<String> userFileId);
+	
+	ResponseMessage deleteUserFile(String userFileId);
+	
 }

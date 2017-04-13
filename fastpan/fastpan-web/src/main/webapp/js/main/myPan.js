@@ -80,6 +80,10 @@ $(function() {
 			function(event) {
 				window.open($(this).parent().parent().find('a').attr('href'));
 			});
+	$('#table table tbody').on('click', '.glyphicon-trash',
+			function(event) {
+		        $(this).parent().parent().find('a').attr('href');
+			});
 	$('.nav-sidebar li').click(function() {
 		$('.nav-sidebar li').removeClass("active");
 		$(this).addClass("active");
@@ -94,9 +98,19 @@ $(function() {
 			function() {
 				$('#main-content-upload').show();
 				$('#main-content-file').hide();
+				$('#main-recycle-bin').hide();
 				$('#table_upload-thead').css('width',
 						$('#table_upload table').width() + 'px');
-			});
+	});
+	
+	$('#my-delete').click(
+			function() {
+				$('#main-recycle-bin').show();
+				$('#main-content-file').hide();
+				$('#main-content-upload').hide();
+				$('#table-delete-thead').css('width',
+						$('#table_delete table').width() + 'px');
+	});
 
 	$('#all-file-list').on('click', 'a', function() {
 		if ($(this).parent().find('span').hasClass('glyphicon-folder-open')) {
@@ -123,6 +137,7 @@ $(function() {
 	// $("#allFile-tmpl").tmpl(data).appendTo("#all-file-list");
 	getAllFileList('/');
 });
+
 function searchFile(filename) {
 	$.ajax({
 		url : '../userFile/search',
@@ -169,6 +184,7 @@ function searchFile(filename) {
 		}
 	});
 }
+
 function getFileByType(type) {
 	$.ajax({
 		url : '../userFile/getFileByType',
@@ -215,6 +231,7 @@ function getFileByType(type) {
 		}
 	});
 }
+
 function getAllFileList(path) {
 	$.ajax({
 		url : '../userFile/getFileList',
@@ -262,6 +279,67 @@ function getAllFileList(path) {
 		}
 	});
 }
+
+function removeLogin(){
+	BootstrapDialog.show({
+		title:'提示信息',
+		message:'确定要注销用户吗?',
+		buttons:[{
+			 label:'取消',
+			 action: function(dialogItself){
+	             dialogItself.close();
+	         }
+		},{
+			label:'确定',
+			action:function(dialogItself){
+				removeLogin2();
+				dialogItself.close();
+			}
+		}]
+	});
+}
+
+function removeLogin2(){
+	
+	$.ajax({
+		url : '../user/removeUser',
+		type : 'get',
+		dataType : 'json',
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		success : function(result) {
+			
+				BootstrapDialog.show({
+					title : "消息",
+					message : "已退出",
+					onshown : function(dialog) {
+						setTimeout(function() {
+//							$('button[type="submit"]').removeAttr("disabled");
+							dialog.close();
+							if (result == 1) {
+								window.location.href = "../index";
+							}
+						}, 1000);
+
+					}
+				});
+		},
+		error : function(error) {
+			BootstrapDialog.show({
+				title : "消息",
+				message : "网络问题或接口问题",
+				onshown : function(dialog) {
+					setTimeout(function() {
+						dialog.close();
+					}, 1000);
+				}
+			});
+		}
+	});
+}
+
+//获取回收站列表
 
 $(document).ready(function() {
 	$.ajax({

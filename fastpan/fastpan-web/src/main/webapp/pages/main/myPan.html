@@ -35,8 +35,9 @@
 						class="icon-bar"></span><span class="icon-bar"></span><span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="../main/index">极速网盘</a>
-				<a class="navbar-brand" href="../main/index">注销</a>
+				<a class="navbar-brand" href="../main/index">极速网盘</a> <a
+					class="navbar-brand" href="javascript:void(0);"
+					onclick="removeLogin()">注销</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
@@ -56,13 +57,14 @@
 					</li>
 					<li><a class="glyphicon glyphicon-briefcase" id="all-txt"><span>文档</span></a>
 					</li>
-					<li><a class="glyphicon glyphicon-facetime-video" id="all-video"><span>视频</span></a>
-					</li>
+					<li><a class="glyphicon glyphicon-facetime-video"
+						id="all-video"><span>视频</span></a></li>
 					<li><a class="glyphicon glyphicon-music" id="all-music"><span>音乐</span></a></li>
 					</li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li id="my-delete"><a class="glyphicon glyphicon-trash"><span>回收站</span></a></li>
+					<li id="my-delete"><a class="glyphicon glyphicon-trash"
+						id="recycle-bin"><span>回收站</span></a></li>
 					<li id="my-share"><a href="#"><div class="batch">&#xF159;</div>
 							<span>我的分享</span></a></li>
 				</ul>
@@ -81,7 +83,8 @@
 						<button type="button" class="btn btn-default">下载</button>
 						<button type="button" class="btn btn-default">分享</button>
 						<div class="pull-right">
-							<input type="text" id="search" name="filename" class="form-control" placeholder="搜索" />
+							<input type="text" id="search" name="filename"
+								class="form-control" placeholder="搜索" />
 						</div>
 					</div>
 					<div class="module-history-list">
@@ -124,78 +127,125 @@
 						</table>
 					</div>
 				</div>
-				<div id="main-content-upload" class="_hide">
-					<div id="uploader">
-						<div class="btns">
-							<span id="picker" style="float: right; margin-left: 2px">上传</span>
-							<button id="ctlBtn" class="btn btn-default" style="float: right;">开始上传</button>
-						</div>
-						<div>
-							<div>
-								<table id="table_upload-thead" class="table table-hover"
-									style="table-layout: fixed; margin-bottom: 0px;">
-									<thead id="thead_upload_show">
-										<tr>
-											<th>文件名</th>
-											<th>进度</th>
-											<th>速度</th>
-											<th>操作</th>
-										</tr>
-									</thead>
-								</table>
-							</div>
-							<div id="table_upload" class="table-responsive"
-								style="overflow-y: scroll">
-								<table class="table table-hover">
-									<tbody id="thelist">
 
-									</tbody>
-								</table>
+				<div id="main-recycle-bin" class="_hide">
+					<div id="delete-content-file">
+						<div id="table-head">
+							<!-- <span id="picker1">回收站</span> -->
+							<button type="button" class="btn btn-default">还原</button>
+							<button type="button" class="btn btn-default">删除</button>
+						</div>
+						<table id="table-delete-thead" class="table table-hover"
+							style="margin: 0">
+							<thead>
+								<tr id="thead_show">
+									<th><input id="select-all" type="checkbox"> </input><a
+										id="deleteFileName">文件名<font size=1><span
+												class="glyphicon"></span></font></a></th>
+									<th></th>
+									<th><a id="deleteFileSize">大小<font size=1><span
+												class="glyphicon"></span></font></a></th>
+									<th><a id="deleteUpdateTime">日期<font size=1><span
+												class="glyphicon"></span></font></a></th>
+								</tr>
+							</thead>
+						</table>
+						<div id="table_delete" class="table-responsive"
+							style="overflow-y: scroll">
+							<table class="table table-hover">
+								<tbody id="delete-file-list">
+
+								<!-- <tr>
+									<td><input type="checkbox"> <a>文件夹1</a></input></td>
+									<td></td>
+									<td></td>
+									<td>2016-05-12 12:05</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox"> <a>文件1</a></input></td>
+									<td></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:06</td>
+								</tr> -->
+								
+								</tbody>
+							</table>
+						</div>
+					</div>
+                </div>
+                
+					<div id="main-content-upload" class="_hide">
+						<div id="uploader">
+							<div class="btns">
+								<span id="picker" style="float: right; margin-left: 2px">上传</span>
+								<button id="ctlBtn" class="btn btn-default"
+									style="float: right;">开始上传</button>
+							</div>
+							<div>
+								<div>
+									<table id="table_upload-thead" class="table table-hover"
+										style="table-layout: fixed; margin-bottom: 0px;">
+										<thead id="thead_upload_show">
+											<tr>
+												<th>文件名</th>
+												<th>进度</th>
+												<th>速度</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+								<div id="table_upload" class="table-responsive"
+									style="overflow-y: scroll">
+									<table class="table table-hover">
+										<tbody id="thelist">
+
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<!-- Bootstrap core JavaScript
+			<!-- Bootstrap core JavaScript
 		================================================== -->
-		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="../plug-in/jquery/js/jquery.min.js"></script>
-		<script src="../plug-in/bootstrap/js/bootstrap.min.js"></script>
-		<script src="../plug-in/bootstrapDialog/js/bootstrap-dialog.min.js"></script>
-		<script src="../plug-in/jquery-tmpl/js/jquery.tmpl.min.js"></script>
-		<script src="../plug-in/webuploader/webuploader.js"></script>
-		<!-- <script src="../js/plug-in/docs.min.js"></script> -->
-		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-		<script src="../plug-in/ie/js/ie10-viewport-bug-workaround.js"></script>
-		<script src="../plug-in/jquery-time/js/jquery-time.js"></script>
-		<script src="../js/main/fileupload.js"></script>
-		<script src="../js/main/myPan.js"></script>
-		<script type="text/javascript">
-			function formatFileSize(fileSize) {
-				if (fileSize < 1024) {
-					return fileSize + 'B';
-				} else if (fileSize < (1024 * 1024)) {
-					var temp = fileSize / 1024;
-					temp = temp.toFixed(2);
-					return temp + 'KB';
-				} else if (fileSize < (1024 * 1024 * 1024)) {
-					var temp = fileSize / (1024 * 1024);
-					temp = temp.toFixed(2);
-					return temp + 'MB';
-				} else {
-					var temp = fileSize / (1024 * 1024 * 1024);
-					temp = temp.toFixed(2);
-					return temp + 'GB';
+			<!-- Placed at the end of the document so the pages load faster -->
+			<script src="../plug-in/jquery/js/jquery.min.js"></script>
+			<script src="../plug-in/bootstrap/js/bootstrap.min.js"></script>
+			<script src="../plug-in/bootstrapDialog/js/bootstrap-dialog.min.js"></script>
+			<script src="../plug-in/jquery-tmpl/js/jquery.tmpl.min.js"></script>
+			<script src="../plug-in/webuploader/webuploader.js"></script>
+			<!-- <script src="../js/plug-in/docs.min.js"></script> -->
+			<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+			<script src="../plug-in/ie/js/ie10-viewport-bug-workaround.js"></script>
+			<script src="../plug-in/jquery-time/js/jquery-time.js"></script>
+			<script src="../js/main/fileupload.js"></script>
+			<script src="../js/main/myPan.js"></script>
+			<script type="text/javascript">
+				function formatFileSize(fileSize) {
+					if (fileSize < 1024) {
+						return fileSize + 'B';
+					} else if (fileSize < (1024 * 1024)) {
+						var temp = fileSize / 1024;
+						temp = temp.toFixed(2);
+						return temp + 'KB';
+					} else if (fileSize < (1024 * 1024 * 1024)) {
+						var temp = fileSize / (1024 * 1024);
+						temp = temp.toFixed(2);
+						return temp + 'MB';
+					} else {
+						var temp = fileSize / (1024 * 1024 * 1024);
+						temp = temp.toFixed(2);
+						return temp + 'GB';
+					}
 				}
-			}
-			function pathToUrl(path){
-				return path.substring(15,path.length);
-			}
-			
-		</script>
-		<script id="allFile-tmpl" type="text/x-jquery-tmpl">
+				function pathToUrl(path) {
+					return path.substring(15, path.length);
+				}
+			</script>
+			<script id="allFile-tmpl" type="text/x-jquery-tmpl">
      		<tr>
         	{{if fileId==null}}
            		<td><input type="checkbox"> <span class="glyphicon glyphicon-folder-open">&nbsp;</span><a path="${path}">${userFileName}</a></input></td>
