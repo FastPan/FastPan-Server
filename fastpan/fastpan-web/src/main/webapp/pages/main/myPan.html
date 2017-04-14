@@ -136,7 +136,7 @@
 						<table id="table-delete-thead" class="table table-hover"
 							style="margin: 0">
 							<thead>
-								<tr id="thead_show">
+								<tr id="thead_show2">
 									<th><input id="delete-all" type="checkbox" ></input>
 									<a id="deleteFileName">文件名<font size=1><span
 												class="glyphicon"></span></font></a></th>
@@ -264,13 +264,11 @@
      		<tr>
         	{{if fileId==null}}
            		<td><input userFileId="${userFileId}" type="checkbox"> <span class="glyphicon glyphicon-folder-open">&nbsp;</span><a path="${path}">${userFileName}</a></input></td>
-				<td></td>
-                <td>${state}</td>
+                <td>${changeState(state)}</td>
 				<td>${$.myTime.UnixToDate(deleteTime,true)}</td>
         	{{else}}
-            	<td><input userFileId="${userFileId}" type="checkbox"> <span class="glyphicon glyphicon-list-alt">&nbsp;</span> <a path="${path}">${userFileName}</a></input></td>
-                <td></td>				
-                <td>${state}</td>
+            	<td><input userFileId="${userFileId}" type="checkbox"> <span class="glyphicon glyphicon-list-alt">&nbsp;</span> <a path="${path}">${userFileName}</a></input></td>			
+                <td>${changeState(state)}</td>
 				<td>${$.myTime.UnixToDate(deleteTime,true)}</td>
         	{{/if}}
        	 	</tr>

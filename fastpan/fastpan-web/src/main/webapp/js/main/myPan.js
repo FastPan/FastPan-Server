@@ -5,6 +5,7 @@ submit = 0;
 submit2 = 0;
 submit3 = 0;
 submit4 = 0;
+var indent = 4;
 
 $(window).resize(
 		function() {
@@ -40,18 +41,23 @@ $(function() {
 	});
 	$('#all-file').click(function() {
 		getAllFileList('/');
+		indent=4;
 	});
 	$('#all-img').click(function() {
 		getFileByType(0);
+		indent=0;
 	});
 	$('#all-txt').click(function() {
 		getFileByType(1);
+		indent=1;
 	});
 	$('#all-video').click(function() {
 		getFileByType(2);
+		indent=2;
 	});
 	$('#all-music').click(function() {
 		getFileByType(3);
+		indent=3;
 	});
 	$('#filename').click(function() {
 
@@ -130,6 +136,11 @@ $(function() {
 			function(event) {
 		        var id = $(this).parent().parent().find('input').attr('userFileId');
 		        checkDeleteFile(id);
+		        if(indent == 4){
+		        	getAllFileList('/');
+		        }else{
+		            getFileByType(indent);
+		        }
 			});
 	$('#delete-all').click(
 			function() {
@@ -472,8 +483,12 @@ function deleteFiles(){
 					$('button[type="submit"]').removeAttr("disabled");
 					dialog.close(); }, 1000);
 				}
-
 			});
+	        if(indent == 4){
+	        	getAllFileList('/');
+	        }else{
+	            getFileByType(indent);
+	        }
 
 		},
 		error : function(error) {
@@ -664,6 +679,16 @@ function checkDeleteFile(userFileId){
 			});
 		}
 	});
+}
+
+function changeState(state){
+	if(state == 0){
+	    return "未删除";
+	}else if(state == 1){
+		return "已删除";
+	}else{
+		return "不存在";
+	}
 }
 
 $(document).ready(function() {
