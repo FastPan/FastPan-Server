@@ -1,3 +1,11 @@
+var arr;
+var arr2;
+var arr3;
+submit = 0;
+submit2 = 0;
+submit3 = 0;
+submit4 = 0;
+
 $(window).resize(
 		function() {
 			var height = $(window).height() - $('nav').height()
@@ -59,6 +67,34 @@ $(function() {
 			searchFile($(this).val());
 		}
 	});
+	$('#newFloderBtn').click(function() {
+		BootstrapDialog.show({
+			title : '新建文件夹',
+			message : $('<div></div>').load('./savePath'),
+			buttons : [ {
+				label : '确定',
+				cssClass : 'btn-primary',
+				action : function(dialogItself) {
+					getAllFileList('/');
+					dialogItself.close();
+				}
+			}, {
+				label : '取消',
+				action : function(dialogItself) {
+					dialogItself.close();
+				}
+			} ]
+		});
+	});
+	$('#move').click(function() {
+		var arr = new Array();
+		$("table input:checkbox").each(function() {
+			if ($(this).is(':checked')) {
+				arr[arr.length] = $(this).attr("userFileId");
+			}
+		})
+		moveFile(arr);
+	});
 	$('#table table tbody')
 			.on(
 					'mouseenter mouseleave',
@@ -76,13 +112,29 @@ $(function() {
 							$(this).find('td:nth-of-type(2)').html('');
 						}
 					});
-	$('#table table tbody').on('click', '.glyphicon-download-alt',
-			function(event) {
-				window.open($(this).parent().parent().find('a').attr('href'));
-			});
+	$('#table table tbody')
+			.on(
+					'click',
+					'.glyphicon-download-alt',
+					function(event) {
+						if ($(this).parent().parent().find('input').attr(
+								'state') != '2') {
+							window.open($(this).parent().parent().find('a')
+									.attr('href2'));
+						} else {
+							alert('此文件已被和谐');
+						}
+
+					});
 	$('#table table tbody').on('click', '.glyphicon-trash',
 			function(event) {
-		        $(this).parent().parent().find('a').attr('href');
+		        var id = $(this).parent().parent().find('input').attr('userFileId');
+		        checkDeleteFile(id);
+			});
+	$('#delete-all').click(
+			function() {
+				$("#table_delete input[type='checkbox']").prop('checked',
+						$(this).prop('checked'));
 			});
 	$('.nav-sidebar li').click(function() {
 		$('.nav-sidebar li').removeClass("active");
@@ -92,6 +144,7 @@ $(function() {
 		if ($(this).attr('id') != "my-upload") {
 			$('#main-content-file').show();
 			$('#main-content-upload').hide();
+			$('#main-recycle-bin').hide();
 		}
 	});
 	$('#my-upload').click(
@@ -110,6 +163,7 @@ $(function() {
 				$('#main-content-upload').hide();
 				$('#table-delete-thead').css('width',
 						$('#table_delete table').width() + 'px');
+				recycleBin();
 	});
 
 	$('#all-file-list').on('click', 'a', function() {
@@ -340,6 +394,277 @@ function removeLogin2(){
 }
 
 //获取回收站列表
+function recycleBin(){
+	$.ajax({
+		url : '../userFile/getRecycleBinList',
+		type : 'get',
+		dataType : 'json',
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		success : function(result) {
+			if (result.success === true) {
+				// console.log(result);
+				var data = result.result;
+				
+				$("#delete-file-list").empty();
+				$("#deleteFile-tmpl").tmpl(data).appendTo("#delete-file-list");
+				
+			}
+		},
+		error : function(error) {
+			BootstrapDialog.show({
+				title : "消息",
+				message : " 获取文件列表失败,服务器出错了",
+				onshown : function(dialog) {
+					setTimeout(function() {
+						dialog.close();
+					}, 1000);
+				}
+			});
+		}
+	});
+}
+
+function getcheckboxList(){
+	arr = new Array();
+	$("table input:checkbox").each(function() {
+		if ($(this).is(':checked')) {
+			if($(this).attr("userFileId") != undefined){
+				arr[arr.length] = $(this).attr("userFileId");
+			}
+		}
+	})
+}
+
+function getcheckboxList2(){
+	arr2 = new Array();
+	$("table input:checkbox").each(function() {
+		if ($(this).is(':checked')) {
+			if($(this).attr("userFileId") != undefined){
+			    arr2[arr2.length] = $(this).attr("userFileId");
+			}
+		}
+	})
+}
+
+function deleteFiles(){
+	submit++;
+	getcheckboxList();
+	console.log(arr);
+	
+	$.ajax({
+		url : '../userFile/deleteRecycleBinFiles',
+		data : JSON.stringify(arr),
+		type : 'post',
+		dataType : 'json',
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		success : function(data) {
+			submit--;
+			var message = data.success ? data.result : data.message;
+			BootstrapDialog.show({
+				title : "消息",
+				message : message,
+				onshown : function(dialog) {
+					setTimeout(function() {
+					$('button[type="submit"]').removeAttr("disabled");
+					dialog.close(); }, 1000);
+				}
+
+			});
+
+		},
+		error : function(error) {
+			submit--;
+			BootstrapDialog.show({
+				title : "消息",
+				message : "服务器出错了",
+				onshown : function(dialog) {
+					setTimeout(function() {
+						$('button[type="submit"]').removeAttr("disabled");
+						dialog.close();
+					}, 1000);
+				}
+			});
+		}
+	});
+}
+
+function backDeleteFiles(){
+	BootstrapDialog.show({
+		title:'提示信息',
+		message:'确定要还原文件吗?',
+		buttons:[{
+			 label:'取消',
+			 action: function(dialogItself){
+	             dialogItself.close();
+	         }
+		},{
+			label:'确定',
+			action:function(dialogItself){
+				backDeleteFiles2();
+				dialogItself.close();
+			}
+		}]
+	});
+}
+
+function backDeleteFiles2(){
+	
+	submit2++;
+	getcheckboxList2();
+	console.log(arr2);
+	
+	$.ajax({
+		url : '../userFile/backRecycleBinFiles',
+		data : JSON.stringify(arr2),
+		type : 'post',
+		dataType : 'json',
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		success : function(data) {
+			submit2--;
+			var message = data.success ? data.result : data.message;
+			BootstrapDialog.show({
+				title : "消息",
+				message : message,
+				onshown : function(dialog) {
+					setTimeout(function() {
+					$('button[type="submit"]').removeAttr("disabled");
+					dialog.close(); }, 1000);
+					recycleBin();
+				}
+
+			});
+
+		},
+		error : function(error) {
+			submit2--;
+			BootstrapDialog.show({
+				title : "消息",
+				message : "服务器出错了",
+				onshown : function(dialog) {
+					setTimeout(function() {
+						$('button[type="submit"]').removeAttr("disabled");
+						dialog.close();
+					}, 1000);
+				}
+			});
+		}
+	});
+}
+
+function clearDeleteFiles(){
+	BootstrapDialog.show({
+		title:'提示信息',
+		message:'确定要清空文件吗?',
+		buttons:[{
+			 label:'取消',
+			 action: function(dialogItself){
+	             dialogItself.close();
+	         }
+		},{
+			label:'确定',
+			action:function(dialogItself){
+				clearDeleteFiles2();
+				dialogItself.close();
+			}
+		}]
+	});
+}
+
+function clearDeleteFiles2(){
+	
+	submit3++;
+	getcheckboxList2();
+	console.log(arr2);
+	
+	$.ajax({
+		url : '../userFile/clearRecycleBinFiles',
+		data : JSON.stringify(arr2),
+		type : 'post',
+		dataType : 'json',
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		success : function(data) {
+			submit3--;
+			var message = data.success ? data.result : data.message;
+			BootstrapDialog.show({
+				title : "消息",
+				message : message,
+				onshown : function(dialog) {
+					setTimeout(function() {
+					$('button[type="submit"]').removeAttr("disabled");
+					dialog.close(); }, 1000);
+					recycleBin();
+				}
+
+			});
+
+		},
+		error : function(error) {
+			submit3--;
+			BootstrapDialog.show({
+				title : "消息",
+				message : "服务器出错了",
+				onshown : function(dialog) {
+					setTimeout(function() {
+						$('button[type="submit"]').removeAttr("disabled");
+						dialog.close();
+					}, 1000);
+				}
+			});
+		}
+	});
+}
+
+function checkDeleteFile(userFileId){
+	submit4++;
+	console.log(userFileId);
+	var date = {requestContext:{userFileId : userFileId}}
+	$.ajax({
+		url : '../userFile/deleteRecycleBinFile',
+		data : JSON.stringify(date),
+		type : 'post',
+		dataType : 'json',
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		success : function(data) {
+			submit4--;
+			var message = data.success ? data.result : data.message;
+			BootstrapDialog.show({
+				title : "消息",
+				message : message,
+				onshown : function(dialog) {
+					setTimeout(function() {
+					$('button[type="submit"]').removeAttr("disabled");
+					dialog.close(); }, 1000);
+					recycleBin();
+				}
+
+			});
+
+		},
+		error : function(error) {
+			submit4--;
+			BootstrapDialog.show({
+				title : "消息",
+				message : "服务器出错了",
+				onshown : function(dialog) {
+					setTimeout(function() {
+						$('button[type="submit"]').removeAttr("disabled");
+						dialog.close();
+					}, 1000);
+				}
+			});
+		}
+	});
+}
 
 $(document).ready(function() {
 	$.ajax({
@@ -387,3 +712,50 @@ $(document).ready(function() {
 		}
 	});
 });
+
+function moveFile(arr) {
+	BootstrapDialog.show({
+		title : '请选择存储位置',
+		message : $('<div></div>').load('./savePath'),
+		buttons : [ {
+			label : '确定',
+			cssClass : 'btn-primary',
+			action : function(dialogItself) {
+				// 取路径
+				var path = getSavePath();
+				var fileListModel=new Object();
+				fileListModel.fileList=arr;
+				fileListModel.path=path;
+				$.ajax({
+					url : '../userFile/moveFile',
+					data : JSON.stringify(fileListModel),
+					type : 'post',
+					dataType : 'json',
+					headers : {
+						"Content-Type" : "application/json"
+					},
+					success : function(result) {
+						getAllFileList('/')
+						dialogItself.close();
+					},
+					error : function(error) {
+						BootstrapDialog.show({
+							title : "消息",
+							message : " 获取文件列表失败,服务器出错了",
+							onshown : function(dialog) {
+								setTimeout(function() {
+									dialog.close();
+								}, 1000);
+							}
+						});
+					}
+				});
+			}
+		}, {
+			label : '取消',
+			action : function(dialogItself) {
+				dialogItself.close();
+			}
+		} ]
+	});
+}

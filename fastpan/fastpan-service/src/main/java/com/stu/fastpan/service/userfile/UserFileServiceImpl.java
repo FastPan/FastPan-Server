@@ -3,6 +3,7 @@ package com.stu.fastpan.service.userfile;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -81,6 +82,35 @@ public class UserFileServiceImpl extends BaseService implements UserFileService 
 	}
 	
 
+	@Override
+	public ResponseMessage moveUserFile(String userFileId,  String path){
+		ResponseMessage rm = null;
+		try {
+			rm = SUCCESS(userFileMapper.moveUserFile(userFileId, path));
+		} catch (Exception e) {
+			e.printStackTrace();
+			rm = FAIL(9998, "数据库执行异常");
+		}
+		return rm;
+	}
+
+	@Override
+	public UserFile selectByPrimaryKey(String userFileId) {
+		return userFileMapper.selectByPrimaryKey(userFileId);
+	}
+
+	@Override
+	public ResponseMessage moveUserFile2(String userFileName, String path, String moveTo) {
+		ResponseMessage rm = null;
+		try {
+			rm = SUCCESS(userFileMapper.moveUserFile2(userFileName, path, moveTo));
+		} catch (Exception e) {
+			e.printStackTrace();
+			rm = FAIL(9998, "数据库执行异常");
+		}
+		return rm;
+	}
+	
 	/** 回收站的操作
 	 * 查询删除文件列表
 	 */
@@ -121,7 +151,7 @@ public class UserFileServiceImpl extends BaseService implements UserFileService 
 		if(result == 0){
 			return FAIL(9998, "更新失败");
 		}
-		return SUCCESS("更新成功");
+		return SUCCESS("删除成功");
 	}
 
 	/** 
@@ -178,24 +208,27 @@ public class UserFileServiceImpl extends BaseService implements UserFileService 
 	 */
 	@Override
 	public ResponseMessage clearUserFiles(List<String> userIdList) {
-		
+		int result = 0;
 		if(userIdList == null){
 			return FAIL(1003, "入参失败");
 		}
-		
+				
 		if(userIdList.size() > 0){
-		
+			
 		for(String userFileId : userIdList){
-			deleteUserFile(userFileId);
-			if(!deleteUserFile(userFileId).isSuccess()){
-				return FAIL(2000, "删除失败");
+			System.out.println(userFileId);
+			result = deleteUserFile2(userFileId);
+			if(result == 0){
+				break;
 			}
 		}
-		
-		return SUCCESS("删除成功");
 		}
 		
-		return FAIL(1003, "入参失败");
+		if(result == 0){
+			return FAIL(9998, "删除失败");
+		}
+		return SUCCESS("删除成功");
+		
 	}
 
 	/** 
@@ -220,6 +253,25 @@ public class UserFileServiceImpl extends BaseService implements UserFileService 
 		}
 		return SUCCESS("删除成功");
 	}
-
 	
+	@Override
+	public int deleteUserFile2(String userFileId) {
+		int result = 0;
+		
+		if(userFileId == null){
+			return result;
+		}
+		try{
+			result = userFileMapper.deleteByPrimaryKey(userFileId);
+		}catch(Exception e){
+			e.printStackTrace();
+			return result;
+		}
+		
+		if(result == 0){
+			return result;
+		}
+		return 1;
+	}
+
 }

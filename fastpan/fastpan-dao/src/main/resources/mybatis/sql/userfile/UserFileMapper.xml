@@ -22,11 +22,12 @@
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="file_id" property="fileId" jdbcType="CHAR" />
 		<result column="state" property="state" jdbcType="TINYINT" />
-		<association column="file_id" property="file" 
+		<association column="file_id" property="file"
 			select="com.stu.fastpan.dao.mapper.file.FileMapper.selectByPrimaryKey" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		user_file_id, user_file_name, path, user_id, delete_time, create_time, file_id,
+		user_file_id, user_file_name, path, user_id, delete_time,
+		create_time, file_id,
 		state
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
@@ -40,13 +41,17 @@
 		select
 		*
 		from user_file
-		where user_id = #{userId,jdbcType=CHAR} and user_file_name like #{fileName,jdbcType=CHAR}  and file_id is not null
+		where user_id = #{userId,jdbcType=CHAR} and user_file_name like
+		#{fileName,jdbcType=CHAR} and file_id is not null
 	</select>
 	<select id="selectByFileType" resultMap="BaseResultMapWithFile">
 		select
 		*
-		from user_file,file
-		where user_id = #{userId,jdbcType=CHAR}and file.file_id=user_file.file_id and file_type = #{type}  and user_file.file_id is not null
+		from
+		user_file,file
+		where user_id = #{userId,jdbcType=CHAR}and
+		file.file_id=user_file.file_id and file_type = #{type} and
+		user_file.file_id is not null
 	</select>
 	<select id="selectByUserId" resultMap="BaseResultMap">
 		select
@@ -58,32 +63,42 @@
 		select
 		<include refid="Base_Column_List" />
 		from user_file
-		where user_id = #{userId,jdbcType=CHAR} and path=#{path,jdbcType=VARCHAR}
+		where user_id = #{userId,jdbcType=CHAR} and
+		path=#{path,jdbcType=VARCHAR}
 	</select>
 	<select id="selectByUserIdPathState" resultMap="BaseResultMapWithFile">
 		select *
-		from user_file
-		where user_id = #{userId,jdbcType=CHAR} and path=#{path,jdbcType=VARCHAR}
+		from
+		user_file
+		where user_id = #{userId,jdbcType=CHAR} and
+		path=#{path,jdbcType=VARCHAR}
 		and state=#{state,jdbcType=TINYINT}
 	</select>
 	<select id="selectFolderByUserIdPathState" resultMap="BaseResultMapWithFile">
 		select *
 		from user_file
-		where user_id = #{userId,jdbcType=CHAR} and path=#{path,jdbcType=VARCHAR}
-		and state=#{state,jdbcType=TINYINT} and file_id is null
+		where user_id = #{userId,jdbcType=CHAR} and
+		path=#{path,jdbcType=VARCHAR}
+		and state=#{state,jdbcType=TINYINT} and
+		file_id is null
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		delete from user_file
+		delete from
+		user_file
 		where user_file_id = #{userFileId,jdbcType=CHAR}
 	</delete>
 	<insert id="insert" parameterType="com.stu.fastpan.dao.pojo.userfile.UserFile">
-		insert into user_file (user_file_id, user_file_name, path,
+		insert into user_file
+		(user_file_id, user_file_name, path,
 		user_id, delete_time, create_time,
 		file_id, state)
-		values (#{userFileId,jdbcType=CHAR}, #{userFileName,jdbcType=VARCHAR},
+		values (#{userFileId,jdbcType=CHAR},
+		#{userFileName,jdbcType=VARCHAR},
 		#{path,jdbcType=VARCHAR},
-		#{userId,jdbcType=CHAR}, #{deleteTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
-		#{fileId,jdbcType=CHAR}, #{state,jdbcType=TINYINT})
+		#{userId,jdbcType=CHAR}, #{deleteTime,jdbcType=TIMESTAMP},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{fileId,jdbcType=CHAR},
+		#{state,jdbcType=TINYINT})
 	</insert>
 	<insert id="insertSelective" parameterType="com.stu.fastpan.dao.pojo.userfile.UserFile">
 		insert into user_file
@@ -170,13 +185,32 @@
 	<update id="updateByPrimaryKey" parameterType="com.stu.fastpan.dao.pojo.userfile.UserFile">
 		update user_file
 		set user_file_name = #{userFileName,jdbcType=VARCHAR},
-		path = #{path,jdbcType=VARCHAR},
+		path =
+		#{path,jdbcType=VARCHAR},
 		user_id = #{userId,jdbcType=CHAR},
 		delete_time = #{deleteTime,jdbcType=TIMESTAMP},
-		create_time = #{createTime,jdbcType=TIMESTAMP},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
 		file_id = #{fileId,jdbcType=CHAR},
 		state = #{state,jdbcType=TINYINT}
-		where user_file_id = #{userFileId,jdbcType=CHAR}
+		where user_file_id =
+		#{userFileId,jdbcType=CHAR}
+	</update>
+	<update id="moveUserFile">
+		update user_file
+		set
+		path =
+		#{moveTo}
+		where user_file_id
+		=
+		#{userFileId,jdbcType=CHAR}
+	</update>
+	<update id="moveUserFile2">
+		update user_file set path=CONCAT(CONCAT(#{moveTo},
+		#{userFileName}),SUBSTR(path
+		,LENGTH(CONCAT(#{path},#{userFileName}))+1,LENGTH(path)-1)) where path
+		like CONCAT(#{path},#{userFileName},'%')
+
 	</update>
 	
 	<update id="updateFilesByManage" parameterType="com.stu.fastpan.dao.pojo.userfile.UserFile">
@@ -196,7 +230,7 @@
 		select
 		*
 		from user_file
-		where user_id = #{userId,jdbcType=CHAR} and state = 1
+		where user_id = #{userId,jdbcType=CHAR} and (state = 1 or state = 2)
 	</select>
 	
 </mapper>

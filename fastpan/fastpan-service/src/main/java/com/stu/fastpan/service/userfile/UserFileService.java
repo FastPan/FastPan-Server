@@ -21,6 +21,12 @@ public interface UserFileService {
 
 	ResponseMessage selectLikeFileName(@Param("userId") String userId, @Param("fileName") String fileName);
 	
+	ResponseMessage moveUserFile(@Param("userFileId")String userFileId, @Param("moveTo") String path);
+	
+	ResponseMessage moveUserFile2(@Param("userFileName") String userFileName,@Param("path") String path, @Param("moveTo") String moveTo);
+	
+	UserFile selectByPrimaryKey(String userFileId);
+	
 	ResponseMessage selectDeleteFiles(String userId);
 	
 	ResponseMessage updateDeleteFile(UserFile userFile);
@@ -32,5 +38,7 @@ public interface UserFileService {
 	ResponseMessage clearUserFiles(List<String> userFileId);
 	
 	ResponseMessage deleteUserFile(String userFileId);
+	
+	int deleteUserFile2(String userFileId);
 	
 }
