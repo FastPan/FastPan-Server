@@ -36,4 +36,6 @@ public interface UserFileMapper {
 	int moveUserFile2(@Param("userFileName") String userFileName,@Param("path") String path, @Param("moveTo") String moveTo,@Param("userId") String userId);
     
     int updateFilesByManage(UserFile record);
+    
+    List<UserFile> selectDeleteFiles(String userId);
 }

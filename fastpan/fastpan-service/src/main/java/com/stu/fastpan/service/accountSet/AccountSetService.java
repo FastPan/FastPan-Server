@@ -349,11 +349,10 @@ public class AccountSetService extends ResponseMeService<User, String>
 		int obj;
 		
 		//项目目录下
-		String path3 = "D:/fastPan/FastPan-Server/fastpan/fastpan-web/src/main/webapp/images/";
+		String path3 = "e:/fastPan/FastPan-Server/fastpan/fastpan-web/src/main/webapp/images/";
 		
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
-//			return FAIL(1006, "session失效");
 			return FAIL(1006, "请重新登录");
 		}
 		try {

@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.omg.PortableInterceptor.SUCCESSFUL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,12 +21,14 @@ import com.stu.fastpan.dao.pojo.user.ForgetPassMax;
 import com.stu.fastpan.dao.pojo.user.Password;
 import com.stu.fastpan.dao.pojo.user.UpdateEmail;
 import com.stu.fastpan.dao.pojo.user.UpdateInfor;
+import com.stu.fastpan.dao.pojo.user.User;
 import com.stu.fastpan.dao.pojo.user.UserCode;
 import com.stu.fastpan.message.RequestMessage;
 import com.stu.fastpan.service.accountSet.AccountSetFacade;
 import com.stu.fastpan.service.forgetPass.ForgetPassFacade;
 import com.stu.fastpan.service.registerLogin.RegisterLoginFacade;
 import com.stu.fastpan.service.sendPicCode.SendPicCodeFacade;
+import com.stu.fastpan.web.utils.SessionUtils;
 
 /**
  * 
@@ -290,6 +293,22 @@ public class UserController {
 		UpdateInfor updateInfor = info.getRequestContext();
 		Object obj = accountSetFacade.updateNameEm(updateInfor.getNickName(), updateInfor.getEmail(), session);
 		return obj;
+	}
+	
+	/**
+	 * 退出登录清除Session
+	 */
+	
+	@RequestMapping(value = "removeUser", method = RequestMethod.GET)
+	@ResponseBody
+	public Object removeUser(HttpSession session)
+			throws ServletException, IOException {
+		SessionUtils.removeSession(session);
+		User user =  (User) session.getAttribute("user");
+		if(user == null){
+			return 1;
+		}
+		return 0;
 	}
 	
 }

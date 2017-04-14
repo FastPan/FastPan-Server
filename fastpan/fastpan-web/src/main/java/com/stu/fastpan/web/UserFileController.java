@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import com.stu.fastpan.dao.pojo.user.User;
 import com.stu.fastpan.dao.pojo.userfile.FileListModel;
 import com.stu.fastpan.dao.pojo.userfile.UserFile;
+import com.stu.fastpan.message.RequestMessage;
 import com.stu.fastpan.message.ResponseMessage;
 import com.stu.fastpan.service.userfile.UserFileService;
 import com.stu.fastpan.web.utils.SessionUtils;
@@ -98,4 +99,94 @@ public class UserFileController {
 		}
 		return rm;
 	}
+	
+	/**
+	 * 获取回收站列表
+	 */
+	@RequestMapping(value = "/getRecycleBinList", method = RequestMethod.GET)
+	@ResponseBody
+	public Object getRecycleBinList(HttpSession session) {
+		ResponseMessage response;
+		User user = (User) session.getAttribute("user");
+		response = userFileService.selectDeleteFiles(user.getUserId());
+		return response;
+	}
+	
+	/**
+	 * 删除单个文件
+	 */
+	@RequestMapping(value = "/deleteRecycleBinFile", method = RequestMethod.POST)
+	@ResponseBody
+	public Object deleteRecycleBinFile(HttpSession session,@RequestBody RequestMessage<UserFile> infor) {
+		UserFile userFile = infor.getRequestContext();
+		ResponseMessage response;
+//		User user = (User) session.getAttribute("user");
+		userFile.setState(new Integer(1).byteValue());
+		response = userFileService.updateDeleteFile(userFile);
+		return response;
+	}
+	
+	/**
+	 * 删除多个文件
+	 */
+	@RequestMapping(value = "/deleteRecycleBinFiles", method = RequestMethod.POST)
+	@ResponseBody
+	public Object deleteRecycleBinFiles(HttpSession session,@RequestBody List<String> userFileId) {
+		ResponseMessage response;
+//		User user = (User) session.getAttribute("user");
+		response = userFileService.updateDeleteFiles(userFileId);
+		return response;
+	}
+	
+	/**
+	 * 还原单个文件
+	 */
+	@RequestMapping(value = "/backRecycleBinFile", method = RequestMethod.POST)
+	@ResponseBody
+	public Object backRecycleBinFile(HttpSession session,@RequestBody RequestMessage<UserFile> infor) {
+		UserFile userFile = infor.getRequestContext();
+		ResponseMessage response;
+//		User user = (User) session.getAttribute("user");
+		userFile.setState(new Integer(0).byteValue());
+		response = userFileService.updateDeleteFile(userFile);
+		return response;
+	}
+	
+	/**
+	 * 还原多个文件
+	 */
+	@RequestMapping(value = "/backRecycleBinFiles", method = RequestMethod.POST)
+	@ResponseBody
+	public Object backRecycleBinFiles(HttpSession session,@RequestBody List<String> userFileId) {
+		ResponseMessage response;
+//		User user = (User) session.getAttribute("user");
+		response = userFileService.backUserFiles(userFileId);
+		return response;
+	}
+	
+	/**
+	 * 清除单个文件
+	 */
+	@RequestMapping(value = "/removeRecycleBinFile", method = RequestMethod.POST)
+	@ResponseBody
+	public Object removeRecycleBinFile(HttpSession session,@RequestBody RequestMessage<UserFile> infor) {
+		UserFile userFile = infor.getRequestContext();
+		ResponseMessage response;
+
+		response = userFileService.deleteUserFile(userFile.getUserFileId());
+		return response;
+	}
+	
+	/**
+	 * 清除多个文件
+	 */
+	@RequestMapping(value = "/clearRecycleBinFiles", method = RequestMethod.POST)
+	@ResponseBody
+	public Object clearRecycleBinFiles(HttpSession session,@RequestBody List<String> userFileId) {
+		ResponseMessage response;
+//		User user = (User) session.getAttribute("user");
+		response = userFileService.clearUserFiles(userFileId);
+		return response;
+	}
+	
 }

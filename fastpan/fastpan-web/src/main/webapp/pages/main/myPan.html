@@ -36,7 +36,8 @@
 						class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="../main/index">极速网盘</a> <a
-					class="navbar-brand" href="../main/index">注销</a>
+					class="navbar-brand" href="javascript:void(0);"
+					onclick="removeLogin()">注销</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
@@ -62,7 +63,8 @@
 					</li>
 				</ul>
 				<ul class="nav nav-sidebar">
-					<li id="my-delete"><a class="glyphicon glyphicon-trash"><span>回收站</span></a></li>
+					<li id="my-delete"><a class="glyphicon glyphicon-trash">
+					        <span>回收站</span></a></li>
 					<li id="my-share"><a href="#"><div class="batch">&#xF159;</div>
 							<span>我的分享</span></a></li>
 				</ul>
@@ -77,7 +79,7 @@
 						<!-- <span id="picker1">上传</span> -->
 						<button type="button" id="newFloderBtn" class="btn btn-default">新建文件夹</button>
 						<button type="button" id="move" class="btn btn-default">移动至</button>
-						<button type="button" class="btn btn-default">删除</button>
+						<button type="button" class="btn btn-default" onclick="deleteFiles()">删除</button>
 						<button type="button" id="shareBtn" class="btn btn-default">分享</button>
 						<div class="pull-right">
 							<input type="text" id="search" name="filename"
@@ -124,36 +126,84 @@
 						</table>
 					</div>
 				</div>
-				<div id="main-content-upload" class="_hide">
-					<div id="uploader">
-						<div class="btns">
-							<span id="picker" style="float: right; margin-left: 2px">上传</span>
-							<button id="ctlBtn" class="btn btn-default" style="float: right;">开始上传</button>
-						</div>
-						<div>
-							<div>
-								<table id="table_upload-thead" class="table table-hover"
-									style="table-layout: fixed; margin-bottom: 0px;">
-									<thead id="thead_upload_show">
-										<tr>
-											<th>文件名</th>
-											<th>进度</th>
-											<th>速度</th>
-											<th>操作</th>
-										</tr>
-									</thead>
-								</table>
-							</div>
-							<div id="table_upload" class="table-responsive"
-								style="overflow-y: scroll">
-								<table class="table table-hover">
-									<tbody id="thelist">
 
-									</tbody>
-								</table>
+				<div id="main-recycle-bin" class="_hide">
+					<div id="delete-content-file">
+						<div id="table-head">
+							<!-- <span id="picker1">回收站</span> -->
+							<button type="button" class="btn btn-default" onclick="backDeleteFiles()" >还原</button>
+							<button type="button" class="btn btn-default" onclick="clearDeleteFiles()" >清空</button>
+						</div>
+						<table id="table-delete-thead" class="table table-hover"
+							style="margin: 0">
+							<thead>
+								<tr id="thead_show2">
+									<th><input id="delete-all" type="checkbox" ></input>
+									<a id="deleteFileName">文件名<font size=1><span
+												class="glyphicon"></span></font></a></th>
+									<th><a id="deleteFileState">状态<font size=1><span
+												class="glyphicon"></span></font></a></th>
+									<th><a id="deleteUpdateTime">日期<font size=1><span
+												class="glyphicon"></span></font></a></th>
+								</tr>
+							</thead>
+						</table>
+						<div id="table_delete" class="table-responsive" style="overflow-y: scroll">
+							<table class="table table-hover">
+								<tbody id="delete-file-list">
+
+								<!-- <tr>
+									<td><input type="checkbox"> <a>文件夹1</a></input></td>
+									<td></td>
+									<td></td>
+									<td>2016-05-12 12:05</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox"> <a>文件1</a></input></td>
+									<td></td>
+									<td>152.9M</td>
+									<td>2016-05-12 12:06</td>
+								</tr> -->
+								
+								</tbody>
+							</table>
+						</div>
+					</div>
+                </div>
+                
+					<div id="main-content-upload" class="_hide">
+						<div id="uploader">
+							<div class="btns">
+								<span id="picker" style="float: right; margin-left: 2px">上传</span>
+								<button id="ctlBtn" class="btn btn-default"
+									style="float: right;">开始上传</button>
+							</div>
+							<div>
+								<div>
+									<table id="table_upload-thead" class="table table-hover"
+										style="table-layout: fixed; margin-bottom: 0px;">
+										<thead id="thead_upload_show">
+											<tr>
+												<th>文件名</th>
+												<th>进度</th>
+												<th>速度</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+								<div id="table_upload" class="table-responsive"
+									style="overflow-y: scroll">
+									<table class="table table-hover">
+										<tbody id="thelist">
+
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>
+				
 				</div>
 				<div id="main-content-share" class="_hide">
 					<table id="table-share-thead" class="table table-hover"
@@ -177,7 +227,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
 
 		<!-- Bootstrap core JavaScript
 		================================================== -->
@@ -259,6 +308,23 @@
 				<td>${$.myTime.UnixToDate(createTime,true)}</td>
         	{{/if}}
        	 	</tr>
+        </script>
+
+		<script id="deleteFile-tmpl" type="text/x-jquery-tmpl">
+     		<tr>
+        	{{if fileId==null}}
+           		<td><input userFileId="${userFileId}" type="checkbox"> <span class="glyphicon glyphicon-folder-open">&nbsp;</span><a path="${path}">${userFileName}</a></input></td>
+                <td>${changeState(state)}</td>
+				<td>${$.myTime.UnixToDate(deleteTime,true)}</td>
+        	{{else}}
+            	<td><input userFileId="${userFileId}" type="checkbox"> <span class="glyphicon glyphicon-list-alt">&nbsp;</span> <a path="${path}">${userFileName}</a></input></td>			
+                <td>${changeState(state)}</td>
+				<td>${$.myTime.UnixToDate(deleteTime,true)}</td>
+        	{{/if}}
+       	 	</tr>
+        </script>
+
+</body>
 </script>
 		<script id="allShareFile-tmpl" type="text/x-jquery-tmpl">
      		<tr>

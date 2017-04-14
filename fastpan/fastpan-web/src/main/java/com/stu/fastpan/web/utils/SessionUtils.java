@@ -5,8 +5,14 @@ import javax.servlet.http.HttpSession;
 import com.stu.fastpan.dao.pojo.user.User;
 
 public class SessionUtils {
+	
 	public static String getUserId(HttpSession session){
 		User user=(User) session.getAttribute("user");
 		return user.getUserId();
 	}
+	
+	public static void removeSession(HttpSession session){
+		session.removeAttribute("user");
+	}
+	
 }

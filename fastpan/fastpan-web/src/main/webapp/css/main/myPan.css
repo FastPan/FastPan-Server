@@ -161,6 +161,18 @@ a:hover {
 	width: 20%;
 }
 
+#table_delete td:nth-child(1), #thead_show2 th:nth-child(1) {
+	width: 50%;
+}
+
+#table_delete  td:nth-child(2), #thead_show2 th:nth-child(2) {
+	width: 20%;
+}
+
+#table_delete  td:nth-child(3), #thead_show2 th:nth-child(3) {
+	width: 10%;
+}
+
 
 #table_upload td:nth-child(1), #thead_upload_show th:nth-child(1) {
 	width: 50%;

@@ -26,4 +26,19 @@ public interface UserFileService {
 	ResponseMessage moveUserFile2(@Param("userFileName") String userFileName,@Param("path") String path, @Param("moveTo") String moveTo, @Param("userId") String userId);
 	
 	UserFile selectByPrimaryKey(String userFileId);
+	
+	ResponseMessage selectDeleteFiles(String userId);
+	
+	ResponseMessage updateDeleteFile(UserFile userFile);
+	
+	ResponseMessage updateDeleteFiles(List<String> userFileId);
+	
+	ResponseMessage backUserFiles(List<String> userFileId);
+	
+	ResponseMessage clearUserFiles(List<String> userFileId);
+	
+	ResponseMessage deleteUserFile(String userFileId);
+	
+	int deleteUserFile2(String userFileId);
+	
 }
