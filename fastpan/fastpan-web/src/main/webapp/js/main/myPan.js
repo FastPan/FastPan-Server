@@ -4,6 +4,7 @@ $(window).resize(
 					- $('#table-head').height() - $('#table-thead').height()
 					- parseInt($('#main-content').css('padding')) * 2;
 			$('#table').css('height', height + 'px');
+			$('#table_share').css('height', height + 'px');
 			$('#table_upload').css('height', height + 'px');
 			$('#table_upload-thead').css('width',
 					$('#table_upload table').width() + 'px');
@@ -13,6 +14,7 @@ $(function() {
 			- $('#table-head').height() - $('#table-thead').height()
 			- parseInt($('#main-content').css('padding')) * 2;
 	$('#table').css('height', height + 'px');
+	$('#table_share').css('height', height + 'px');
 	$('#table_upload').css('height', height + 'px');
 	$('#select-all').click(
 			function() {
@@ -111,13 +113,27 @@ $(function() {
 					function(event) {
 						if ($(this).parent().parent().find('input').attr(
 								'state') != '2') {
-							window.open($(this).parent().parent().find('a')
-									.attr('href2'));
+							if ($(this).parent().parent().find('a').attr(
+									'href2') != '') {
+								window.open($(this).parent().parent().find('a')
+										.attr('href2'));
+							} else {
+								alert('暂时不支持文件夹下载');
+							}
 						} else {
 							alert('此文件已被和谐');
 						}
 
 					});
+	$('#shareBtn').click(function() {
+		var arr = new Array();
+		$("table input:checkbox").each(function() {
+			if ($(this).is(':checked')) {
+				arr[arr.length] = $(this).attr("userFileId");
+			}
+		})
+		shareFile(arr);
+	});
 	$('.nav-sidebar li').click(function() {
 		$('.nav-sidebar li').removeClass("active");
 		$(this).addClass("active");
@@ -132,13 +148,21 @@ $(function() {
 			function() {
 				$('#main-content-upload').show();
 				$('#main-content-file').hide();
+				$('#main-content-share').hide();
 				$('#table_upload-thead').css('width',
 						$('#table_upload table').width() + 'px');
 			});
-
+	$('#my-share').click(
+			function() {
+				$('#main-content-share').show();
+				$('#main-content-upload').hide();
+				$('#main-content-file').hide();
+				$('#table_upload-thead').css('width',
+						$('#table_upload table').width() + 'px');
+				getAllShareFileList();
+			});
 	$('#all-file-list').on('click', 'a', function() {
 		if ($(this).parent().find('span').hasClass('glyphicon-folder-open')) {
-			// console.log($(this).attr('path')+$(this).html()+'/');
 			getAllFileList($(this).attr('path') + $(this).html() + '/');
 		}
 	});
@@ -160,6 +184,7 @@ $(function() {
 	// $("#all-file-list").empty();
 	// $("#allFile-tmpl").tmpl(data).appendTo("#all-file-list");
 	getAllFileList('/');
+	getAllShareFileList();
 });
 function searchFile(filename) {
 	$.ajax({
@@ -357,9 +382,9 @@ function moveFile(arr) {
 			action : function(dialogItself) {
 				// 取路径
 				var path = getSavePath();
-				var fileListModel=new Object();
-				fileListModel.fileList=arr;
-				fileListModel.path=path;
+				var fileListModel = new Object();
+				fileListModel.fileList = arr;
+				fileListModel.path = path;
 				$.ajax({
 					url : '../userFile/moveFile',
 					data : JSON.stringify(fileListModel),
@@ -393,3 +418,78 @@ function moveFile(arr) {
 		} ]
 	});
 }
+function shareFile(arr) {
+	var fileListModel = new Object();
+	fileListModel.fileList = arr;
+	$.ajax({
+		url : '../share/shareFile',
+		data : JSON.stringify(fileListModel),
+		type : 'post',
+		dataType : 'json',
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		success : function(result) {
+			BootstrapDialog.show({
+				title : "消息",
+				message : " 操作成功",
+				onshown : function(dialog) {
+					setTimeout(function() {
+						dialog.close();
+					}, 1000);
+				}
+			});
+		},
+		error : function(error) {
+			BootstrapDialog.show({
+				title : "消息",
+				message : " 获取文件列表失败,服务器出错了",
+				onshown : function(dialog) {
+					setTimeout(function() {
+						dialog.close();
+					}, 1000);
+				}
+			});
+		}
+	});
+}
+
+function getAllShareFileList() {
+	$.ajax({
+		url : '../share/getShareFileList',
+		type : 'get',
+		dataType : 'json',
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		success : function(result) {
+			if (result.success === true) {
+				var data = result.result;
+				$("#all-share-file-list").empty();
+				$("#allShareFile-tmpl").tmpl(data).appendTo(
+						"#all-share-file-list");
+
+				/*
+				 * var arr = path.split('/'); $('#home-path').empty();
+				 * $('#home-path').append('<a path="/">全部文件</a>'); temp = '/';
+				 * for (var i = 0; i < arr.length; i++) { if (arr[i] != '') {
+				 * temp += arr[i]; temp += '/'; $('#home-path').append( '<span
+				 * class="historylistmanager-separator">&gt;</span><a path="' +
+				 * temp + '">' + arr[i] + '</a>'); } }
+				 */
+			}
+		},
+		error : function(error) {
+			BootstrapDialog.show({
+				title : "消息",
+				message : " 获取文件列表失败,服务器出错了",
+				onshown : function(dialog) {
+					setTimeout(function() {
+						dialog.close();
+					}, 1000);
+				}
+			});
+		}
+	});
+}
+

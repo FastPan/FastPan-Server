@@ -23,7 +23,7 @@ public interface UserFileService {
 	
 	ResponseMessage moveUserFile(@Param("userFileId")String userFileId, @Param("moveTo") String path);
 	
-	ResponseMessage moveUserFile2(@Param("userFileName") String userFileName,@Param("path") String path, @Param("moveTo") String moveTo);
+	ResponseMessage moveUserFile2(@Param("userFileName") String userFileName,@Param("path") String path, @Param("moveTo") String moveTo, @Param("userId") String userId);
 	
 	UserFile selectByPrimaryKey(String userFileId);
 }

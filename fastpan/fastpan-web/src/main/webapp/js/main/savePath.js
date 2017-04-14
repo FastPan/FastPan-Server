@@ -146,5 +146,5 @@ function newSaveFolder(path, newFolder) {
 	});
 }
 function back(){
-	getSavePath()
+	getSavePath();
 }

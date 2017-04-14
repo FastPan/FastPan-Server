@@ -42,7 +42,7 @@
 		*
 		from user_file
 		where user_id = #{userId,jdbcType=CHAR} and user_file_name like
-		#{fileName,jdbcType=CHAR} and file_id is not null
+		#{fileName,jdbcType=CHAR} and file_id is not null and state=0
 	</select>
 	<select id="selectByFileType" resultMap="BaseResultMapWithFile">
 		select
@@ -51,7 +51,7 @@
 		user_file,file
 		where user_id = #{userId,jdbcType=CHAR}and
 		file.file_id=user_file.file_id and file_type = #{type} and
-		user_file.file_id is not null
+		user_file.file_id is not null and state=0
 	</select>
 	<select id="selectByUserId" resultMap="BaseResultMap">
 		select
@@ -209,8 +209,7 @@
 		update user_file set path=CONCAT(CONCAT(#{moveTo},
 		#{userFileName}),SUBSTR(path
 		,LENGTH(CONCAT(#{path},#{userFileName}))+1,LENGTH(path)-1)) where path
-		like CONCAT(#{path},#{userFileName},'%')
-
+		like CONCAT(#{path},#{userFileName},'%') and user_id=#{userId}
 	</update>
 	
 	<update id="updateFilesByManage" parameterType="com.stu.fastpan.dao.pojo.userfile.UserFile">

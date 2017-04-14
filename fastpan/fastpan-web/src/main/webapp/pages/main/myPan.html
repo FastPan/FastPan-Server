@@ -35,8 +35,8 @@
 						class="icon-bar"></span><span class="icon-bar"></span><span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="../main/index">极速网盘</a>
-				<a class="navbar-brand" href="../main/index">注销</a>
+				<a class="navbar-brand" href="../main/index">极速网盘</a> <a
+					class="navbar-brand" href="../main/index">注销</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
@@ -56,8 +56,8 @@
 					</li>
 					<li><a class="glyphicon glyphicon-briefcase" id="all-txt"><span>文档</span></a>
 					</li>
-					<li><a class="glyphicon glyphicon-facetime-video" id="all-video"><span>视频</span></a>
-					</li>
+					<li><a class="glyphicon glyphicon-facetime-video"
+						id="all-video"><span>视频</span></a></li>
 					<li><a class="glyphicon glyphicon-music" id="all-music"><span>音乐</span></a></li>
 					</li>
 				</ul>
@@ -78,9 +78,10 @@
 						<button type="button" id="newFloderBtn" class="btn btn-default">新建文件夹</button>
 						<button type="button" id="move" class="btn btn-default">移动至</button>
 						<button type="button" class="btn btn-default">删除</button>
-						<button type="button" class="btn btn-default">分享</button>
+						<button type="button" id="shareBtn" class="btn btn-default">分享</button>
 						<div class="pull-right">
-							<input type="text" id="search" name="filename" class="form-control" placeholder="搜索" />
+							<input type="text" id="search" name="filename"
+								class="form-control" placeholder="搜索" />
 						</div>
 					</div>
 					<div class="module-history-list">
@@ -154,6 +155,27 @@
 						</div>
 					</div>
 				</div>
+				<div id="main-content-share" class="_hide">
+					<table id="table-share-thead" class="table table-hover"
+						style="margin: 0">
+						<thead>
+							<tr id="thead_share_show">
+								<th></input><a
+									id="link">分享链接<font size=1><span class="glyphicon"></span></font></a></th>
+								<th></th>
+								<th><a id="doSome">操作<font size=1><span
+											class="glyphicon"></span></font></a></th>
+							</tr>
+						</thead>
+					</table>
+					<div id="table_share" class="table-responsive"
+						style="overflow-y: scroll">
+						<table class="table table-hover">
+							<tbody id="all-share-file-list">
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -169,7 +191,7 @@
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 		<script src="../plug-in/ie/js/ie10-viewport-bug-workaround.js"></script>
 		<script src="../plug-in/jquery-time/js/jquery-time.js"></script>
-		
+
 		<script src="../js/main/fileupload.js"></script>
 		<script src="../js/main/myPan.js"></script>
 		<script type="text/javascript">
@@ -190,10 +212,38 @@
 					return temp + 'GB';
 				}
 			}
-			function pathToUrl(path){
-				return path.substring(15,path.length);
+			function pathToUrl(path) {
+				return path.substring(15, path.length);
 			}
-			
+			function deleteShare(shareRootId) {
+				$.ajax({
+					url : '../share/deleteShare',
+					type : 'get',
+					data : {
+						shareRootId : shareRootId
+					},
+					dataType : 'json',
+					headers : {
+						"Content-Type" : "application/json"
+					},
+					success : function(result) {
+						if (result.success === true) {
+							getAllShareFileList();
+						}
+					},
+					error : function(error) {
+						BootstrapDialog.show({
+							title : "消息",
+							message : " 获取文件列表失败,服务器出错了",
+							onshown : function(dialog) {
+								setTimeout(function() {
+									dialog.close();
+								}, 1000);
+							}
+						});
+					}
+				});
+			}
 		</script>
 		<script id="allFile-tmpl" type="text/x-jquery-tmpl">
      		<tr>
@@ -210,6 +260,12 @@
         	{{/if}}
        	 	</tr>
 </script>
-<!-- 		-->
-	</body>
+		<script id="allShareFile-tmpl" type="text/x-jquery-tmpl">
+     		<tr>
+				<td><a href="../share/index?shareRootId=${shareRootId}" target="${shareRootId}">${shareRootId}</a></td>
+				<td><span class="glyphicon glyphicon-trash blue" onclick="deleteShare('${shareRootId}')" title="删除"></span></td>
+       	 	</tr>
+</script>
+		<!-- 		-->
+</body>
 </html>

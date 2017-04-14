@@ -33,7 +33,7 @@ public interface UserFileMapper {
 
 	int moveUserFile(@Param("userFileId")String userFileId, @Param("moveTo") String path);
 
-	int moveUserFile2(@Param("userFileName") String userFileName,@Param("path") String path, @Param("moveTo") String moveTo);
+	int moveUserFile2(@Param("userFileName") String userFileName,@Param("path") String path, @Param("moveTo") String moveTo,@Param("userId") String userId);
     
     int updateFilesByManage(UserFile record);
 }

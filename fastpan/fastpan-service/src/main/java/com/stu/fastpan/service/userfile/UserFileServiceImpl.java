@@ -1,8 +1,5 @@
 package com.stu.fastpan.service.userfile;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -98,10 +95,10 @@ public class UserFileServiceImpl extends BaseService implements UserFileService 
 	}
 
 	@Override
-	public ResponseMessage moveUserFile2(String userFileName, String path, String moveTo) {
+	public ResponseMessage moveUserFile2(String userFileName, String path, String moveTo,String userId) {
 		ResponseMessage rm = null;
 		try {
-			rm = SUCCESS(userFileMapper.moveUserFile2(userFileName, path, moveTo));
+			rm = SUCCESS(userFileMapper.moveUserFile2(userFileName, path, moveTo,userId));
 		} catch (Exception e) {
 			e.printStackTrace();
 			rm = FAIL(9998, "数据库执行异常");

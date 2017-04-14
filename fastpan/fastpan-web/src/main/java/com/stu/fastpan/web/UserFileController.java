@@ -75,19 +75,17 @@ public class UserFileController {
 	@ResponseBody
 	public Object moveFile(HttpSession session, @RequestBody FileListModel fileListModel) {
 		boolean flag = true;
-		// List<String> fileList = fileListModel.getFileList();
 		System.out.println();
 		List<String> fileList = fileListModel.getFileList();
-		// fileList=jsonArray.toList();
 		String path = fileListModel.getPath();
 		for (String id : fileList) {
 			UserFile selectByPrimaryKey = userFileService.selectByPrimaryKey(id);
 			System.out.println(selectByPrimaryKey);
-			if (userFileService.moveUserFile(selectByPrimaryKey.getUserFileId(), path).isSuccess() == false) {
+			if (userFileService.moveUserFile(id, path).isSuccess() == false) {
 				flag = false;
 			}
 			if (selectByPrimaryKey.getFileId() == null) {
-				if (userFileService.moveUserFile2(selectByPrimaryKey.getUserFileName(),selectByPrimaryKey.getPath(), path).isSuccess() == false) {
+				if (userFileService.moveUserFile2(selectByPrimaryKey.getUserFileName(),selectByPrimaryKey.getPath(), path,SessionUtils.getUserId(session)).isSuccess() == false) {
 					flag = false;
 				}
 			}

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.stu.fastpan.dao.mapper.userShare.UserShareMapper">
+	<resultMap id="BaseResultMap" type="com.stu.fastpan.dao.pojo.userShare.UserShare">
+		<id column="share_id" property="shareId" jdbcType="BIGINT" />
+		<result column="share_root_id" property="shareRootId" jdbcType="CHAR" />
+		<result column="file_name" property="fileName" jdbcType="VARCHAR" />
+		<result column="path" property="path" jdbcType="VARCHAR" />
+		<result column="share_user_id" property="shareUserId" jdbcType="CHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="file_id" property="fileId" jdbcType="CHAR" />
+		<result column="state" property="state" jdbcType="TINYINT" />
+	</resultMap>
+	<resultMap id="BaseResultMapWithFile" type="com.stu.fastpan.dao.pojo.userShare.UserShare">
+		<id column="share_id" property="shareId" jdbcType="BIGINT" />
+		<result column="share_root_id" property="shareRootId" jdbcType="CHAR" />
+		<result column="file_name" property="fileName" jdbcType="VARCHAR" />
+		<result column="path" property="path" jdbcType="VARCHAR" />
+		<result column="share_user_id" property="shareUserId" jdbcType="CHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="file_id" property="fileId" jdbcType="CHAR" />
+		<result column="state" property="state" jdbcType="TINYINT" />
+		<association column="file_id" property="file"
+			select="com.stu.fastpan.dao.mapper.file.FileMapper.selectByPrimaryKey" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		share_id, share_root_id, file_name, path, share_user_id,
+		create_time, file_id,
+		state
+	</sql>
+	<select id="selectAllShareRootId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select distinct
+		share_root_id
+		from user_share
+		where share_user_id =
+		#{shareUserId,jdbcType=BIGINT} and state=0
+	</select>
+	<select id="selectAllFromShareRootIdPathState" resultMap="BaseResultMapWithFile">
+		select
+		*
+		from user_share
+		where share_root_id = #{shareRootId,jdbcType=BIGINT}
+		and path=#{path,jdbcType=VARCHAR}
+		and state=#{state,jdbcType=TINYINT}
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from user_share
+		where share_id = #{shareId,jdbcType=BIGINT}
+	</select>
+	<update id="deleteByShareRootId">
+		update user_share
+		set state = 1
+		where share_root_id =
+		#{shareRootId}
+	</update>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		user_share
+		where share_id = #{shareId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insertShare">
+		insert into user_share (
+		share_root_id, file_name,
+		path, share_user_id,
+		file_id,state ) select #{shareRootId} as
+		share_root_id,user_file_name
+		as file_name,
+		'/' as path,user_id as
+		share_user_id, file_id,0 as state
+		from
+		user_file where user_file_id
+		=
+		#{userFileId,jdbcType=CHAR}
+	</insert>
+	<insert id="insertShare2">
+		insert into user_share (
+		share_root_id, file_name,
+		path,
+		share_user_id,
+		file_id,
+		state ) select #{shareRootId} as
+		share_root_id,user_file_name
+		as file_name,
+		CONCAT(CONCAT('/',
+		#{userFileName}),SUBSTR(path
+		,LENGTH(CONCAT(#{path},#{userFileName}))+1,LENGTH(path)-1)) as
+		path,user_id as share_user_id, file_id,0 as state
+		from
+		user_file where
+		path
+		like CONCAT(#{path},#{userFileName},'%') and user_id=#{userId}
+	</insert>
+	<insert id="insert" parameterType="com.stu.fastpan.dao.pojo.userShare.UserShare">
+		insert into user_share
+		(share_id, share_root_id, file_name,
+		path, share_user_id, create_time,
+		file_id, state)
+		values (#{shareId,jdbcType=BIGINT},
+		#{shareRootId,jdbcType=BIGINT},
+		#{fileName,jdbcType=VARCHAR},
+		#{path,jdbcType=VARCHAR}, #{shareUserId,jdbcType=BIGINT},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{fileId,jdbcType=CHAR},
+		#{state,jdbcType=TINYINT})
+	</insert>
+	<insert id="insertSelective" parameterType="com.stu.fastpan.dao.pojo.userShare.UserShare">
+		insert into user_share
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="shareId != null">
+				share_id,
+			</if>
+			<if test="shareRootId != null">
+				share_root_id,
+			</if>
+			<if test="fileName != null">
+				file_name,
+			</if>
+			<if test="path != null">
+				path,
+			</if>
+			<if test="shareUserId != null">
+				share_user_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="fileId != null">
+				file_id,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="shareId != null">
+				#{shareId,jdbcType=BIGINT},
+			</if>
+			<if test="shareRootId != null">
+				#{shareRootId,jdbcType=BIGINT},
+			</if>
+			<if test="fileName != null">
+				#{fileName,jdbcType=VARCHAR},
+			</if>
+			<if test="path != null">
+				#{path,jdbcType=VARCHAR},
+			</if>
+			<if test="shareUserId != null">
+				#{shareUserId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="fileId != null">
+				#{fileId,jdbcType=CHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=TINYINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.stu.fastpan.dao.pojo.userShare.UserShare">
+		update user_share
+		<set>
+			<if test="shareRootId != null">
+				share_root_id = #{shareRootId,jdbcType=BIGINT},
+			</if>
+			<if test="fileName != null">
+				file_name = #{fileName,jdbcType=VARCHAR},
+			</if>
+			<if test="path != null">
+				path = #{path,jdbcType=VARCHAR},
+			</if>
+			<if test="shareUserId != null">
+				share_user_id = #{shareUserId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="fileId != null">
+				file_id = #{fileId,jdbcType=CHAR},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=TINYINT},
+			</if>
+		</set>
+		where share_id = #{shareId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.stu.fastpan.dao.pojo.userShare.UserShare">
+		update user_share
+		set share_root_id = #{shareRootId,jdbcType=BIGINT},
+		file_name =
+		#{fileName,jdbcType=VARCHAR},
+		path = #{path,jdbcType=VARCHAR},
+		share_user_id = #{shareUserId,jdbcType=BIGINT},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		file_id = #{fileId,jdbcType=CHAR},
+		state = #{state,jdbcType=TINYINT}
+		where share_id =
+		#{shareId,jdbcType=BIGINT}
+	</update>
+</mapper>
