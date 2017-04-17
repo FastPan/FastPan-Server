@@ -9,8 +9,7 @@
 <meta name="author" content="">
 <link rel="icon" href="http://v3.bootcss.com/favicon.ico">
 
-<title>注册</title>
-
+<title>登录</title>
 <!-- Bootstrap core CSS -->
 <link href="../plug-in/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -19,8 +18,10 @@
 	rel="stylesheet" />
 <!-- Custom styles for this template -->
 <link href="../css/user/login.css" rel="stylesheet">
+
 <link href="../plug-in/bootstrapDialog/css/bootstrap-dialog.min.css"
 	rel="stylesheet">
+
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 <script src="../plug-in/ie/js/ie-emulation-modes-warning.js"></script>
@@ -30,45 +31,34 @@
       <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 
 <body>
 
 	<div class="container">
 
-		<form class="form-signin" role="form" onsubmit="register()">
-			<h2 class="form-signin-heading" align="center">请输入个人信息</h2>
+		<form class="form-signin" role="form" onsubmit = "login()">
+			<h2 class="form-signin-heading" align="center">登录</h2>
 			<div class="form-group">
-				<input type="text" class="form-control" name="nickName"
-					placeholder="昵称" required="required" autofocus="autofocus"
-					value="">
-			</div>
-			<div class="form-group email">
 				<input type="email" class="form-control" name="email"
-					placeholder="邮箱" required="required" value="">
-				<button class="btn btn-lg btn-primary btn-block" type="button"
-					onclick="getCode()" id="sendCode">发送验证码</button>
-			</div>
-			<div class="form-group">
-				<input type="text" class="form-control" name="code"
-					placeholder="验证码" required="required" value="">
+					placeholder="邮箱" required="required" value="1043244426@qq.com">
 			</div>
 			<div class="form-group">
 				<input type="password" class="form-control" name="password"
-					placeholder="密码" required="required" value="">
+					placeholder="密码" required="required" value="abc@1234">
 			</div>
-			<div class="form-group">
-				<input type="password" class="form-control" name="passwordAgain"
-					placeholder="确认密码" required="required" value="">
+			<div class="form-group code">
+				<input type="text" class="form-control" name="code"
+					placeholder="验证码" required="required" value="h2j3b4">
+				<img id="pictureCode" src="../verify/pictureCode">
 			</div>
 			<button class="btn btn-lg btn-primary btn-block" type="submit"
-				onclick="register()">注册</button>
+				onclick="login()">登录</button>
 		</form>
-
 	</div>
 	<!-- /container -->
-
-
+	
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="../plug-in/ie/js/ie10-viewport-bug-workaround.js"></script>
 	<script src="../plug-in/jquery/js/jquery.min.js"></script>
@@ -76,6 +66,6 @@
 	<script src="../plug-in/bootstrapDialog/js/bootstrap-dialog.min.js"></script>
 	<script
 		src="../plug-in/bootstrapValidator/js/bootstrapValidator.min.js"></script>
-	<script src="../js/user/register.js"></script>
+	<script src="../js/user/login.js"></script>
 </body>
 </html>

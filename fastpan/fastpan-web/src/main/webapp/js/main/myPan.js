@@ -5,6 +5,7 @@ submit = 0;
 submit2 = 0;
 submit3 = 0;
 submit4 = 0;
+submit5 = 0;
 var indent = 4;
 
 $(window).resize(
@@ -42,24 +43,25 @@ $(function() {
 		}
 	});
 	$('#all-file').click(function() {
-		getAllFileList('/');
 		indent=4;
+		getAllFileList('/');
 	});
 	$('#all-img').click(function() {
-		getFileByType(0);
 		indent=0;
+		getFileByType(0);
 	});
 	$('#all-txt').click(function() {
-		getFileByType(1);
 		indent=1;
+		getFileByType(1);
 	});
 	$('#all-video').click(function() {
-		getFileByType(2);
 		indent=2;
+		getFileByType(2);
 	});
 	$('#all-music').click(function() {
-		getFileByType(3);
 		indent=3;
+		getFileByType(3);
+		
 	});
 	$('#filename').click(function() {
 
@@ -143,11 +145,7 @@ $(function() {
 			function(event) {
 		        var id = $(this).parent().parent().find('input').attr('userFileId');
 		        checkDeleteFile(id);
-		        if(indent == 4){
-		        	getAllFileList('/');
-		        }else{
-		            getFileByType(indent);
-		        }
+
 			});
 	$('#delete-all').click(
 			function() {
@@ -172,6 +170,7 @@ $(function() {
 			$('#main-content-file').show();
 			$('#main-content-upload').hide();
 			$('#main-recycle-bin').hide();
+			$('#main-content-share').hide();
 		}
 	});
 	$('#my-upload').click(
@@ -189,6 +188,7 @@ $(function() {
 				$('#main-recycle-bin').show();
 				$('#main-content-file').hide();
 				$('#main-content-upload').hide();
+				$('#main-content-share').hide();
 				$('#table-delete-thead').css('width',
 						$('#table_delete table').width() + 'px');
 				recycleBin();
@@ -198,6 +198,7 @@ $(function() {
 				$('#main-content-share').show();
 				$('#main-content-upload').hide();
 				$('#main-content-file').hide();
+				$('#main-recycle-bin').hide();
 				$('#table_upload-thead').css('width',
 						$('#table_upload table').width() + 'px');
 				getAllShareFileList();
@@ -684,7 +685,11 @@ function checkDeleteFile(userFileId){
 					setTimeout(function() {
 					$('button[type="submit"]').removeAttr("disabled");
 					dialog.close(); }, 1000);
-					recycleBin();
+			        if(indent == 4){
+			        	getAllFileList('/');
+			        }else{
+			            getFileByType(indent);
+			        }
 				}
 
 			});

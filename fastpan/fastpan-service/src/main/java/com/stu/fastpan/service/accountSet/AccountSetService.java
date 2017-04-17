@@ -153,6 +153,7 @@ public class AccountSetService extends ResponseMeService<User, String>
 
 		// 用户输入的旧密码
 		String oldPassword = MD5Utils.getMD5(password.getPassword().getBytes());
+		System.out.println(user.getPassword());
 		if (user.getPassword().equals(oldPassword)) {
 			// 用户输入的新密码
 			String newPassword = MD5Utils.getMD5(password.getNewPassword()
