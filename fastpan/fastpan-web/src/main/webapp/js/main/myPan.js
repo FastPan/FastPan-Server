@@ -116,7 +116,7 @@ $(function() {
 								$(this)
 										.find('td:nth-of-type(2)')
 										.html(
-												'<span class="batch blue" title="分享">&#xF159;</span><span class="glyphicon glyphicon-download-alt blue" title="下载"></span><span class="glyphicon glyphicon-trash blue" title="删除"></span>');
+												'<span class="glyphicon glyphicon-download-alt blue" title="下载"></span><span class="glyphicon glyphicon-trash blue" title="删除"></span>');
 							}
 						} else if (event.type == "mouseleave") {
 							$(this).find('td:nth-of-type(2)').html('');

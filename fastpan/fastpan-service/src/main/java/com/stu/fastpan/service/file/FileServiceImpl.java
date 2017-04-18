@@ -51,6 +51,7 @@ public class FileServiceImpl extends BaseService implements FileService {
 	}
 
 	public ResponseMessage fileUpload(String userId, FileUpload fileUpload, MultipartFile[] files) {
+		System.out.println("被调用");
 		ResponseMessage rm = null;
 		if (userId == null) {
 			// 登录失效
@@ -120,11 +121,18 @@ public class FileServiceImpl extends BaseService implements FileService {
 					// 是否全部上传完成
 					// 所有分片都存在才说明整个文件上传完成
 					// 所有分片文件都上传完成
-					// 将所有分片文件合并到一个文件中
-					if (parentFileDir.listFiles().length == fileUpload.getChunks()) {
+					// 将所有分片文件合并到一个文件中fileUpload
+					long fileSize=0;
+					java.io.File[] listFiles = parentFileDir.listFiles();
+					for (java.io.File file : listFiles) {
+						fileSize+=file.length();
+					}
+					if (listFiles.length == fileUpload.getChunks()&&fileSize==fileUpload.getSize()) {
 						java.io.File destTempFile = new java.io.File(
 								getTempFilePath(getDate, fileUpload.getFileMd5(), userId), fileName);
+						System.out.println("分片个数:" + fileUpload.getChunks());
 						for (int i = 0; i < fileUpload.getChunks(); i++) {
+							System.out.println("第" + i + "个正在合并");
 							java.io.File partFile = new java.io.File(parentFileDir, fileName + "_" + i + ".part");
 							FileOutputStream destTempfos = null;
 							try {
@@ -139,13 +147,16 @@ public class FileServiceImpl extends BaseService implements FileService {
 								if (destTempfos != null) {
 									try {
 										destTempfos.close();
+										destTempfos=null;
 									} catch (Exception e) {
 										e.printStackTrace();
 										rm = FAIL(9999, "文件合并异常");
 									}
 								}
 							}
+							System.out.println("第" + i + "个合并结束,文件流为空是:" + (destTempfos == null));
 						}
+						System.out.println("全部合并完成");
 						// 删除临时目录中的分片文件
 						try {
 							FileUtils.deleteDirectory(parentFileDir);
